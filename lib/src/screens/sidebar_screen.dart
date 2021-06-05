@@ -1,3 +1,8 @@
+import 'package:e_management/src/produits/ventes/add_vente_screen.dart';
+import 'package:e_management/src/produits/ventes/list_vente_screen.dart';
+import 'package:e_management/src/screens/contact_screen.dart';
+import 'package:e_management/src/screens/home_screen.dart';
+import 'package:e_management/src/screens/shareapp_screen.dart';
 import 'package:flutter/material.dart';
 
 class SideBarScreen extends StatelessWidget {
@@ -19,7 +24,11 @@ class SideBarScreen extends StatelessWidget {
             title: Text("Acceuil"),
             onTap: () {
               print("Home Clicked");
-              Navigator.pushNamed(context,'/');
+              Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => HomeScreen())
+              );
             },
           ),
           ListTile(
@@ -27,7 +36,11 @@ class SideBarScreen extends StatelessWidget {
             title: Text("Produits"),
             onTap: () {
                 print("Produits Clicked");
-              Navigator.pushNamed(context,'/produits');
+              Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => HomeScreen())
+              );
             },
           ),
           ListTile(
@@ -35,15 +48,23 @@ class SideBarScreen extends StatelessWidget {
             title: Text("Liste des Ventes"),
             onTap: () {
                 print("Ventes");
-              Navigator.pushNamed(context,'/ventes');
+              Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ListVenteScreen())
+              );
             },
           ),
           ListTile(
             leading: Icon(Icons.add_to_photos),
             title: Text("Ajoutez votre vente"),
             onTap: () {
-                print("Add Ventes");
-              Navigator.pushNamed(context,'/addventes');
+              print("Add Ventes");
+              Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => AddVenteScreen())
+              );
             },
           ),
           ListTile(
@@ -54,30 +75,29 @@ class SideBarScreen extends StatelessWidget {
               Navigator.pushNamed(context,'/addproduits');
             },
           ),
-          ListTile(
-            leading: Icon(Icons.add_comment_rounded),
-            title: Text("Ajoutez une Categories"),
-            onTap: () {
-                print("Add Categories");
-              Navigator.pushNamed(context,'/addcategory');
-            },
-          ),
-
           Divider(),
           ListTile(
             leading: Icon(Icons.contact_page),
-            title: Text("Contactez-nous"),
+            title: Text("Contactez-nous!"),
             onTap: () {
                 print("Contact Clicked");
-              Navigator.pushNamed(context,'/contact');
+              Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ContactScreen())
+              );
             },
           ),
           ListTile(
             leading: Icon(Icons.share),
-            title: Text("Share with Friends"),
+            title: Text("Partagez!"),
             onTap: () {
-                print("Share Clicked");
-              Navigator.pushNamed(context,'/shareapps');
+              print("Share Clicked");
+              Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ShareAppScreen())
+              );
             },
           ),
         ],

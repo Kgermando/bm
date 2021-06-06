@@ -1,4 +1,4 @@
-import 'package:e_management/src/produits/achats/aad_achat_screen.dart';
+import 'package:e_management/src/produits/achats/add_achat_screen.dart';
 import 'package:e_management/src/screens/sidebar_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +17,7 @@ class _ListAchatScreenState extends State<ListAchatScreen> {
           title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          Text('Liste des ventes'),
+          Text('Liste des achats'),
           ElevatedButton.icon(
             onPressed: () {},
             icon: Icon(Icons.power_settings_new),

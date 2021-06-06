@@ -1,4 +1,5 @@
-import 'package:e_management/src/produits/achats/aad_achat_screen.dart';
+import 'package:e_management/src/produits/achats/add_achat_screen.dart';
+import 'package:e_management/src/produits/achats/list_achat_screen.dart';
 import 'package:e_management/src/produits/ventes/add_vente_screen.dart';
 import 'package:e_management/src/produits/ventes/list_vente_screen.dart';
 import 'package:e_management/src/screens/contact_screen.dart';
@@ -34,13 +35,13 @@ class SideBarScreen extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.dashboard),
-            title: Text("Produits"),
+            title: Text("Liste des Achats"),
             onTap: () {
-                print("Produits Clicked");
+                print("List Achats Clicked");
               Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => HomeScreen())
+                builder: (context) => ListAchatScreen())
               );
             },
           ),

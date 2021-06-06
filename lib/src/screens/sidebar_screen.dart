@@ -1,3 +1,4 @@
+import 'package:e_management/src/produits/achats/aad_achat_screen.dart';
 import 'package:e_management/src/produits/ventes/add_vente_screen.dart';
 import 'package:e_management/src/produits/ventes/list_vente_screen.dart';
 import 'package:e_management/src/screens/contact_screen.dart';
@@ -72,7 +73,11 @@ class SideBarScreen extends StatelessWidget {
             title: Text("Ajoutez des produits"),
             onTap: () {
                 print("Add produits");
-              Navigator.pushNamed(context,'/addproduits');
+              Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => AddAchatScreen())
+              );
             },
           ),
           Divider(),

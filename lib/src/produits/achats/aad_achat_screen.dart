@@ -1,14 +1,14 @@
 import 'package:e_management/src/screens/sidebar_screen.dart';
 import 'package:flutter/material.dart';
 
-class ListAchatScreen extends StatefulWidget {
-  const ListAchatScreen({Key? key}) : super(key: key);
+class AddAchatScreen extends StatefulWidget {
+  const AddAchatScreen({ Key? key }) : super(key: key);
 
   @override
-  _ListAchatScreenState createState() => _ListAchatScreenState();
+  _AddAchatScreenState createState() => _AddAchatScreenState();
 }
 
-class _ListAchatScreenState extends State<ListAchatScreen> {
+class _AddAchatScreenState extends State<AddAchatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,15 +25,6 @@ class _ListAchatScreenState extends State<ListAchatScreen> {
         ],
       )),
       drawer: SideBarScreen(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator(
-            float
-          );
-        },
-        tooltip: 'Ajoutez achats',
-        child: Icon(Icons.add),
-      ),
       body: Container(),
     );
   }

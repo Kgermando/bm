@@ -1,3 +1,4 @@
+import 'package:e_management/src/produits/achats/aad_achat_screen.dart';
 import 'package:e_management/src/screens/sidebar_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -27,9 +28,11 @@ class _ListAchatScreenState extends State<ListAchatScreen> {
       drawer: SideBarScreen(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator(
-            float
-          );
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => AddAchatScreen())
+            );
         },
         tooltip: 'Ajoutez achats',
         child: Icon(Icons.add),

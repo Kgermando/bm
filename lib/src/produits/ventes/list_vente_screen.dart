@@ -1,4 +1,5 @@
 import 'package:e_management/src/models/vente_model.dart';
+import 'package:e_management/src/produits/ventes/add_vente_screen.dart';
 import 'package:e_management/src/screens/sidebar_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -14,12 +15,23 @@ class ListVenteScreen extends StatelessWidget {
         children: <Widget>[
           Text('Liste des ventes'),
           ElevatedButton.icon(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => AddVenteScreen())
+              );
+            },
             icon: Icon(Icons.power_settings_new),
             label: Text(''),
           ),
         ],
       )),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: Icon(Icons.add),
+        tooltip: 'add vente',
+      ),
       drawer: SideBarScreen(),
       body: Container(),
     );

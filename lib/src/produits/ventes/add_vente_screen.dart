@@ -1,4 +1,3 @@
-import 'package:e_management/src/screens/sidebar_screen.dart';
 import 'package:flutter/material.dart';
 
 class AddVenteScreen extends StatelessWidget {
@@ -47,7 +46,7 @@ class AddVenteScreen extends StatelessWidget {
           ],
         )
       ),
-      drawer: SideBarScreen(),
+      // drawer: SideBarScreen(),
       body: Container(),
     );
   }

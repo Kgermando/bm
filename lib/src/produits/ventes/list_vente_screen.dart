@@ -28,7 +28,14 @@ class ListVenteScreen extends StatelessWidget {
         ],
       )),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => AddVenteScreen()
+            )
+          );
+        },
         child: Icon(Icons.add),
         tooltip: 'add vente',
       ),

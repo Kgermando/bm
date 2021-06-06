@@ -60,14 +60,14 @@ class AchatModel {
   );
 
   static AchatModel fromJson(Map<String, Object?> json) => AchatModel(
-        id: json[AchatFields.id] as int?,
-        categorie: json[AchatFields.categorie] as String,
-        sousCategorie: json[AchatFields.sousCategorie] as String,
-        nameProduct: json[AchatFields.nameProduct] as String,
-        quantity: json[AchatFields.quantity] as int,
-        price: json[AchatFields.price] as int,
-        date: DateTime.parse(json[AchatFields.date] as String),
-      );
+    id: json[AchatFields.id] as int?,
+    categorie: json[AchatFields.categorie] as String,
+    sousCategorie: json[AchatFields.sousCategorie] as String,
+    nameProduct: json[AchatFields.nameProduct] as String,
+    quantity: json[AchatFields.quantity] as int,
+    price: json[AchatFields.price] as int,
+    date: DateTime.parse(json[AchatFields.date] as String),
+  );
 
   Map<String, Object?> toJson() => {
     AchatFields.id: id,

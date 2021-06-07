@@ -30,7 +30,7 @@ class AchatModel {
   final int price;
   final DateTime date;
 
-  const AchatModel({
+  const AchatModel(categorie, {
     this.id,
     required this.categorie,
     required this.sousCategorie,

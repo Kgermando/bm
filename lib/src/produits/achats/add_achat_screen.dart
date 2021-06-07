@@ -1,17 +1,39 @@
+import 'dart:html';
+
+import 'package:e_management/resources/products_database.dart';
+import 'package:e_management/src/models/achat_model.dart';
 import 'package:e_management/src/screens/sidebar_screen.dart';
 import 'package:flutter/material.dart';
 
 class AddAchatScreen extends StatefulWidget {
-  const AddAchatScreen({Key? key}) : super(key: key);
+  final AchatModel? achat;
+
+  const AddAchatScreen({Key? key, this.achat}) : super(key: key);
 
   @override
   _AddAchatScreenState createState() => _AddAchatScreenState();
 }
 
 class _AddAchatScreenState extends State<AddAchatScreen> {
-  final ButtonStyle style =
-      ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 10));
-  final String categorieValue =  'Selectionnez la categorie';
+  final formKey = GlobalKey<FormState>();
+
+  final categorieController = TextEditingController();
+  final sousCategorieController = TextEditingController();
+  final nameProductController = TextEditingController();
+  final quantityController = TextEditingController();
+  final priceController = TextEditingController();
+  
+  @override
+  void dispose() {
+    categorieController.dispose();
+    sousCategorieController.dispose();
+    nameProductController.dispose();
+    quantityController.dispose();
+    priceController.dispose();
+    super.dispose();
+  }
+
+  final String categorieValue = 'Selectionnez la categorie';
   static var _categorie = <String>[
     'Selectionnez la categorie',
     'Pain',
@@ -55,12 +77,14 @@ class _AddAchatScreenState extends State<AddAchatScreen> {
           ),
         ],
       )),
-      drawer: SideBarScreen(),
+      // drawer: SideBarScreen(),
       body: SingleChildScrollView(
         child: Container(
           margin: EdgeInsets.all(20.0),
           child: Form(
+            key: formKey,
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 categorieField(),
                 sousCategorieFIeld(),
@@ -96,25 +120,30 @@ class _AddAchatScreenState extends State<AddAchatScreen> {
           // Text("Categorie"),
           InputDecorator(
             decoration: InputDecoration(
-                border:
+              labelText: 'Categorie',
+              labelStyle: TextStyle(),
+              border:
                   OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
-                contentPadding: EdgeInsets.all(5.0),
-              ),
+              // contentPadding: EdgeInsets.all(5.0),
+            ),
             child: DropdownButton<String>(
-              value: categorieValue,
               icon: const Icon(Icons.arrow_drop_down),
-              iconSize: 24,
+              iconSize: 28,
               elevation: 16,
               isDense: true,
               isExpanded: true,
               style: const TextStyle(color: Colors.deepPurple),
-              onChanged: (String? newValue) {},
               items: _categorie.map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
                   child: Text(value),
                 );
               }).toList(),
+              onChanged: (String? value) {
+                print(value);
+                categorie = value!;
+              },
+              value: categorieValue,
             ),
           )
         ],
@@ -127,24 +156,28 @@ class _AddAchatScreenState extends State<AddAchatScreen> {
       margin: const EdgeInsets.only(bottom: 20.0),
       child: Column(
         children: [
-          // Text("Sous Categorie"),
           InputDecorator(
             decoration: InputDecoration(
+              labelText: 'Sous Categorie',
+              labelStyle: TextStyle(),
               border:
-              OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
-              contentPadding: EdgeInsets.all(5.0),
+                  OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
+              // contentPadding: EdgeInsets.all(5.0),
             ),
             child: DropdownButton<String>(
               value: sousCategorieValue,
               icon: const Icon(Icons.arrow_drop_down),
-              iconSize: 24,
+              iconSize: 28,
               elevation: 16,
               isDense: true,
               isExpanded: true,
               style: const TextStyle(color: Colors.deepPurple),
-              onChanged: (String? newValue) {},
+              onChanged: (String? value) {
+                print(value);
+                sousCategorie = value!;
+              },
               items:
-                _sousCategorie.map<DropdownMenuItem<String>>((String value) {
+                  _sousCategorie.map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
                   child: Text(value),
@@ -161,6 +194,7 @@ class _AddAchatScreenState extends State<AddAchatScreen> {
     return Container(
       margin: const EdgeInsets.only(bottom: 20.0),
       child: TextFormField(
+        controller: nameProductController,
         keyboardType: TextInputType.text,
         decoration: InputDecoration(
           labelText: 'Nom du produit vendu',
@@ -169,6 +203,16 @@ class _AddAchatScreenState extends State<AddAchatScreen> {
             borderRadius: BorderRadius.circular(5.0),
           ),
         ),
+        validator: (String? value) {
+          if(value!.isEmpty) {
+            return 'Remplissez le nom du produit';
+          }
+          return null;
+        },
+        onSaved: (String? value) {
+          print(value);
+          nameProduct = value!;
+        },
       ),
     );
   }
@@ -177,6 +221,7 @@ class _AddAchatScreenState extends State<AddAchatScreen> {
     return Container(
       margin: const EdgeInsets.only(bottom: 20.0),
       child: TextFormField(
+        controller: quantityController,
         keyboardType: TextInputType.number,
         decoration: InputDecoration(
           labelText: 'Quantités des produits vendus',
@@ -185,6 +230,16 @@ class _AddAchatScreenState extends State<AddAchatScreen> {
             borderRadius: BorderRadius.circular(5.0),
           ),
         ),
+        validator: (String? value) {
+          if(value!.isEmpty) {
+            return 'Remplissez la quantité';
+          }
+          return null;
+        },
+        onSaved: (String? value) {
+          // print(value);
+          quantity = value!;
+        },
       ),
     );
   }
@@ -193,6 +248,7 @@ class _AddAchatScreenState extends State<AddAchatScreen> {
     return Container(
       margin: const EdgeInsets.only(bottom: 20.0),
       child: TextFormField(
+        controller: priceController,
         keyboardType: TextInputType.number,
         decoration: InputDecoration(
           labelText: 'Total d\'argents',
@@ -201,6 +257,12 @@ class _AddAchatScreenState extends State<AddAchatScreen> {
             borderRadius: BorderRadius.circular(5.0),
           ),
         ),
+        validator: (String? value) {
+          if (value!.isEmpty) {
+            return 'Mettez le montant total d\'achat';
+          }
+          return null;
+        },
       ),
     );
   }
@@ -208,13 +270,26 @@ class _AddAchatScreenState extends State<AddAchatScreen> {
   Widget saveForm() {
     return ElevatedButton(
       onPressed: () {
-        setState(() {});
+        if (formKey.currentState!.validate()) {
+          AchatModel achat = AchatModel(
+            categorie: categorieValue, 
+            sousCategorie: sousCategorie, 
+            nameProduct: nameProduct, 
+            quantity: quantityController.value,
+
+            quantityController.value.text,
+            priceController.value.text,
+            date: DateTime.now()
+          );
+          ProductDatabase.instance.insertAchat(achat);
+          Navigator.pop(context);
+        }
       },
       child: Text(
         'Enregistrez',
         textScaleFactor: 1.5,
       ),
-      style: style,
+      style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 10)),
     );
   }
 
@@ -227,7 +302,30 @@ class _AddAchatScreenState extends State<AddAchatScreen> {
         'Supprimer',
         textScaleFactor: 1.5,
       ),
-      style: style,
+      style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 10)),
     );
   }
+
+
+  // Future updateNote() async {
+  //   final achat = widget.achat!.copy(
+  //     categorie: categorieController,
+  //     date: DateTime.now(),
+  //   );
+
+  //   await ProductDatabase.instance.updataAchat(achat);
+  // }
+
+  // Future addNote() async {
+  //   final achat = AchatModel(
+  //     categorie: title,
+  //     sousCategorie: true,
+  //     nameProduct: number,
+  //     quantity: description,
+  //     price: ,
+  //     date: DateTime.now(),
+  //   );
+
+  //   await ProductDatabase.instance.insertAchat(achat);
+  // }
 }

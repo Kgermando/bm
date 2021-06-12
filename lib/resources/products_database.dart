@@ -12,7 +12,7 @@ class ProductDatabase {
   Future<Database> get database async {
     if (_database != null) return _database!;
 
-    _database = await _initDB('products.db');
+    _database = await _initDB('e_management.db');
 
     return _database!;
   }
@@ -20,6 +20,7 @@ class ProductDatabase {
   Future<Database> _initDB(String filePath) async {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, filePath);
+    print(path);
 
     return await openDatabase(path, version: 1, onCreate: _createDB);
   }
@@ -28,7 +29,7 @@ class ProductDatabase {
     final idType = 'INTEGER PRIMARY KEY AUTOINCREMENT';
     final textType = 'TEXT NOT NULL';
     // final boolType = 'BOOLEAN NOT NULL';
-    final integerType = 'INTEGER NOT NULL';
+    // final integerType = 'INTEGER NOT NULL';
 
     await db.execute('''
       CREATE TABLE $tableAchats (
@@ -36,8 +37,9 @@ class ProductDatabase {
         ${AchatFields.categorie} $textType,
         ${AchatFields.sousCategorie} $textType,
         ${AchatFields.nameProduct} $textType,
-        ${AchatFields.quantity} $integerType,
-        ${AchatFields.price} $integerType,
+        ${AchatFields.quantity} $textType,
+        ${AchatFields.unity} $textType,
+        ${AchatFields.price} $textType,
         ${AchatFields.date} $textType
       )
       ''');

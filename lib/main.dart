@@ -1,7 +1,7 @@
 import 'package:e_management/src/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+void main() {    
   runApp(MyApp());
 }
 

@@ -1,12 +1,12 @@
 import 'package:e_management/resources/products_database.dart';
 import 'package:e_management/src/models/achat_model.dart';
+import 'package:e_management/src/widgets/achat_form_widget.dart';
 import 'package:flutter/material.dart';
 
 class AddAchatScreen extends StatefulWidget {
   final AchatModel? achat;
 
-  const AddAchatScreen({
-    Key? key, this.achat}) : super(key: key);
+  const AddAchatScreen({Key? key, this.achat}) : super(key: key);
 
   @override
   _AddAchatScreenState createState() => _AddAchatScreenState();
@@ -15,42 +15,24 @@ class AddAchatScreen extends StatefulWidget {
 class _AddAchatScreenState extends State<AddAchatScreen> {
   final formKey = GlobalKey<FormState>();
 
-  String categorie = '';
-  String sousCategorie = '';
-  String nameProduct = '';
-  int quantity = 0;
-  int price = 0;
-  DateTime date = DateTime.now();
+  late String categorie;
+  late String sousCategorie;
+  late String nameProduct;
+  late String quantity;
+  late String unity;
+  late String price;
 
+  @override
+  void initState() {
+    super.initState();
 
-  final String categorieValue = 'Selectionnez la categorie';
-  static var _categorie = <String>[
-    'Selectionnez la categorie',
-    'Pain',
-    'Lait',
-    'Boisson',
-    'Stylo',
-    'Cahier',
-    'Huile',
-    'Farine',
-    'Biscuit'
-  ];
-
-  final String sousCategorieValue = 'Selectionnez le sous categorie';
-  static var _sousCategorie = [
-    'Selectionnez le sous categorie',
-    'Baguette',
-    'Gateau',
-    'Kanga journee',
-    'Zest',
-    'Oragina',
-    'Bic Bic',
-    'Speciale',
-    'Salte',
-    'Rouge',
-    'Fromat',
-    'Fraine de manioc'
-  ];
+    categorie = widget.achat?.categorie ?? '';
+    sousCategorie = widget.achat?.sousCategorie ?? '';
+    nameProduct = widget.achat?.nameProduct ?? '';
+    quantity = widget.achat?.quantity ?? '';
+    unity = widget.achat?.unity ?? '';
+    price = widget.achat?.price ?? '';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,177 +58,36 @@ class _AddAchatScreenState extends State<AddAchatScreen> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  categorieField(),
-                  sousCategorieFIeld(),
-                  nameProductField(),
-                  quantityField(),
-                  priceField(),
+                  AchatFormWidget(
+                    categorie: categorie,
+                    sousCategorie: sousCategorie,
+                    nameProduct: nameProduct,
+                    quantity: quantity,
+                    unity: unity,
+                    price: price,
+                    onChangedCategorie: (categorie) =>
+                        setState(() => this.categorie = categorie),
+                    onChangedSousCategorie: (sousCategorie) =>
+                        setState(() => this.sousCategorie = sousCategorie),
+                    onChangedNameProduct: (nameProduct) =>
+                        setState(() => this.nameProduct = nameProduct),
+                    onChangedQuantity: (quantity) =>
+                        setState(() => this.quantity = quantity),
+                    onChangedUnity: (unity) =>
+                        setState(() => this.unity = unity),
+                    onChangedPrice: (price) =>
+                        setState(() => this.price = price),
+                  ),
                   Row(
                     children: [
                       Expanded(
                         child: saveForm(),
-                      ),
-                      SizedBox(
-                        width: 5.0,
-                      ),
-                      Expanded(
-                        child: deleteForm(),
                       ),
                     ],
                   ),
                 ],
               )),
         ),
-      ),
-    );
-  }
-
-  Widget categorieField() {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 20.0),
-      child: Column(
-        children: [
-          // Text("Categorie"),
-          InputDecorator(
-            decoration: InputDecoration(
-              labelText: 'Categorie',
-              labelStyle: TextStyle(),
-              border:
-                  OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
-              // contentPadding: EdgeInsets.all(5.0),
-            ),
-            child: DropdownButton<String>(
-              icon: const Icon(Icons.arrow_drop_down),
-              iconSize: 28,
-              elevation: 16,
-              isDense: true,
-              isExpanded: true,
-              style: const TextStyle(color: Colors.deepPurple),
-              items: _categorie.map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-              onChanged: (String? value) {
-                print(value);
-                categorie = value!;
-              },
-              value: categorieValue,
-            ),
-          )
-        ],
-      ),
-    );
-  }
-
-  Widget sousCategorieFIeld() {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 20.0),
-      child: Column(
-        children: [
-          InputDecorator(
-            decoration: InputDecoration(
-              labelText: 'Sous Categorie',
-              labelStyle: TextStyle(),
-              border:
-                  OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
-              // contentPadding: EdgeInsets.all(5.0),
-            ),
-            child: DropdownButton<String>(
-              value: sousCategorieValue,
-              icon: const Icon(Icons.arrow_drop_down),
-              iconSize: 28,
-              elevation: 16,
-              isDense: true,
-              isExpanded: true,
-              style: const TextStyle(color: Colors.deepPurple),
-              onChanged: (String? value) {
-                print(value);
-                sousCategorie = value!;
-              },
-              items:
-                  _sousCategorie.map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-            ),
-          )
-        ],
-      ),
-    );
-  }
-
-  Widget nameProductField() {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 20.0),
-      child: TextFormField(
-        keyboardType: TextInputType.text,
-        decoration: InputDecoration(
-          labelText: 'Nom du produit vendu',
-          labelStyle: TextStyle(),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(5.0),
-          ),
-        ),
-        validator: (String? value) {
-          if (value!.isEmpty) {
-            return 'Remplissez le nom du produit';
-          }
-          return null;
-        },
-        onChanged: (String? value) {
-          print(value);
-          nameProduct = value!;
-        },
-      ),
-    );
-  }
-
-  Widget quantityField() {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 20.0),
-      child: TextFormField(
-        keyboardType: TextInputType.number,
-        decoration: InputDecoration(
-          labelText: 'Quantités des produits vendus',
-          labelStyle: TextStyle(),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(5.0),
-          ),
-        ),
-        validator: (String? value) {
-          if (value!.isEmpty) {
-            return 'Remplissez la quantité';
-          }
-          return null;
-        },
-        onChanged: (number) => quantity.toInt()
-      ),
-    );
-  }
-
-  Widget priceField() {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 20.0),
-      child: TextFormField(
-        // controller: priceController,
-        keyboardType: TextInputType.number,
-        decoration: InputDecoration(
-          labelText: 'Total d\'argents',
-          labelStyle: TextStyle(),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(5.0),
-          ),
-        ),
-        validator: (String? value) {
-          if (value!.isEmpty) {
-            return 'Mettez le montant total d\'achat';
-          }
-        },
-        onChanged: (number) => price.toInt()
       ),
     );
   }
@@ -264,9 +105,7 @@ class _AddAchatScreenState extends State<AddAchatScreen> {
 
   Widget deleteForm() {
     return ElevatedButton(
-      onPressed: () {
-        setState(() {});
-      },
+      onPressed: () {},
       child: Text(
         'Supprimer',
         textScaleFactor: 1.5,
@@ -274,7 +113,6 @@ class _AddAchatScreenState extends State<AddAchatScreen> {
       style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 10)),
     );
   }
-
 
   void addOrUpdateAchat() async {
     final isValid = formKey.currentState!.validate();
@@ -294,27 +132,37 @@ class _AddAchatScreenState extends State<AddAchatScreen> {
 
   Future updateAchat() async {
     final achat = widget.achat!.copy(
-      categorie: categorieValue,
+      categorie: categorie,
       sousCategorie: sousCategorie,
       nameProduct: nameProduct,
       quantity: quantity,
+      unity: unity,
       price: price,
-      date: date
+      date: DateTime.now(),
     );
 
     await ProductDatabase.instance.updataAchat(achat);
+    SnackBar(
+      content: Text("${achat.nameProduct} Modifié!"),
+      backgroundColor: Colors.green[400],
+    );
   }
 
   Future addAchat() async {
     final achat = AchatModel(
-      categorie: categorieValue,
+      categorie: categorie,
       sousCategorie: sousCategorie,
       nameProduct: nameProduct,
       quantity: quantity,
+      unity: unity,
       price: price,
-      date: date
+      date: DateTime.now(),
     );
 
     await ProductDatabase.instance.insertAchat(achat);
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text("${achat.nameProduct} ajouté!"),
+      backgroundColor: Colors.green[400],
+    ));
   }
 }

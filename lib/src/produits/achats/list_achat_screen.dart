@@ -1,10 +1,9 @@
+import 'package:e_management/src/produits/achats/detail_achat_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:e_management/resources/products_database.dart';
 import 'package:e_management/src/models/achat_model.dart';
 import 'package:e_management/src/produits/achats/add_achat_screen.dart';
-import 'package:e_management/src/produits/achats/detail_achat_screen.dart';
 import 'package:e_management/src/screens/sidebar_screen.dart';
-import 'package:e_management/src/widgets/achat_card_widget.dart';
 
 class ListAchatScreen extends StatefulWidget {
   @override
@@ -12,36 +11,25 @@ class ListAchatScreen extends StatefulWidget {
 }
 
 class _ListAchatScreenState extends State<ListAchatScreen> {
-  late List<AchatModel> achats = [];
-  bool isLoading = false;
 
   @override
   void initState() {
     super.initState();
-
-    refreshAchats();
+    getData();
   }
 
-  @override
-  void dispose() {
-    ProductDatabase.instance.closaAchat();
-    super.dispose();
+  Future<void> getData() async {
+    setState(() {
+      ProductDatabase.instance.getAllAchats();
+    });
   }
 
-  Future refreshAchats() async {
-    // setState(() => isLoading = true);
-
-    this.achats = await ProductDatabase.instance.getAllAchats();
-    print(this.achats);
-
-    // setState(() => isLoading = true);
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Row(
+        appBar: AppBar(
+            title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Text('Liste des achats'),
@@ -51,46 +39,125 @@ class _ListAchatScreenState extends State<ListAchatScreen> {
               label: Text(''),
             ),
           ],
-        )
-      ),
-      drawer: SideBarScreen(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => AddAchatScreen()));
-        },
-        tooltip: 'Ajoutez achats',
-        child: Icon(Icons.add),
-      ),
-      body: Center(
-        child: isLoading
-            ? CircularProgressIndicator()
-            : achats.isEmpty
-                ? Text(
-                    'Pas d\articles!',
-                    style: TextStyle(color: Colors.white, fontSize: 24),
-                  )
-                : buildAchats(),
-      ),
-    );
+        )),
+        drawer: SideBarScreen(),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => AddAchatScreen()));
+          },
+          tooltip: 'Ajoutez achats',
+          child: Icon(Icons.add),
+        ),
+        body: FutureBuilder<List<AchatModel>>(
+            future: ProductDatabase.instance.getAllAchats(),
+            builder: (BuildContext context,
+                AsyncSnapshot<List<AchatModel>> snapshot) {
+              if (snapshot.hasData) {
+                List<AchatModel>? achats = snapshot.data;
+                return RefreshIndicator(
+                  onRefresh: getData,
+                  child: ListView.builder(
+                      itemCount: achats!.length,
+                      itemBuilder: (context, index) {
+                        final achat = achats[index];
+                        return Dismissible(
+                            key: Key(achat.categorie),
+                            onDismissed: (direction) {
+                              setState(() {
+                                ProductDatabase.instance.deleteAchat(achat.id!);
+                              });
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                      content:
+                                          Text("${achat.categorie} supprimé")));
+                            },
+                            background: Container(color: Colors.purple),
+                            child: AchatItemWidget(achat: achat));
+                      }),
+                  
+                );
+              } else {
+                return Center(child: CircularProgressIndicator());
+              }
+            }));
   }
+}
 
-  Widget buildAchats() {
-    return ListView.builder(
-      itemCount: achats.length,
-      itemBuilder: (context, index) {
-        final achat = achats[index];
+class AchatItemWidget extends StatelessWidget {
+  const AchatItemWidget({Key? key, required this.achat}) : super(key: key);
+  final AchatModel achat;
 
-        return GestureDetector(
-            onTap: () async {
-              await Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => AchatDetailScreen(achatId: achat.id!),
-              ));
-
-              refreshAchats();
-            },
-            child: AchatCardWidget(achat: achat, index: index));
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => AchatDetailScreen(achat: achat)));
       },
+      child: Card(
+        margin: EdgeInsets.all(8),
+        elevation: 8,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SizedBox(
+                      child: Icon(
+                    Icons.add_chart,
+                    size: 40.0,
+                    color: Color(0xFF6200EE),
+                  )),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(8),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.only(bottom: 8),
+                        child: Text(achat.nameProduct,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 20)),
+                      ),
+                      Text('${achat.categorie} -> ${achat.sousCategorie}',
+                          style:
+                              TextStyle(color: Colors.grey[500], fontSize: 16))
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            Padding(
+              padding: EdgeInsets.all(8),
+              child: Column(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.only(bottom: 8),
+                    child: Text('${achat.price} FC',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                          color: Color(0xFF6200EE),
+                        )),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.only(bottom: 8),
+                    child: Text('Qty: ${achat.quantity} ${achat.unity}',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 14)),
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 }

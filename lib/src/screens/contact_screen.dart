@@ -11,7 +11,7 @@ class ContactScreen extends StatelessWidget {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Text('Prenez contact avec nous!'),
+            Text('Contactez nous!'),
             ElevatedButton.icon(
               onPressed: () {},
               icon: Icon(Icons.power_settings_new),

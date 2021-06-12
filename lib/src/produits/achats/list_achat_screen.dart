@@ -143,7 +143,7 @@ class AchatItemWidget extends StatelessWidget {
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
-                          color: Color(0xFF6200EE),
+                          color: Colors.purple
                         )),
                   ),
                   Container(

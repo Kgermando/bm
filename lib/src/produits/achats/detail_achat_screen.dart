@@ -2,6 +2,7 @@ import 'package:e_management/src/models/achat_model.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+
 class AchatDetailScreen extends StatelessWidget {
   final AchatModel achat;
   const AchatDetailScreen({Key? key, required this.achat}) : super(key: key);

@@ -1,11 +1,11 @@
 import 'package:e_management/resources/products_database.dart';
-import 'package:e_management/src/models/vente_model.dart';
+import 'package:e_management/src/models/dette_model.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class VenteDetailScreen extends StatelessWidget {
-  const VenteDetailScreen({Key? key, required this.vente}) : super(key: key);
-  final VenteModel vente;
+class DetailDetteScreen extends StatelessWidget {
+  final DetteModel dette;
+  const DetailDetteScreen({Key? key, required this.dette}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +14,7 @@ class VenteDetailScreen extends StatelessWidget {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Text('${vente.nameProduct}'),
+            Text('${dette.nameProduct}'),
             Container(
               child: Row(
                 children: [
@@ -24,7 +24,7 @@ class VenteDetailScreen extends StatelessWidget {
                     label: Text(''),
                   ),
                   ElevatedButton.icon(
-                    onPressed: deleteVente,
+                    onPressed: deleteDette,
                     icon: Icon(Icons.delete),
                     label: Text(''),
                   ),
@@ -40,8 +40,7 @@ class VenteDetailScreen extends StatelessWidget {
           children: [
             header(),
             headerTitle(),
-            // ventetitle(),
-            ventes()
+            dettes()
           ],
         ),
       ),
@@ -56,9 +55,9 @@ class VenteDetailScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text('${vente.categorie.toUpperCase()}',
+          Text('${dette.categorie.toUpperCase()}',
               style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16)),
-          Text(DateFormat("dd.MM.yy HH:mm").format(vente.date),
+          Text(DateFormat("dd.MM.yy HH:mm").format(dette.date),
               style: TextStyle(fontWeight: FontWeight.w400, fontSize: 16)),
         ],
       ),
@@ -73,32 +72,23 @@ class VenteDetailScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Text(vente.sousCategorie,
+          Text(dette.sousCategorie,
               style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20)),
           SizedBox(
             child: Container(
               child: Icon(Icons.arrow_right_outlined),
             ),
           ),
-          Text(vente.nameProduct,
+          Text(dette.nameProduct,
               style: TextStyle(fontWeight: FontWeight.w700, fontSize: 36)),
         ],
       ),
     ));
   }
 
-  // Widget ventetitle() {
-  //   return Card(
-  //     child: Text(
-  //       'Ventes',
-  //       style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0),
-  //     ),
-  //   );
-  // }
-
-  Widget ventes() {
-    double prix = double.parse(vente.price);
-    double quantite = double.parse(vente.quantity);
+  Widget dettes() {
+    double prix = double.parse(dette.price);
+    double quantite = double.parse(dette.quantity);
     // var = prix / quantite;
     return Card(
         child: Padding(
@@ -109,9 +99,9 @@ class VenteDetailScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('${vente.quantity} ${vente.unity}',
+              Text('${dette.quantity} ${dette.unity}',
                   style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20)),
-              Text('${vente.price} FC',
+              Text('${dette.price} FC',
                   style: TextStyle(
                       fontWeight: FontWeight.w700,
                       fontSize: 30,
@@ -122,10 +112,19 @@ class VenteDetailScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('1 ${vente.unity}',
+              Text('1 ${dette.unity}',
                   style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20)),
               Text('${prix / quantite} FC',
                   style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20)),
+            ],
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text('Dette de ${dette.personne}',
+                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 24)
+                ),
             ],
           ),
         ],
@@ -133,25 +132,26 @@ class VenteDetailScreen extends StatelessWidget {
     ));
   }
 
-  Widget deleteVente() {
+  Widget deleteDette() {
     return ElevatedButton(
-      onPressed: venteData,
+      onPressed: detteData,
       child: Text(
-        'Enregistrez',
+        'Supprimé',
         textScaleFactor: 1.5,
       ),
       style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 10)),
     );
   }
 
-  void venteData() async {
-    final ventes = vente.id;
+  void detteData() async {
+    final dettes = dette.id;
 
-    await ProductDatabase.instance.deleteVente(ventes!);
+    await ProductDatabase.instance.deleteVente(dettes!);
     SnackBar(
-      content: Text("${vente.nameProduct} vient d'être supprimé!"),
+      content: Text("${dette.nameProduct} vient d'être supprimé!"),
       backgroundColor: Colors.red[600],
     );
 
   }
+
 }

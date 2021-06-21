@@ -1,4 +1,5 @@
 import 'package:e_management/src/models/achat_model.dart';
+import 'package:e_management/src/models/dette_model.dart';
 import 'package:e_management/src/models/vente_model.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -43,7 +44,8 @@ class ProductDatabase {
         ${AchatFields.price} $textType,
         ${AchatFields.date} $textType
       )
-      ''');
+      '''
+    );
     
     await db.execute('''
       CREATE TABLE $tableVente (
@@ -56,7 +58,23 @@ class ProductDatabase {
         ${VenteFields.price} $textType,
         ${VenteFields.date} $textType
       )
-      ''');
+      '''
+    );
+
+    await db.execute('''
+      CREATE TABLE $tableDettes (
+        ${DetteFields.id} $idType,
+        ${DetteFields.categorie} $textType,
+        ${DetteFields.sousCategorie} $textType,
+        ${DetteFields.nameProduct} $textType,
+        ${DetteFields.quantity} $textType,
+        ${DetteFields.unity} $textType,
+        ${DetteFields.price} $textType,
+        ${DetteFields.date} $textType,
+        ${DetteFields.personne} $textType
+      )
+      '''
+    );
   }
 
   // Insert data in database
@@ -153,14 +171,10 @@ class ProductDatabase {
     );
   }
 
-  // Close connexion with database
-  Future closaAchat() async {
-    final db = await instance.database;
-
-    db.close();
-  }
 
 
+
+// VENTES
 
   // Insert data in database
   Future<VenteModel> insertVente(VenteModel vente) async {
@@ -201,14 +215,14 @@ class ProductDatabase {
   }
 
   // Update Data in database
-  Future<int> updataVente(VenteModel achat) async {
+  Future<int> updataVente(VenteModel dette) async {
     final db = await instance.database;
 
     return db.update(
       tableVente,
-      achat.toJson(),
+      dette.toJson(),
       where: '${VenteFields.id} = ?',
-      whereArgs: [achat.id],
+      whereArgs: [dette.id],
     );
   }
 
@@ -223,8 +237,72 @@ class ProductDatabase {
     );
   }
 
+
+  // DETTES
+
+    // Insert data in database
+  Future<DetteModel> insertDette(DetteModel dette) async {
+    final db = await instance.database;
+
+    final id = await db.insert(tableDettes, dette.toJson());
+    return dette.copy(id: id);
+  }
+
+  // Get One Achat in database
+  Future<DetteModel> getOneDette(int id) async {
+    final db = await instance.database;
+
+    final maps = await db.query(
+      tableDettes,
+      columns: DetteFields.values,
+      where: '${DetteFields.id} = ?',
+      whereArgs: [id],
+    );
+
+    if (maps.isNotEmpty) {
+      return DetteModel.fromJson(maps.first);
+    } else {
+      throw Exception('ID $id not found');
+    }
+  }
+
+  // Get All Achat database
+  Future<List<DetteModel>> getAllDette() async {
+    final db = await instance.database;
+
+    final orderBy = '${DetteFields.date} ASC';
+    // final result = await db.rawQuery('SELECT * FROM $tableDettes ORDER BY $orderBy');
+
+    final result = await db.query(tableDettes, orderBy: orderBy);
+
+    return result.map((json) => DetteModel.fromJson(json)).toList();
+  }
+
+  // Update Data in database
+  Future<int> updataDette(DetteModel dette) async {
+    final db = await instance.database;
+
+    return db.update(
+      tableDettes,
+      dette.toJson(),
+      where: '${DetteFields.id} = ?',
+      whereArgs: [dette.id],
+    );
+  }
+
+  // Delete Achat int database
+  Future<int> deleteDette(int id) async {
+    final db = await instance.database;
+
+    return await db.delete(
+      tableDettes,
+      where: '${DetteFields.id} = ?',
+      whereArgs: [id],
+    );
+  }
+
   // Close connexion with database
-  Future closeVente() async {
+  Future closeDB() async {
     final db = await instance.database;
 
     db.close();

@@ -1,5 +1,6 @@
 import 'package:e_management/src/produits/achats/add_achat_screen.dart';
 import 'package:e_management/src/produits/achats/list_achat_screen.dart';
+import 'package:e_management/src/produits/dette/list_dette_screen.dart';
 import 'package:e_management/src/produits/ventes/add_vente_screen.dart';
 import 'package:e_management/src/produits/ventes/list_vente_screen.dart';
 import 'package:e_management/src/screens/contact_screen.dart';
@@ -36,21 +37,12 @@ class SideBarScreen extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: Icon(Icons.home),
+            leading: Icon(Icons.dashboard),
             title: Text("Dashboard"),
             onTap: () {
               print("Dashboard Clicked");
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => DashboardScreen()));
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.home),
-            title: Text("Statistiques"),
-            onTap: () {
-              print("Stats Clicked");
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => StatistiqueWiddget()));
             },
           ),
           ListTile(
@@ -66,7 +58,7 @@ class SideBarScreen extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: Icon(Icons.dashboard),
+            leading: Icon(Icons.shopping_bag_sharp),
             title: Text("Liste des Achats"),
             onTap: () {
                 print("List Achats Clicked");
@@ -77,7 +69,16 @@ class SideBarScreen extends StatelessWidget {
               );
             },
           ),
-          
+          ListTile(
+            leading: Icon(Icons.money_off),
+            title: Text("Liste des Dettes"),
+            onTap: () {
+              print("List Dettes Clicked");
+              Navigator.push(context,
+                MaterialPageRoute(builder: (context) => ListDetteScreen())
+              );
+            },
+          ),
           ListTile(
             leading: Icon(Icons.add_to_photos),
             title: Text("Ajoutez votre vente"),

@@ -26,6 +26,10 @@ class _StatistiqueWiddgetState extends State<StatistiqueWiddget> {
         )
       ),
       drawer: SideBarScreen(),
+      body: Container(
+        padding: EdgeInsets.all(8.0),
+        
+      ),
     );
   }
 }

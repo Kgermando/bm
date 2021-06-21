@@ -3,8 +3,10 @@ import 'package:e_management/src/produits/achats/list_achat_screen.dart';
 import 'package:e_management/src/produits/ventes/add_vente_screen.dart';
 import 'package:e_management/src/produits/ventes/list_vente_screen.dart';
 import 'package:e_management/src/screens/contact_screen.dart';
+import 'package:e_management/src/screens/dashboard_screen.dart';
 import 'package:e_management/src/screens/home_screen.dart';
 import 'package:e_management/src/screens/shareapp_screen.dart';
+import 'package:e_management/src/screens/stats.dart';
 import 'package:flutter/material.dart';
 
 class SideBarScreen extends StatelessWidget {
@@ -31,6 +33,24 @@ class SideBarScreen extends StatelessWidget {
               MaterialPageRoute(
                 builder: (context) => HomeScreen())
               );
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.home),
+            title: Text("Dashboard"),
+            onTap: () {
+              print("Dashboard Clicked");
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => DashboardScreen()));
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.home),
+            title: Text("Statistiques"),
+            onTap: () {
+              print("Stats Clicked");
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => StatistiqueWiddget()));
             },
           ),
           ListTile(

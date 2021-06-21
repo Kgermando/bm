@@ -38,17 +38,18 @@ class _AddAchatScreenState extends State<AddAchatScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Text('Ajoutez vos achats'),
-          ElevatedButton.icon(
-            onPressed: () {},
-            icon: Icon(Icons.power_settings_new),
-            label: Text(''),
-          ),
-        ],
-      )),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Text('Ajoutez vos achats'),
+            ElevatedButton.icon(
+              onPressed: () {},
+              icon: Icon(Icons.power_settings_new),
+              label: Text(''),
+            ),
+          ],
+        )
+      ),
       // drawer: SideBarScreen(),
       body: SingleChildScrollView(
         child: Container(
@@ -144,7 +145,7 @@ class _AddAchatScreenState extends State<AddAchatScreen> {
     await ProductDatabase.instance.updataAchat(achat);
     SnackBar(
       content: Text("${achat.nameProduct} Modifié!"),
-      backgroundColor: Colors.green[400],
+      backgroundColor: Colors.green[700],
     );
   }
 
@@ -162,7 +163,7 @@ class _AddAchatScreenState extends State<AddAchatScreen> {
     await ProductDatabase.instance.insertAchat(achat);
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text("${achat.nameProduct} ajouté!"),
-      backgroundColor: Colors.green[400],
+      backgroundColor: Colors.green[700],
     ));
   }
 }

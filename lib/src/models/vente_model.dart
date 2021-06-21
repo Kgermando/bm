@@ -1,5 +1,5 @@
 
-final String tableVente = 'achat_table';
+final String tableVente = 'vente_table';
 
 class VenteFields {
   static final List<String> values = [

@@ -25,7 +25,7 @@ class AchatDetailScreen extends StatelessWidget {
                   ),
                   ElevatedButton.icon(
                     onPressed: () {},
-                    icon: Icon(Icons.power_settings_new),
+                    icon: Icon(Icons.delete),
                     label: Text(''),
                   ),
                 ],

@@ -34,18 +34,6 @@ class SideBarScreen extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: Icon(Icons.dashboard),
-            title: Text("Liste des Achats"),
-            onTap: () {
-                print("List Achats Clicked");
-              Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ListAchatScreen())
-              );
-            },
-          ),
-          ListTile(
             leading: Icon(Icons.list_sharp),
             title: Text("Liste des Ventes"),
             onTap: () {
@@ -57,6 +45,19 @@ class SideBarScreen extends StatelessWidget {
               );
             },
           ),
+          ListTile(
+            leading: Icon(Icons.dashboard),
+            title: Text("Liste des Achats"),
+            onTap: () {
+                print("List Achats Clicked");
+              Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ListAchatScreen())
+              );
+            },
+          ),
+          
           ListTile(
             leading: Icon(Icons.add_to_photos),
             title: Text("Ajoutez votre vente"),

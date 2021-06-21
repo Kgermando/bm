@@ -29,17 +29,18 @@ class _ListAchatScreenState extends State<ListAchatScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-            title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Text('Liste des achats'),
-            ElevatedButton.icon(
-              onPressed: () {},
-              icon: Icon(Icons.power_settings_new),
-              label: Text(''),
-            ),
-          ],
-        )),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Text('Liste des achats'),
+              ElevatedButton.icon(
+                onPressed: () {},
+                icon: Icon(Icons.power_settings_new),
+                label: Text(''),
+              ),
+            ],
+          )
+        ),
         drawer: SideBarScreen(),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
@@ -50,37 +51,27 @@ class _ListAchatScreenState extends State<ListAchatScreen> {
           child: Icon(Icons.add),
         ),
         body: FutureBuilder<List<AchatModel>>(
-            future: ProductDatabase.instance.getAllAchats(),
-            builder: (BuildContext context,
-                AsyncSnapshot<List<AchatModel>> snapshot) {
-              if (snapshot.hasData) {
-                List<AchatModel>? achats = snapshot.data;
-                return RefreshIndicator(
-                  onRefresh: getData,
-                  child: ListView.builder(
-                      itemCount: achats!.length,
-                      itemBuilder: (context, index) {
-                        final achat = achats[index];
-                        return Dismissible(
-                            key: Key(achat.categorie),
-                            onDismissed: (direction) {
-                              setState(() {
-                                ProductDatabase.instance.deleteAchat(achat.id!);
-                              });
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                      content:
-                                          Text("${achat.categorie} supprimé")));
-                            },
-                            background: Container(color: Colors.purple),
-                            child: AchatItemWidget(achat: achat));
-                      }),
-                  
-                );
-              } else {
-                return Center(child: CircularProgressIndicator());
-              }
-            }));
+          future: ProductDatabase.instance.getAllAchats(),
+          builder: (BuildContext context,
+              AsyncSnapshot<List<AchatModel>> snapshot) {
+            if (snapshot.hasData) {
+              List<AchatModel>? achats = snapshot.data;
+              return RefreshIndicator(
+                onRefresh: getData,
+                child: ListView.builder(
+                    itemCount: achats!.length,
+                    itemBuilder: (context, index) {
+                      final achat = achats[index];
+                      return AchatItemWidget(achat: achat);
+                    }),
+                
+              );
+            } else {
+              return Center(child: CircularProgressIndicator());
+            }
+          }
+        )
+      );
   }
 }
 
@@ -140,17 +131,20 @@ class AchatItemWidget extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.only(bottom: 8),
                     child: Text('${achat.price} FC',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                          color: Color(0xFF6200EE),
-                        )),
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        color: Color(0xFF6200EE),
+                      )
+                    ),
                   ),
                   Container(
                     padding: const EdgeInsets.only(bottom: 8),
                     child: Text('Qty: ${achat.quantity} ${achat.unity}',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 14)),
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 14
+                        )
+                      ),
                   )
                 ],
               ),

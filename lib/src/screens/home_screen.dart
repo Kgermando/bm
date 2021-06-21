@@ -1,4 +1,4 @@
-import 'package:e_management/src/produits/achats/add_achat_screen.dart';
+import 'package:e_management/src/produits/ventes/add_vente_screen.dart';
 import 'package:e_management/src/screens/sidebar_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -29,7 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(context,
-            MaterialPageRoute(builder: (context) => AddAchatScreen()));
+            MaterialPageRoute(builder: (context) => AddVenteScreen()));
         },
         tooltip: 'Ajoutez achats',
         child: Icon(Icons.add),

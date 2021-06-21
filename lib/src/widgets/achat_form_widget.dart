@@ -31,8 +31,7 @@ class AchatFormWidget extends StatelessWidget {
     required this.onChangedPrice,
   }) : super(key: key);
 
-
-
+  
 
   final String categorieValue = 'Selectionnez la categorie';
   static var _categorie = <String>[
@@ -131,7 +130,7 @@ class AchatFormWidget extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 20.0),
       child: Column(
         children: [
-          InputDecorator(
+          DropdownButtonFormField<String>(
             decoration: InputDecoration(
               labelText: 'Categorie',
               labelStyle: TextStyle(),
@@ -139,22 +138,20 @@ class AchatFormWidget extends StatelessWidget {
                   OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
               contentPadding: EdgeInsets.only(left: 5.0),
             ),
-            child: DropdownButtonFormField<String>(
-              value: categorieValue,
-              icon: const Icon(Icons.arrow_drop_down),
-              iconSize: 20,
-              elevation: 16,
-              isDense: true,
-              isExpanded: true,
-              style: const TextStyle(color: Colors.deepPurple),
-              onChanged: (categorie) => onChangedCategorie(categorie.toString()),
-              items: _categorie.map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-            ),
+            value: categorieValue,
+            icon: const Icon(Icons.arrow_drop_down),
+            iconSize: 20,
+            elevation: 16,
+            isDense: true,
+            isExpanded: true,
+            style: const TextStyle(color: Colors.deepPurple),
+            onChanged: (categorie) => onChangedCategorie(categorie.toString()),
+            items: _categorie.map<DropdownMenuItem<String>>((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(value),
+              );
+            }).toList(),
           )
         ],
       ),
@@ -166,31 +163,29 @@ class AchatFormWidget extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 20.0),
       child: Column(
         children: [
-          InputDecorator(
+          DropdownButtonFormField<String>(
             decoration: InputDecoration(
               labelText: 'Sous Categorie',
               labelStyle: TextStyle(),
-              border:
-                  OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
+              border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5.0)),
               contentPadding: EdgeInsets.only(left: 5.0),
             ),
-            child: DropdownButtonFormField<String>(
-              value: sousCategorieValue,
-              icon: const Icon(Icons.arrow_drop_down),
-              iconSize: 20,
-              elevation: 16,
-              isDense: true,
-              isExpanded: true,
-              style: const TextStyle(color: Colors.deepPurple),
-              onChanged: (sousCategorie) => onChangedSousCategorie(sousCategorie.toString()),
-              items:
-                  _sousCategorie.map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-            ),
+            value: sousCategorieValue,
+            icon: const Icon(Icons.arrow_drop_down),
+            iconSize: 20,
+            elevation: 16,
+            isDense: true,
+            isExpanded: true,
+            style: const TextStyle(color: Colors.deepPurple),
+            onChanged: (sousCategorie) => onChangedSousCategorie(sousCategorie.toString()),
+            items:
+                _sousCategorie.map<DropdownMenuItem<String>>((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(value),
+              );
+            }).toList(),
           )
         ],
       ),
@@ -239,6 +234,12 @@ class AchatFormWidget extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: 20.0),
       child: DropdownButtonFormField<String>(
+        decoration: InputDecoration(
+          labelText: 'Unité',
+          labelStyle: TextStyle(),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
+          contentPadding: EdgeInsets.only(left: 5.0),
+        ),
         value: unityValue,
         icon: const Icon(Icons.arrow_drop_down),
         iconSize: 20,

@@ -1,5 +1,6 @@
 import 'package:e_management/resources/products_database.dart';
 import 'package:e_management/src/models/dette_model.dart';
+import 'package:e_management/src/models/vente_model.dart';
 import 'package:e_management/src/produits/dette/add_dette_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -12,34 +13,33 @@ class DetailDetteScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Text('${dette.nameProduct}'),
-            Container(
-              child: Row(
-                children: [
-                  ElevatedButton.icon(
-                    onPressed: () {},
-                    icon: Icon(Icons.print),
-                    label: Text(''),
-                  ),
-                  editButton(context),
-                  deleteButton(context)
-                ],
-              ),
-            )
-          ],
-        )
-      ),
+          title: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Text('${dette.nameProduct}'),
+          Container(
+            child: Row(
+              children: [
+                ElevatedButton.icon(
+                  onPressed: () {},
+                  icon: Icon(Icons.print),
+                  label: Text(''),
+                ),
+                editButton(context),
+                ElevatedButton.icon(
+                  onPressed: addDette(context),
+                  icon: Icon(Icons.send),
+                  label: Text(''),
+                ),
+              ],
+            ),
+          )
+        ],
+      )),
       body: Padding(
         padding: EdgeInsets.all(8.0),
         child: Column(
-          children: [
-            header(),
-            headerTitle(),
-            dettes()
-          ],
+          children: [header(), headerTitle(), dettes()],
         ),
       ),
     );
@@ -121,15 +121,13 @@ class DetailDetteScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text('Dette de ${dette.personne}',
-                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 24)
-                ),
+                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 24)),
             ],
           ),
         ],
       ),
     ));
   }
-
 
   Widget editButton(BuildContext context) {
     return IconButton(
@@ -156,5 +154,23 @@ class DetailDetteScreen extends StatelessWidget {
     );
   }
 
+  addDette(BuildContext context) async {
+    final dettes = VenteModel(
+      categorie: dette.categorie,
+      sousCategorie: dette.sousCategorie,
+      nameProduct: dette.nameProduct,
+      quantity: dette.quantity,
+      unity: dette.unity,
+      price: dette.price,
+      date: DateTime.now(),
+      // personne: dette.personne,
+    );
 
+    await ProductDatabase.instance.insertVente(dettes);
+    deleteButton(context);
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text("${dette.nameProduct} ajouté!"),
+      backgroundColor: Colors.green[700],
+    ));
+  }
 }

@@ -44,7 +44,7 @@ class SideBarScreen extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: Icon(Icons.list_sharp),
+            leading: Icon(Icons.add_shopping_cart_sharp),
             title: Text("Liste des Ventes"),
             onTap: () {
                 print("Ventes");
@@ -68,7 +68,7 @@ class SideBarScreen extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: Icon(Icons.money_off),
+            leading: Icon(Icons.money_off_sharp),
             title: Text("Liste des Dettes"),
             onTap: () {
               print("List Dettes Clicked");
@@ -78,7 +78,7 @@ class SideBarScreen extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: Icon(Icons.add_to_photos),
+            leading: Icon(Icons.add_shopping_cart_sharp),
             title: Text("Ajoutez votre vente"),
             onTap: () {
               print("Add Ventes");

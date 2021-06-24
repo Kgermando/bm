@@ -52,7 +52,7 @@ class _AchatDetailScreenState extends State<AchatDetailScreen> {
                   icon: Icon(Icons.print),
                   label: Text(''),
                 ),
-                editButton(context),
+                // editButton(context),
                 deleteButton(context)
               ],
             ),
@@ -83,10 +83,7 @@ class _AchatDetailScreenState extends State<AchatDetailScreen> {
               achats(),
               ventetitle(),
               ventes(),
-              benficetitle(),
               benfices(),
-              pertetitle(),
-              pertes(),
             ],
           ),
         ),
@@ -180,6 +177,7 @@ class _AchatDetailScreenState extends State<AchatDetailScreen> {
 
   Widget ventetitle() {
     return Card(
+      margin: EdgeInsets.only(top: 20.0),
       child: Text(
         'VENTES',
         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0),
@@ -193,26 +191,24 @@ class _AchatDetailScreenState extends State<AchatDetailScreen> {
         achat.categorie == element.categorie &&
         achat.sousCategorie == element.sousCategorie &&
         achat.nameProduct == element.nameProduct);
-    print('$filter filter data');
+    // print('$filter filter data');
 
     // Quantités
     var filterQty = filter.map((e) => int.parse(e.quantity));
-    print('$filterQty filter qty');
+    // print('$filterQty filter qty');
     int sumQty = 0;
     filterQty.forEach((qty) => sumQty += qty);
-    print('$sumQty quantit"s des produits vendus');
+    // print('$sumQty quantit"s des produits vendus');
 
     // Prix
     var filterPrice = filter.map((e) => int.parse(e.price));
-    print('$filterPrice filter price');
+    // print('$filterPrice filter price');
     int sumPrice = 0;
     filterPrice.forEach((price) => sumPrice += price);
-    print('$sumPrice sommes des produits vendus');
-
-    // int qtyAchat = int.parse(achat.quantity);
-    // int prixAchat = int.parse(achat.price);
+    // print('$sumPrice sommes des produits vendus');
 
     return Container(
+      padding: EdgeInsets.only(top: 20.0),
       child: Container(
           child: Card(
               child: Padding(
@@ -223,9 +219,21 @@ class _AchatDetailScreenState extends State<AchatDetailScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                Text('${achat.unity} vendus',
+                    style:
+                        TextStyle(fontWeight: FontWeight.w700, fontSize: 14)),
+                Text('Montant vendus',
+                    style:
+                        TextStyle(fontWeight: FontWeight.w700, fontSize: 14)),
+              ],
+            ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
                 Text('$sumQty ${achat.unity}',
                     style:
-                        TextStyle(fontWeight: FontWeight.w600, fontSize: 20)),
+                        TextStyle(fontWeight: FontWeight.w700, fontSize: 20)),
                 Text('$sumPrice FC',
                     style: TextStyle(
                         fontWeight: FontWeight.w700,
@@ -239,14 +247,6 @@ class _AchatDetailScreenState extends State<AchatDetailScreen> {
     );
   }
 
-  Widget benficetitle() {
-    return Card(
-      child: Text(
-        'BENEFICES',
-        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0),
-      ),
-    );
-  }
 
   Widget benfices() {
     // Filter
@@ -254,26 +254,22 @@ class _AchatDetailScreenState extends State<AchatDetailScreen> {
         achat.categorie == element.categorie &&
         achat.sousCategorie == element.sousCategorie &&
         achat.nameProduct == element.nameProduct);
-    print('$filter filter data');
 
     // Quantités
     var filterQty = filter.map((e) => int.parse(e.quantity));
-    print('$filterQty filter qty');
     int sumQty = 0;
     filterQty.forEach((qty) => sumQty += qty);
-    print('$sumQty quantit"s des produits vendus');
 
     // Prix
     var filterPrice = filter.map((e) => int.parse(e.price));
-    print('$filterPrice filter price');
     int sumPrice = 0;
     filterPrice.forEach((price) => sumPrice += price);
-    print('$sumPrice sommes des produits vendus');
 
     int qtyAchat = int.parse(achat.quantity);
     int prixAchat = int.parse(achat.price);
 
     return Container(
+      padding: EdgeInsets.only(top: 20.0),
         child: Card(
             child: Padding(
       padding: EdgeInsets.only(top: 28.0, bottom: 10.0),
@@ -283,77 +279,38 @@ class _AchatDetailScreenState extends State<AchatDetailScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('${qtyAchat - sumQty} ${achat.unity}',
-                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20)),
-              Text('${sumPrice - prixAchat} FC',
+              Text('Restes des ${achat.unity}',
+                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16)),
+              Text('Revenus',
                   style: TextStyle(
                       fontWeight: FontWeight.w700,
-                      fontSize: 30,
-                      color: Colors.green[800])),
+                      fontSize: 16
+                    )
+              ),
             ],
           ),
-        ],
-      ),
-    )));
-  }
-
-  Widget pertetitle() {
-    return Card(
-      child: Text(
-        'PERTES',
-        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0),
-      ),
-    );
-  }
-
-  Widget pertes() {
-    // Filter
-    var filter = venteList.where((element) =>
-        achat.categorie == element.categorie &&
-        achat.sousCategorie == element.sousCategorie &&
-        achat.nameProduct == element.nameProduct);
-    print('$filter filter data');
-
-    // Quantités
-    var filterQty = filter.map((e) => int.parse(e.quantity));
-    print('$filterQty filter qty');
-    int sumQty = 0;
-    filterQty.forEach((qty) => sumQty += qty);
-    print('$sumQty quantit"s des produits vendus');
-
-    // Prix
-    var filterPrice = filter.map((e) => int.parse(e.price));
-    print('$filterPrice filter price');
-    int sumPrice = 0;
-    filterPrice.forEach((price) => sumPrice += price);
-    print('$sumPrice sommes des produits vendus');
-
-    int qtyAchat = int.parse(achat.quantity);
-    int prixAchat = int.parse(achat.price);
-
-    return Container(
-        child: Card(
-            child: Padding(
-      padding: EdgeInsets.only(top: 28.0, bottom: 10.0),
-      child: Column(
-        children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text('${qtyAchat - sumQty} ${achat.unity}',
-                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20)),
+                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20)
+              ),
               Text('${prixAchat - sumPrice} FC',
                   style: TextStyle(
                       fontWeight: FontWeight.w700,
                       fontSize: 30,
-                      color: Colors.lime[800])),
+                      color: Colors.green[800]
+                    )
+              ),
             ],
           ),
+          
         ],
       ),
     )));
   }
+
 
   Widget editButton(BuildContext context) {
     return IconButton(

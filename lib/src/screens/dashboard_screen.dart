@@ -60,7 +60,7 @@ class _VenteDashboardScreenState extends State<VenteDashboardScreen> {
   Widget build(BuildContext context) {
     // var data = [0.0, 1.0, 1.5, 2.0, 0.0, 0.0, -0.5, -1.0, -0.5, 0.0, 0.0];
     var dataPrice = venteList.map((e) => double.parse(e.price)).toList();
-    print(dataPrice);
+    // print(dataPrice);
     double sum = 0;
     dataPrice.forEach((data) => sum += data);
 

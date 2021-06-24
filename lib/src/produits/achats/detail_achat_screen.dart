@@ -1,5 +1,7 @@
 import 'package:e_management/resources/products_database.dart';
 import 'package:e_management/src/models/achat_model.dart';
+import 'package:e_management/src/models/vente_model.dart';
+import 'package:e_management/src/produits/achats/add_achat_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -16,7 +18,9 @@ class _AchatDetailScreenState extends State<AchatDetailScreen> {
 
   _AchatDetailScreenState(this.achat);
 
-  List<AchatModel> venteList = [];
+  List<VenteModel> venteList = [];
+
+  bool loading = false;
 
   @override
   void initState() {
@@ -25,8 +29,7 @@ class _AchatDetailScreenState extends State<AchatDetailScreen> {
   }
 
   void loadVente() async {
-    List<AchatModel>? ventes =
-        await ProductDatabase.instance.getAllAchatsVente();
+    List<VenteModel>? ventes = await ProductDatabase.instance.getAllVente();
     setState(() {
       venteList = ventes;
       // print(venteList);
@@ -49,33 +52,44 @@ class _AchatDetailScreenState extends State<AchatDetailScreen> {
                   icon: Icon(Icons.print),
                   label: Text(''),
                 ),
-                ElevatedButton.icon(
-                  onPressed: () {},
-                  icon: Icon(Icons.delete),
-                  label: Text(''),
-                ),
+                editButton(context),
+                deleteButton(context)
               ],
             ),
           )
         ],
       )),
-      body: Padding(
-        padding: EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            header(),
-            headerTitle(),
-            achattitle(),
-            achats(),
-            ventetitle(),
-            ventes(),
-            benficetitle(),
-            benfices(),
-            pertetitle(),
-            pertes(),
-          ],
-        ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => AddAchatScreen(achat: achat)
+              )
+            );
+        },
+        tooltip: 'Ajoutez achats',
+        child: Icon(Icons.edit),
       ),
+      body: loading 
+        ? Center(child: CircularProgressIndicator())
+        : Padding(
+          padding: EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              header(),
+              headerTitle(),
+              achattitle(),
+              achats(),
+              ventetitle(),
+              ventes(),
+              benficetitle(),
+              benfices(),
+              pertetitle(),
+              pertes(),
+            ],
+          ),
+        ),
     );
   }
 
@@ -146,7 +160,7 @@ class _AchatDetailScreenState extends State<AchatDetailScreen> {
                   style: TextStyle(
                       fontWeight: FontWeight.w700,
                       fontSize: 30,
-                      color: Colors.blueAccent)),
+                      color: Colors.blueGrey[800])),
             ],
           ),
           Row(
@@ -174,58 +188,55 @@ class _AchatDetailScreenState extends State<AchatDetailScreen> {
   }
 
   Widget ventes() {
-    var venteCategorie = venteList.map((e) => e.categorie);
-    var venteSousCategorie = venteList.map((e) => e.sousCategorie);
-    var ventenameProduct = venteList.map((e) => e.nameProduct);
-    var ventequantity = venteList.map((e) => e.quantity);
-    var ventePrice = venteList.map((e) => e.price);
+    // Filter
+    var filter = venteList.where((element) =>
+        achat.categorie == element.categorie &&
+        achat.sousCategorie == element.sousCategorie &&
+        achat.nameProduct == element.nameProduct);
+    print('$filter filter data');
 
-    print(venteCategorie);
-    print(venteSousCategorie);
-    print(ventenameProduct);
-    print(ventequantity);
-    print(ventePrice);
+    // Quantités
+    var filterQty = filter.map((e) => int.parse(e.quantity));
+    print('$filterQty filter qty');
+    int sumQty = 0;
+    filterQty.forEach((qty) => sumQty += qty);
+    print('$sumQty quantit"s des produits vendus');
 
-    double prix = double.parse(achat.price);
-    double quantite = double.parse(achat.quantity);
+    // Prix
+    var filterPrice = filter.map((e) => int.parse(e.price));
+    print('$filterPrice filter price');
+    int sumPrice = 0;
+    filterPrice.forEach((price) => sumPrice += price);
+    print('$sumPrice sommes des produits vendus');
 
-    if (venteCategorie == achat.categorie &&
-        venteSousCategorie == achat.sousCategorie &&
-        ventenameProduct == achat.nameProduct) {
-      print(ventequantity);
-    }
+    // int qtyAchat = int.parse(achat.quantity);
+    // int prixAchat = int.parse(achat.price);
 
     return Container(
-      child: Container(),
+      child: Container(
+          child: Card(
+              child: Padding(
+        padding: EdgeInsets.only(top: 28.0, bottom: 10.0),
+        child: Column(
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('$sumQty ${achat.unity}',
+                    style:
+                        TextStyle(fontWeight: FontWeight.w600, fontSize: 20)),
+                Text('$sumPrice FC',
+                    style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 30,
+                        color: Colors.blue[800])),
+              ],
+            ),
+          ],
+        ),
+      ))),
     );
-  }
-
-  // void someFunction3() {
-  //   var venteCategorie = venteList.map((e) => e.categorie);
-  //   var venteSousCategorie = venteList.map((e) => e.sousCategorie);
-  //   var ventenameProduct = venteList.map((e) => e.nameProduct);
-  //   var ventequantity = venteList.map((e) => e.quantity);
-  //   var ventePrice = venteList.map((e) => e.price);
-  //   for (venteCategorie == achat.categorie; i < 10; i++) {
-  //     if (i == 0) print(someFunction3); // OK
-  //   }
-  // }
-
-  void venteOperation() {
-    var venteCategorie = venteList.map((e) => e.categorie);
-    var venteSousCategorie = venteList.map((e) => e.sousCategorie);
-    var ventenameProduct = venteList.map((e) => e.nameProduct);
-    var ventequantity = venteList.map((e) => e.quantity);
-    var ventePrice = venteList.map((e) => e.price);
-
-    double prix = double.parse(achat.price);
-    double quantite = double.parse(achat.quantity);
-
-    if (venteCategorie == achat.categorie &&
-        venteSousCategorie == achat.sousCategorie &&
-        ventenameProduct == achat.nameProduct) {
-      print(ventequantity);
-    }
   }
 
   Widget benficetitle() {
@@ -238,7 +249,52 @@ class _AchatDetailScreenState extends State<AchatDetailScreen> {
   }
 
   Widget benfices() {
-    return Card();
+    // Filter
+    var filter = venteList.where((element) =>
+        achat.categorie == element.categorie &&
+        achat.sousCategorie == element.sousCategorie &&
+        achat.nameProduct == element.nameProduct);
+    print('$filter filter data');
+
+    // Quantités
+    var filterQty = filter.map((e) => int.parse(e.quantity));
+    print('$filterQty filter qty');
+    int sumQty = 0;
+    filterQty.forEach((qty) => sumQty += qty);
+    print('$sumQty quantit"s des produits vendus');
+
+    // Prix
+    var filterPrice = filter.map((e) => int.parse(e.price));
+    print('$filterPrice filter price');
+    int sumPrice = 0;
+    filterPrice.forEach((price) => sumPrice += price);
+    print('$sumPrice sommes des produits vendus');
+
+    int qtyAchat = int.parse(achat.quantity);
+    int prixAchat = int.parse(achat.price);
+
+    return Container(
+        child: Card(
+            child: Padding(
+      padding: EdgeInsets.only(top: 28.0, bottom: 10.0),
+      child: Column(
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text('${qtyAchat - sumQty} ${achat.unity}',
+                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20)),
+              Text('${sumPrice - prixAchat} FC',
+                  style: TextStyle(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 30,
+                      color: Colors.green[800])),
+            ],
+          ),
+        ],
+      ),
+    )));
   }
 
   Widget pertetitle() {
@@ -251,6 +307,76 @@ class _AchatDetailScreenState extends State<AchatDetailScreen> {
   }
 
   Widget pertes() {
-    return Card();
+    // Filter
+    var filter = venteList.where((element) =>
+        achat.categorie == element.categorie &&
+        achat.sousCategorie == element.sousCategorie &&
+        achat.nameProduct == element.nameProduct);
+    print('$filter filter data');
+
+    // Quantités
+    var filterQty = filter.map((e) => int.parse(e.quantity));
+    print('$filterQty filter qty');
+    int sumQty = 0;
+    filterQty.forEach((qty) => sumQty += qty);
+    print('$sumQty quantit"s des produits vendus');
+
+    // Prix
+    var filterPrice = filter.map((e) => int.parse(e.price));
+    print('$filterPrice filter price');
+    int sumPrice = 0;
+    filterPrice.forEach((price) => sumPrice += price);
+    print('$sumPrice sommes des produits vendus');
+
+    int qtyAchat = int.parse(achat.quantity);
+    int prixAchat = int.parse(achat.price);
+
+    return Container(
+        child: Card(
+            child: Padding(
+      padding: EdgeInsets.only(top: 28.0, bottom: 10.0),
+      child: Column(
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text('${qtyAchat - sumQty} ${achat.unity}',
+                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20)),
+              Text('${prixAchat - sumPrice} FC',
+                  style: TextStyle(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 30,
+                      color: Colors.lime[800])),
+            ],
+          ),
+        ],
+      ),
+    )));
+  }
+
+  Widget editButton(BuildContext context) {
+    return IconButton(
+        icon: Icon(Icons.edit_outlined),
+        onPressed: () async {
+          await Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => AddAchatScreen(achat: achat),
+          ));
+        });
+  }
+
+  Widget deleteButton(BuildContext context) {
+    return IconButton(
+      icon: Icon(Icons.delete),
+      onPressed: () async {
+        await ProductDatabase.instance.deleteAchat(achat.id!);
+
+        Navigator.of(context).pop();
+        SnackBar(
+          content: Text("${achat.nameProduct} vient d'être supprimé!"),
+          backgroundColor: Colors.red[700],
+        );
+      },
+    );
   }
 }

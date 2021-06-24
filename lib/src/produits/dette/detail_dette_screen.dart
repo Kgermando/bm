@@ -1,5 +1,6 @@
 import 'package:e_management/resources/products_database.dart';
 import 'package:e_management/src/models/dette_model.dart';
+import 'package:e_management/src/produits/dette/add_dette_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -23,11 +24,8 @@ class DetailDetteScreen extends StatelessWidget {
                     icon: Icon(Icons.print),
                     label: Text(''),
                   ),
-                  ElevatedButton.icon(
-                    onPressed: deleteDette,
-                    icon: Icon(Icons.delete),
-                    label: Text(''),
-                  ),
+                  editButton(context),
+                  deleteButton(context)
                 ],
               ),
             )
@@ -132,26 +130,31 @@ class DetailDetteScreen extends StatelessWidget {
     ));
   }
 
-  Widget deleteDette() {
-    return ElevatedButton(
-      onPressed: detteData,
-      child: Text(
-        'Supprimé',
-        textScaleFactor: 1.5,
-      ),
-      style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 10)),
+
+  Widget editButton(BuildContext context) {
+    return IconButton(
+        icon: Icon(Icons.edit_outlined),
+        onPressed: () async {
+          await Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => AddDetteScreen(dette: dette),
+          ));
+        });
+  }
+
+  Widget deleteButton(BuildContext context) {
+    return IconButton(
+      icon: Icon(Icons.delete),
+      onPressed: () async {
+        await ProductDatabase.instance.deleteDette(dette.id!);
+
+        Navigator.of(context).pop();
+        SnackBar(
+          content: Text("${dette.nameProduct} vient d'être supprimé!"),
+          backgroundColor: Colors.red[700],
+        );
+      },
     );
   }
 
-  void detteData() async {
-    final dettes = dette.id;
-
-    await ProductDatabase.instance.deleteVente(dettes!);
-    SnackBar(
-      content: Text("${dette.nameProduct} vient d'être supprimé!"),
-      backgroundColor: Colors.red[600],
-    );
-
-  }
 
 }

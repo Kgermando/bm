@@ -1,7 +1,9 @@
 import 'package:e_management/resources/products_database.dart';
 import 'package:e_management/src/models/vente_model.dart';
+import 'package:e_management/src/produits/ventes/add_vente_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+
 
 class VenteDetailScreen extends StatelessWidget {
   const VenteDetailScreen({Key? key, required this.vente}) : super(key: key);
@@ -23,11 +25,8 @@ class VenteDetailScreen extends StatelessWidget {
                     icon: Icon(Icons.print),
                     label: Text(''),
                   ),
-                  ElevatedButton.icon(
-                    onPressed: deleteVente,
-                    icon: Icon(Icons.delete),
-                    label: Text(''),
-                  ),
+                  editButton(context),
+                  deleteButton(context)
                 ],
               ),
             )
@@ -115,7 +114,7 @@ class VenteDetailScreen extends StatelessWidget {
                   style: TextStyle(
                       fontWeight: FontWeight.w700,
                       fontSize: 30,
-                      color: Colors.blueAccent)),
+                      color: Colors.blueGrey[900])),
             ],
           ),
           Row(
@@ -133,7 +132,7 @@ class VenteDetailScreen extends StatelessWidget {
     ));
   }
 
-  Widget deleteVente() {
+  deleteVente() {
     return ElevatedButton(
       onPressed: venteData,
       child: Text(
@@ -150,8 +149,37 @@ class VenteDetailScreen extends StatelessWidget {
     await ProductDatabase.instance.deleteVente(ventes!);
     SnackBar(
       content: Text("${vente.nameProduct} vient d'être supprimé!"),
-      backgroundColor: Colors.red[600],
+      backgroundColor: Colors.red[700],
     );
 
   }
+
+
+    Widget editButton(BuildContext context) {
+      return IconButton(
+      icon: Icon(Icons.edit_outlined),
+      onPressed: () async {
+
+        await Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => AddVenteScreen(vente: vente),
+        ));
+
+      });
+    }
+
+    Widget deleteButton(BuildContext context) {
+      return IconButton(
+        icon: Icon(Icons.delete),
+        onPressed: () async {
+          await ProductDatabase.instance.deleteVente(vente.id!);
+
+          Navigator.of(context).pop();
+          SnackBar(
+          content: Text("${vente.nameProduct} vient d'être supprimé!"),
+          backgroundColor: Colors.red[700],
+        );
+        },
+      );
+    }
+
 }

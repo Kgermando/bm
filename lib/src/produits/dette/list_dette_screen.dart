@@ -99,7 +99,7 @@ class DetteItemWidget extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: SizedBox(
                       child: Icon(
-                    Icons.add_chart,
+                    Icons.money_off,
                     size: 40.0,
                     color: Color(0xFF6200EE),
                   )),

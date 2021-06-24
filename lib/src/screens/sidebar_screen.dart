@@ -5,9 +5,7 @@ import 'package:e_management/src/produits/ventes/add_vente_screen.dart';
 import 'package:e_management/src/produits/ventes/list_vente_screen.dart';
 import 'package:e_management/src/screens/contact_screen.dart';
 import 'package:e_management/src/screens/dashboard_screen.dart';
-import 'package:e_management/src/screens/home_screen.dart';
 import 'package:e_management/src/screens/shareapp_screen.dart';
-import 'package:e_management/src/screens/stats.dart';
 import 'package:flutter/material.dart';
 
 class SideBarScreen extends StatelessWidget {
@@ -24,18 +22,18 @@ class SideBarScreen extends StatelessWidget {
               child: Text("GK"),
             ),
           ),
-          ListTile(
-            leading: Icon(Icons.home),
-            title: Text("Acceuil"),
-            onTap: () {
-              print("Home Clicked");
-              Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => HomeScreen())
-              );
-            },
-          ),
+          // ListTile(
+          //   leading: Icon(Icons.home),
+          //   title: Text("Acceuil"),
+          //   onTap: () {
+          //     print("Home Clicked");
+          //     Navigator.push(
+          //     context,
+          //     MaterialPageRoute(
+          //       builder: (context) => HomeScreen())
+          //     );
+          //   },
+          // ),
           ListTile(
             leading: Icon(Icons.dashboard),
             title: Text("Dashboard"),

@@ -1,6 +1,7 @@
 import 'package:e_management/src/models/achat_model.dart';
 import 'package:e_management/src/models/dette_model.dart';
 import 'package:e_management/src/models/vente_model.dart';
+import 'package:intl/intl.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -205,9 +206,35 @@ class ProductDatabase {
   // Get All Achat database
   Future<List<VenteModel>> getAllVente() async {
     final db = await instance.database;
+    final DateTime now = DateTime.now();
+    final DateFormat formatter = DateFormat('dd.MM.yy');
+    final String formatted = formatter.format(now);
+    print(formatted);
 
     final orderBy = '${VenteFields.date} ASC';
-    // final result = await db.rawQuery('SELECT * FROM $tableVente ORDER BY $orderBy');
+    // final resultt = await db.rawQuery('SELECT * FROM $tableVente WHERE >= $formatted ORDER BY $orderBy');
+
+    final result = await db.query(tableVente, orderBy: orderBy);
+
+    return result.map((json) => VenteModel.fromJson(json)).toList();
+  }
+
+    // Get All Achat database
+  Future<List<VenteModel>> getAllVenteByDate() async {
+    final db = await instance.database;
+    final DateTime now = DateTime.now();
+    final DateFormat formatter = DateFormat('yyyy-MM-dd');
+    final String formatted = formatter.format(now);
+    print(formatted);
+
+    final orderBy = '${VenteFields.date} ASC';
+    // final date = '${VenteFields.date} $formatted';
+    // final String date = orderBy < formatted;
+ 
+    // final resultt = await db.rawQuery(
+    //     'SELECT * FROM $tableVente WHERE $formatted ORDER BY $orderBy');
+    // final resultt = await db.rawQuery(
+    //     'SELECT * FROM $tableVente WHERE date > $formatter ORDER BY $orderBy');
 
     final result = await db.query(tableVente, orderBy: orderBy);
 

@@ -1,4 +1,4 @@
-import 'package:e_management/src/screens/home_screen.dart';
+import 'package:e_management/src/screens/dashboard_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {    
@@ -11,10 +11,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'E-Management',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.deepPurple,
       ),
-      home: HomeScreen(),
+      home: DashboardScreen(),
     );
   }
 }
+ 

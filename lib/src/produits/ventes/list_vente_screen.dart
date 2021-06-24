@@ -13,7 +13,7 @@ class ListVenteScreen extends StatefulWidget {
 }
 
 class _ListVenteScreenState extends State<ListVenteScreen> {
-  
+
   @override
   void initState() {
     super.initState();
@@ -22,7 +22,7 @@ class _ListVenteScreenState extends State<ListVenteScreen> {
 
   Future<void> getData() async {
     setState(() {
-      ProductDatabase.instance.getAllVente();
+      ProductDatabase.instance.getAllVenteByDate();
     });
   }
 
@@ -51,7 +51,7 @@ class _ListVenteScreenState extends State<ListVenteScreen> {
         ),
         drawer: SideBarScreen(),
         body: FutureBuilder<List<VenteModel>>(
-            future: ProductDatabase.instance.getAllVente(),
+            future: ProductDatabase.instance.getAllVenteByDate(),
             builder: (BuildContext context,
                 AsyncSnapshot<List<VenteModel>> snapshot) {
               if (snapshot.hasData) {
@@ -69,7 +69,9 @@ class _ListVenteScreenState extends State<ListVenteScreen> {
               } else {
                 return Center(child: CircularProgressIndicator());
               }
-            }));
+            }
+          )
+        );
   }
 }
 

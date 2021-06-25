@@ -81,8 +81,8 @@ class DetailDetteScreen extends StatelessWidget {
   }
 
   Widget dettes() {
-    double prix = double.parse(dette.price);
-    double quantite = double.parse(dette.quantity);
+    // double prix = double.parse(dette.price);
+    // double quantite = double.parse(dette.quantity);
     // var = prix / quantite;
     return Card(
         child: Padding(

@@ -281,7 +281,7 @@ class _AchatDetailScreenState extends State<AchatDetailScreen> {
             children: [
               Text('Restes des ${achat.unity}',
                   style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16)),
-              Text('Revenus',
+              Text('Revenues',
                   style: TextStyle(
                       fontWeight: FontWeight.w700,
                       fontSize: 16

@@ -1,6 +1,5 @@
 import 'package:e_management/resources/products_database.dart';
 import 'package:e_management/src/models/achat_model.dart';
-import 'package:e_management/src/models/dette_model.dart';
 import 'package:flutter/material.dart';
 
 class DetteFormWidget extends StatefulWidget {

@@ -247,36 +247,39 @@ class _AchatItemWidgetState extends State<AchatItemWidget> {
     double qtyAchat12 = (qty / 12);
     double qtyAchat15 = (qty / 15);
     double qtyAchat18 = (qty / 18);
+    double qtyAchat19 = (qty / 18 - 1);
     double qtyAchat20 = (qty / 20);
 
     if (sumQty == qtyAchat1) {
       return Colors.red[900];
-    } else if (sumQty <= qtyAchat2) {
+    } else if (sumQty >= qtyAchat2) {
       return Colors.green[200];
-    } else if (sumQty <= qtyAchat3) {
+    } else if (sumQty >= qtyAchat3) {
       return Colors.orange[100];
-    } else if (sumQty <= qtyAchat4) {
+    } else if (sumQty >= qtyAchat4) {
       return Colors.orange[300];
-    } else if (sumQty <= qtyAchat5) {
+    } else if (sumQty >= qtyAchat5) {
       return Colors.orange[500];
-    } else if (sumQty <= qtyAchat6) {
+    } else if (sumQty >= qtyAchat6) {
       return Colors.orange[700];
-    } else if (sumQty <= qtyAchat7) {
+    } else if (sumQty >= qtyAchat7) {
       return Colors.orange[900];
-    } else if (sumQty <= qtyAchat8) {
+    } else if (sumQty >= qtyAchat8) {
       return Colors.red[500];
-    } else if (sumQty <= qtyAchat9) {
+    } else if (sumQty >= qtyAchat9) {
       return Colors.red[600];
-    } else if (sumQty <= qtyAchat10) {
+    } else if (sumQty >= qtyAchat10) {
       return Colors.red[700];
-    } else if (sumQty <= qtyAchat12) {
+    } else if (sumQty >= qtyAchat12) {
       return Colors.red[800];
-    } else if (sumQty <= qtyAchat15) {
+    } else if (sumQty >= qtyAchat15) {
       return Colors.red[900];
-    } else if (sumQty <= qtyAchat18) {
+    } else if (sumQty >= qtyAchat18) {
       return Colors.pink[800];
-    } else if (sumQty < qtyAchat20) {
+    } else if (sumQty <= qtyAchat19) {
       return Colors.pink[900];
+    } else if (sumQty <= qtyAchat20) {
+      return Colors.purple[900];
     } else {
       return Colors.lightBlue[100];
     }

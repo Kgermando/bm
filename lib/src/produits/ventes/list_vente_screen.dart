@@ -116,11 +116,11 @@ class VenteItemWidget extends StatelessWidget {
                         padding: const EdgeInsets.only(bottom: 8),
                         child: Text(vente.nameProduct,
                             style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 20)),
+                                fontWeight: FontWeight.bold, fontSize: 20, overflow: TextOverflow.ellipsis)),
                       ),
                       Text('${vente.categorie} -> ${vente.sousCategorie}',
                           style:
-                              TextStyle(color: Colors.grey[500], fontSize: 16))
+                              TextStyle(color: Colors.grey[500], fontSize: 16, overflow: TextOverflow.ellipsis))
                     ],
                   ),
                 ),

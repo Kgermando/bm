@@ -280,7 +280,7 @@ class _AchatDetailScreenState extends State<AchatDetailScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text('Restes des ${achat.unity}',
-                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16)),
+                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 14)),
               Text('Revenues',
                   style: TextStyle(
                       fontWeight: FontWeight.w700,

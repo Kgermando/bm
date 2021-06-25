@@ -113,11 +113,12 @@ class DetteItemWidget extends StatelessWidget {
                         padding: const EdgeInsets.only(bottom: 8),
                         child: Text(dette.nameProduct,
                             style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 20)),
+                                fontWeight: FontWeight.bold, fontSize: 20,
+                                overflow: TextOverflow.ellipsis)),
                       ),
                       Text('${dette.categorie} -> ${dette.sousCategorie}',
                           style:
-                              TextStyle(color: Colors.grey[500], fontSize: 16))
+                              TextStyle(color: Colors.grey[500], fontSize: 16, overflow: TextOverflow.ellipsis))
                     ],
                   ),
                 ),

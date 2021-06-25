@@ -82,16 +82,16 @@ class _ListAchatScreenState extends State<ListAchatScreen> {
         icon: Icon(Icons.print),
         label: Text(''),
         onPressed: () async {
-          final achatPdf = AchatModel(
-              categorie: '',
-              sousCategorie: '',
-              nameProduct: '',
-              quantity: '',
-              unity: '',
-              price: '',
-              date: DateTime.now(),
-          );
-          final pdfFile = await PdfProductApi.generate(achatPdf);
+          // final achatPdf = AchatModel(
+          //     categorie: '',
+          //     sousCategorie: '',
+          //     nameProduct: '',
+          //     quantity: '',
+          //     unity: '',
+          //     price: '',
+          //     date: DateTime.now(),
+          // );
+          final pdfFile = await PdfProductApi.generate();
 
           PdfApi.openFile(pdfFile);
         });
@@ -176,11 +176,15 @@ class _AchatItemWidgetState extends State<AchatItemWidget> {
                         padding: const EdgeInsets.only(bottom: 8),
                         child: Text(achat.nameProduct,
                             style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 20)),
+                              fontWeight: FontWeight.bold, 
+                              fontSize: 20, 
+                              overflow: TextOverflow.ellipsis
+                            )
+                            ),
                       ),
                       Text('${achat.categorie} -> ${achat.sousCategorie}',
                           style:
-                              TextStyle(color: Colors.grey[700], fontSize: 16))
+                              TextStyle(color: Colors.grey[700], fontSize: 16, overflow: TextOverflow.ellipsis))
                     ],
                   ),
                 ),

@@ -15,7 +15,7 @@ class ProductDatabase {
   Future<Database> get database async {
     if (_database != null) return _database!;
 
-    _database = await _initDB('emanagement.db');
+    _database = await _initDB('e_management.db');
 
     return _database!;
   }
@@ -133,20 +133,6 @@ class ProductDatabase {
 
     return result.map((json) => AchatModel.fromJson(json)).toList();
   }
-
-  // Future<List<AchatModel>> getAllCategories() async {
-  //   final db = await instance.database;
-  //   var res = await db.query(tableAchats);
-  //   List<AchatModel> list = res.isNotEmpty
-  //       ? res
-  //           .map((c) => AchatModel(
-  //              categorie: c['categorie'].toString(), sousCategorie: c['sousCategorie'].toString(),
-  //               nameProduct: c['nameProduct'].toString(), quantity: c['quantity'].toString(), unity: c['unity'].toString(), price: c['price'].toString(), date: DateTime.now()))
-  //           .toList()
-  //       : [];
-  //   return list;
-  // }
-
   
 
   // Update Data in database

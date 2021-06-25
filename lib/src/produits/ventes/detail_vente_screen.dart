@@ -173,11 +173,11 @@ class VenteDetailScreen extends StatelessWidget {
         onPressed: () async {
           await ProductDatabase.instance.deleteVente(vente.id!);
 
-          Navigator.of(context).pop();
-          SnackBar(
+        Navigator.of(context).pop();
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text("${vente.nameProduct} vient d'être supprimé!"),
           backgroundColor: Colors.red[700],
-        );
+        ));
         },
       );
     }

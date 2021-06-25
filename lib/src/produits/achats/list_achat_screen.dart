@@ -1,4 +1,6 @@
 import 'package:e_management/src/models/vente_model.dart';
+import 'package:e_management/src/pdf/pdf_api.dart';
+import 'package:e_management/src/pdf/pdf_product_api.dart';
 import 'package:e_management/src/produits/achats/detail_achat_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:e_management/resources/products_database.dart';
@@ -18,9 +20,14 @@ class _ListAchatScreenState extends State<ListAchatScreen> {
     getData();
   }
 
+  List<AchatModel> achatsPdfList = [];
+
   Future<void> getData() async {
+    List<AchatModel>? achatpdfList =
+        await ProductDatabase.instance.getAllAchats();
     setState(() {
       ProductDatabase.instance.getAllAchats();
+      achatsPdfList = achatpdfList;
     });
   }
 
@@ -32,6 +39,7 @@ class _ListAchatScreenState extends State<ListAchatScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Text('Liste des achats'),
+            printPdf(),
             ElevatedButton.icon(
               onPressed: () {},
               icon: Icon(Icons.power_settings_new),
@@ -68,6 +76,27 @@ class _ListAchatScreenState extends State<ListAchatScreen> {
               }
             }));
   }
+
+  Widget printPdf() {
+    return ElevatedButton.icon(
+        icon: Icon(Icons.print),
+        label: Text(''),
+        onPressed: () async {
+          final achatPdf = AchatModel(
+              categorie: '',
+              sousCategorie: '',
+              nameProduct: '',
+              quantity: '',
+              unity: '',
+              price: '',
+              date: DateTime.now(),
+          );
+          final pdfFile = await PdfProductApi.generate(achatPdf);
+
+          PdfApi.openFile(pdfFile);
+        });
+  }
+
 }
 
 class AchatItemWidget extends StatefulWidget {
@@ -83,8 +112,8 @@ class _AchatItemWidgetState extends State<AchatItemWidget> {
 
   _AchatItemWidgetState(this.achat);
 
- List<VenteModel> venteList = [];
- 
+  List<VenteModel> venteList = [];
+
   @override
   void initState() {
     super.initState();
@@ -95,14 +124,24 @@ class _AchatItemWidgetState extends State<AchatItemWidget> {
     List<VenteModel>? ventes = await ProductDatabase.instance.getAllVente();
     setState(() {
       venteList = ventes;
-      // print(venteList);
     });
   }
 
-
-
   @override
   Widget build(BuildContext context) {
+    // Filter
+    var filter = venteList.where((element) =>
+        achat.categorie == element.categorie &&
+        achat.sousCategorie == element.sousCategorie &&
+        achat.nameProduct == element.nameProduct);
+
+    // Quantités
+    var filterQty = filter.map((e) => double.parse(e.quantity));
+    double sumQty = 0;
+    filterQty.forEach((qty) => sumQty += qty);
+
+    double achatQty = double.parse(achat.quantity);
+
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -141,7 +180,7 @@ class _AchatItemWidgetState extends State<AchatItemWidget> {
                       ),
                       Text('${achat.categorie} -> ${achat.sousCategorie}',
                           style:
-                              TextStyle(color: Colors.grey[500], fontSize: 16))
+                              TextStyle(color: Colors.grey[700], fontSize: 16))
                     ],
                   ),
                 ),
@@ -162,7 +201,8 @@ class _AchatItemWidgetState extends State<AchatItemWidget> {
                   ),
                   Container(
                     padding: const EdgeInsets.only(bottom: 8),
-                    child: Text('Stock: ${achat.quantity} ${achat.unity}',
+                    child: Text(
+                        'Stock: ${achatQty - sumQty} ${achat.unity}',
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 12)),
                   )
@@ -177,7 +217,7 @@ class _AchatItemWidgetState extends State<AchatItemWidget> {
 
   // Returns the priority color
   getPriorityColor() {
-        // Filter
+    // Filter
     var filter = venteList.where((element) =>
         achat.categorie == element.categorie &&
         achat.sousCategorie == element.sousCategorie &&
@@ -189,7 +229,7 @@ class _AchatItemWidgetState extends State<AchatItemWidget> {
     filterQty.forEach((qty) => sumQty += qty);
 
     double qty = double.parse(achat.quantity);
-    
+
     double qtyAchat1 = (qty / 1);
     double qtyAchat2 = (qty / 2);
     double qtyAchat3 = (qty / 3);
@@ -209,180 +249,32 @@ class _AchatItemWidgetState extends State<AchatItemWidget> {
       return Colors.red[900];
     } else if (sumQty <= qtyAchat2) {
       return Colors.green[200];
-    } else if (sumQty >= qtyAchat3) {
+    } else if (sumQty <= qtyAchat3) {
       return Colors.orange[100];
-    } else if (sumQty >= qtyAchat4) {
+    } else if (sumQty <= qtyAchat4) {
       return Colors.orange[300];
-    } else if (sumQty >= qtyAchat5) {
+    } else if (sumQty <= qtyAchat5) {
       return Colors.orange[500];
-    } else if (sumQty >= qtyAchat6) {
+    } else if (sumQty <= qtyAchat6) {
       return Colors.orange[700];
-    } else if (sumQty >= qtyAchat7) {
+    } else if (sumQty <= qtyAchat7) {
       return Colors.orange[900];
-    } else if (sumQty >= qtyAchat8) {
+    } else if (sumQty <= qtyAchat8) {
       return Colors.red[500];
-    } else if (sumQty >= qtyAchat9) {
+    } else if (sumQty <= qtyAchat9) {
       return Colors.red[600];
-    } else if (sumQty >= qtyAchat10) {
+    } else if (sumQty <= qtyAchat10) {
       return Colors.red[700];
-    } else if (sumQty >= qtyAchat12) {
+    } else if (sumQty <= qtyAchat12) {
       return Colors.red[800];
-    } else if (sumQty >= qtyAchat15) {
+    } else if (sumQty <= qtyAchat15) {
       return Colors.red[900];
-    } else if (sumQty >= qtyAchat18) {
+    } else if (sumQty <= qtyAchat18) {
       return Colors.pink[800];
-    } else if (sumQty <= qtyAchat20) {
+    } else if (sumQty < qtyAchat20) {
       return Colors.pink[900];
     } else {
       return Colors.lightBlue[100];
     }
   }
-  
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// class AchatItemWidget extends StatelessWidget {
-//   const AchatItemWidget({Key? key, required this.achat}) : super(key: key);
-//   final AchatModel achat;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return GestureDetector(
-//       onTap: () {
-//         Navigator.push(
-//             context,
-//             MaterialPageRoute(
-//                 builder: (context) => AchatDetailScreen(achat: achat)));
-//       },
-//       child: Card(
-//         color: getPriorityColor(),
-//         margin: EdgeInsets.all(8),
-//         elevation: 8,
-//         child: Row(
-//           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//           children: [
-//             Row(
-//               children: [
-//                 Padding(
-//                   padding: const EdgeInsets.all(8.0),
-//                   child: SizedBox(
-//                       child: Icon(
-//                     Icons.shopping_bag_sharp,
-//                     size: 40.0,
-//                     color: Color(0xFF6200EE),
-//                   )),
-//                 ),
-//                 Padding(
-//                   padding: EdgeInsets.all(8),
-//                   child: Column(
-//                     crossAxisAlignment: CrossAxisAlignment.start,
-//                     children: [
-//                       Container(
-//                         padding: const EdgeInsets.only(bottom: 8),
-//                         child: Text(achat.nameProduct,
-//                             style: TextStyle(
-//                                 fontWeight: FontWeight.bold, fontSize: 20)),
-//                       ),
-//                       Text('${achat.categorie} -> ${achat.sousCategorie}',
-//                           style:
-//                               TextStyle(color: Colors.grey[500], fontSize: 16))
-//                     ],
-//                   ),
-//                 ),
-//               ],
-//             ),
-//             Padding(
-//               padding: EdgeInsets.all(8),
-//               child: Column(
-//                 children: [
-//                   Container(
-//                     padding: const EdgeInsets.only(bottom: 8),
-//                     child: Text('${achat.price} FC',
-//                         style: TextStyle(
-//                           fontWeight: FontWeight.bold,
-//                           fontSize: 16,
-//                           color: Color(0xFF6200EE),
-//                         )),
-//                   ),
-//                   Container(
-//                     padding: const EdgeInsets.only(bottom: 8),
-//                     child: Text('Stock: ${achat.quantity} ${achat.unity}',
-//                         style: TextStyle(
-//                             fontWeight: FontWeight.bold, fontSize: 12)),
-//                   )
-//                 ],
-//               ),
-//             )
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-
-//   // Returns the priority color
-//   getPriorityColor() {
-//     double stock = double.parse(achat.quantity);
-//     double qty = double.parse(achat.quantity);
-//     // print('stock $stock');
-//     // print('qty $qty');
-
-//     double qtyAchat1 = (qty / 1);
-//     // print('1 $qtyAchat1');
-//     double qtyAchat2 = (qty / 2);
-//     // print('2 $qtyAchat2');
-//     double qtyAchat3 = (qty / 3);
-//     // print('3 $qtyAchat3');
-//     double qtyAchat4 = (qty / 4);
-//     // print('4 $qtyAchat4');
-//     double qtyAchat5 = (qty / 5);
-//     // print('5 $qtyAchat5');
-//     double qtyAchat6 = (qty / qty);
-//     // print('6 $qtyAchat6');
-
-//     if (stock == qtyAchat1) {
-//       return Colors.lightBlue[50];
-//     } else if (stock >= qtyAchat2) {
-//       return Colors.green[200];
-//     } else if (stock >= qtyAchat3) {
-//       return Colors.red[200];
-//     } else if (stock >= qtyAchat4) {
-//       return Colors.red[400];
-//     } else if (stock >= qtyAchat5) {
-//       return Colors.red[600];
-//     } else if (stock >= qtyAchat6) {
-//       return Colors.red[700];
-//     } else if (stock <= qtyAchat6) {
-//       return Colors.red[900];
-//     } else {
-//       return Colors.lightBlue[700];
-//     }
-//   }
-// }

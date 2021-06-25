@@ -215,7 +215,7 @@ class AchatFormWidget extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: 20.0),
       child: TextFormField(
-        keyboardType: TextInputType.number,
+        keyboardType: TextInputType.phone,
         decoration: InputDecoration(
           labelText: 'Quantités des produits achetés',
           labelStyle: TextStyle(),
@@ -263,7 +263,7 @@ class AchatFormWidget extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 20.0),
       child: TextFormField(
         // controller: priceController,
-        keyboardType: TextInputType.number,
+        keyboardType: TextInputType.phone,
         decoration: InputDecoration(
           labelText: 'Total d\'argents',
           labelStyle: TextStyle(),

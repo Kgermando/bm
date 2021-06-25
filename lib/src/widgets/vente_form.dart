@@ -47,7 +47,8 @@ class VenteForm extends StatefulWidget {
       this.onChangedNameProduct,
       this.onChangedQuantity,
       this.onChangedUnity,
-      this.onChangedPrice);
+      this.onChangedPrice
+    );
 }
 
 class _VenteFormState extends State<VenteForm> {
@@ -94,8 +95,8 @@ class _VenteFormState extends State<VenteForm> {
     setState(() {
       categorieList = categories;
       category = categories.first;
-      print(categorieList);
-      print(category);
+      // print(categorieList);
+      // print(category);
     });
   }
 
@@ -232,7 +233,7 @@ class _VenteFormState extends State<VenteForm> {
     return Container(
       margin: const EdgeInsets.only(bottom: 20.0),
       child: TextFormField(
-        keyboardType: TextInputType.number,
+        keyboardType: TextInputType.phone,
         decoration: InputDecoration(
           labelText: 'Quantités des produits achetés',
           labelStyle: TextStyle(),
@@ -281,7 +282,7 @@ class _VenteFormState extends State<VenteForm> {
       margin: const EdgeInsets.only(bottom: 20.0),
       child: TextFormField(
         // controller: priceController,
-        keyboardType: TextInputType.number,
+        keyboardType: TextInputType.phone,
         decoration: InputDecoration(
           labelText: 'Total d\'argents',
           labelStyle: TextStyle(),

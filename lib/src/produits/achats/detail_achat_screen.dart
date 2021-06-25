@@ -296,7 +296,7 @@ class _AchatDetailScreenState extends State<AchatDetailScreen> {
               Text('${qtyAchat - sumQty} ${achat.unity}',
                   style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20)
               ),
-              Text('${prixAchat - sumPrice} FC',
+              Text('${sumPrice - prixAchat} FC',
                   style: TextStyle(
                       fontWeight: FontWeight.w700,
                       fontSize: 30,
@@ -329,10 +329,10 @@ class _AchatDetailScreenState extends State<AchatDetailScreen> {
         await ProductDatabase.instance.deleteAchat(achat.id!);
 
         Navigator.of(context).pop();
-        SnackBar(
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text("${achat.nameProduct} vient d'être supprimé!"),
           backgroundColor: Colors.red[700],
-        );
+        ));
       },
     );
   }

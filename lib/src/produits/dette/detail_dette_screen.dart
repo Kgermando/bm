@@ -25,12 +25,8 @@ class DetailDetteScreen extends StatelessWidget {
                   icon: Icon(Icons.print),
                   label: Text(''),
                 ),
-                editButton(context),
-                ElevatedButton.icon(
-                  onPressed: addDette(context),
-                  icon: Icon(Icons.send),
-                  label: Text(''),
-                ),
+                // editButton(context),
+                addDette(context)
               ],
             ),
           )
@@ -103,26 +99,30 @@ class DetailDetteScreen extends StatelessWidget {
                   style: TextStyle(
                       fontWeight: FontWeight.w700,
                       fontSize: 30,
-                      color: Colors.blueAccent)),
+                      color: Colors.indigo)
+                    ),
             ],
           ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text('1 ${dette.unity}',
-                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20)),
-              Text('${prix / quantite} FC',
-                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20)),
-            ],
-          ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text('Dette de ${dette.personne}',
-                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 24)),
-            ],
+          // Row(
+          //   crossAxisAlignment: CrossAxisAlignment.start,
+          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //   children: [
+          //     Text('1 ${dette.unity}',
+          //         style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20)),
+          //     Text('${prix / quantite} FC',
+          //         style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20)),
+          //   ],
+          // ),
+          Padding(
+            padding: const EdgeInsets.only(top: 20.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('Dette de ${dette.personne}',
+                    style: TextStyle(fontWeight: FontWeight.w800, color: Colors.black, fontSize: 20)),
+              ],
+            ),
           ),
         ],
       ),
@@ -146,15 +146,15 @@ class DetailDetteScreen extends StatelessWidget {
         await ProductDatabase.instance.deleteDette(dette.id!);
 
         Navigator.of(context).pop();
-        SnackBar(
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text("${dette.nameProduct} vient d'être supprimé!"),
           backgroundColor: Colors.red[700],
-        );
+        ));
       },
     );
   }
 
-  addDette(BuildContext context) async {
+  Widget addDette(BuildContext context)  {
     final dettes = VenteModel(
       categorie: dette.categorie,
       sousCategorie: dette.sousCategorie,
@@ -165,12 +165,21 @@ class DetailDetteScreen extends StatelessWidget {
       date: DateTime.now(),
       // personne: dette.personne,
     );
+    return IconButton(
+      icon: Icon(Icons.send),
+      onPressed: () async {
+        await ProductDatabase.instance.insertVente(dettes);
+        await ProductDatabase.instance.deleteDette(dette.id!);
+        Navigator.of(context).pop();
 
-    await ProductDatabase.instance.insertVente(dettes);
-    deleteButton(context);
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text("${dette.nameProduct} ajouté!"),
-      backgroundColor: Colors.green[700],
-    ));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text("${dette.nameProduct} ajouté aux ventes!"),
+          backgroundColor: Colors.green[700],
+        ));
+      }
+    );
+ 
+
+
   }
 }

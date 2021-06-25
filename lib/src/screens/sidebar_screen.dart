@@ -115,8 +115,8 @@ class SideBarScreen extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: Icon(Icons.share),
-            title: Text("Partagez!"),
+            leading: Icon(Icons.settings),
+            title: Text("Paramètre"),
             onTap: () {
               print("Share Clicked");
               Navigator.push(

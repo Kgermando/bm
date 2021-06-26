@@ -85,8 +85,18 @@ class _VenteDashboardScreenState extends State<VenteDashboardScreen> {
                 height: 200.0,
                 child: Sparkline(
                   data: dataPrice,
+                  sharpCorners: true,
                   lineColor: Colors.purple,
                   lineWidth: 6.0,
+                  pointsMode: PointsMode.all,
+                  pointSize: 8.0,
+                  pointColor: Colors.blue,
+
+                  lineGradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [Colors.purple, Colors.purple],
+                  ),
                 ),
               ),
             ],

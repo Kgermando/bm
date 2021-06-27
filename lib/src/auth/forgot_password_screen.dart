@@ -101,7 +101,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     MaterialPageRoute(builder: (context) => LoginScreen()));
               },
               child: Text(
-                'SOUMETTRE',
+                'ENVOYEZ',
                 style: TextStyle(
                   color: Colors.white,
                   letterSpacing: 1.5,

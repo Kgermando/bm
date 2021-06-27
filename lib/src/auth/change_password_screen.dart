@@ -78,7 +78,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
             Icons.lock,
             color: Colors.purple,
           ),
-          labelText: 'Password',
+          labelText: 'Mot de passe',
         ),
       ),
     );
@@ -100,7 +100,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
             Icons.lock,
             color: Colors.purple,
           ),
-          labelText: 'Password',
+          labelText: 'Confirme le mot de passe',
         ),
       ),
     );

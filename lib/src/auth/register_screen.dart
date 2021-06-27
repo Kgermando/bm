@@ -23,7 +23,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   final String provinceValue = 'Kinshasa';
 
-  var _provinces = <String>[
+  static var _provinces = <String>[
     'Bas-Uele',
     'Équateur',
     'Haut-Katanga,'
@@ -51,7 +51,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
     'Tshopo',
     'Tshuapa',
   ];
-
 
   @override
   Widget build(BuildContext context) {
@@ -178,7 +177,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-
   Widget lastNameBuild() {
     return Padding(
       padding: EdgeInsets.all(8),
@@ -198,7 +196,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
       ),
     );
   }
-
 
   Widget userNameBuild() {
     return Padding(
@@ -271,8 +268,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   Icons.place,
                   color: Colors.purple,
                 ),
-                labelText: 'Province'
-            ),
+                labelText: 'Province'),
             value: provinceValue,
             icon: const Icon(Icons.arrow_drop_down),
             iconSize: 20,
@@ -280,7 +276,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
             isDense: true,
             isExpanded: true,
             style: const TextStyle(color: Colors.deepPurple),
-            
+            onChanged: (value) {
+              setState(() {
+                province = value;
+              });
+            },
             items: _provinces.map<DropdownMenuItem<String>>((String value) {
               return DropdownMenuItem<String>(
                 value: value,
@@ -304,17 +304,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
           });
         },
         decoration: InputDecoration(
-          prefixIcon: Icon(
-            Icons.business,
-            color: Colors.purple,
-          ),
-          labelText: 'Nom de votre activité'
-        ),
+            prefixIcon: Icon(
+              Icons.business,
+              color: Colors.purple,
+            ),
+            labelText: 'Nom de votre activité'),
       ),
     );
   }
 
-    Widget typeAbonnementBuild() {
+  Widget typeAbonnementBuild() {
     return Padding(
       padding: EdgeInsets.all(8),
       child: TextFormField(
@@ -334,7 +333,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-    Widget passwordBuild() {
+  Widget passwordBuild() {
     return Padding(
       padding: EdgeInsets.all(8),
       child: TextFormField(
@@ -354,7 +353,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-    Widget confirmPasswordBuild() {
+  Widget confirmPasswordBuild() {
     return Padding(
       padding: EdgeInsets.all(8),
       child: TextFormField(
@@ -374,39 +373,33 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-
   Widget registerButtonBuild() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center, 
-      children: [
-        Container(
+    return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+      Container(
           height: 1.4 * (MediaQuery.of(context).size.height / 20),
           width: 5 * (MediaQuery.of(context).size.width / 10),
           margin: EdgeInsets.only(bottom: 20),
           child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              textStyle: const TextStyle(fontSize: 10),
-              elevation: 5.0,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30.0),
+              style: ElevatedButton.styleFrom(
+                textStyle: const TextStyle(fontSize: 10),
+                elevation: 5.0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30.0),
+                ),
               ),
-            ),
-            onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => DashboardScreen()));
-            },
-            child: Text(
-              'INSCRIPTION',
-              style: TextStyle(
-                color: Colors.white,
-                letterSpacing: 1.5,
-                fontWeight: FontWeight.w700,
-                fontSize: MediaQuery.of(context).size.height / 50,
-              ),
-            )
-          )
-        )
-      ]
-    );
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => DashboardScreen()));
+              },
+              child: Text(
+                'INSCRIPTION',
+                style: TextStyle(
+                  color: Colors.white,
+                  letterSpacing: 1.5,
+                  fontWeight: FontWeight.w700,
+                  fontSize: MediaQuery.of(context).size.height / 50,
+                ),
+              )))
+    ]);
   }
 }

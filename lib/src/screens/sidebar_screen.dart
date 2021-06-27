@@ -116,9 +116,9 @@ class SideBarScreen extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.settings),
-            title: Text("Paramètre"),
+            title: Text("Paramètres"),
             onTap: () {
-              print("Share Clicked");
+              print("Settings Clicked");
               Navigator.push(
               context,
               MaterialPageRoute(

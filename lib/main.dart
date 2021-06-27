@@ -1,4 +1,4 @@
-import 'package:e_management/src/screens/dashboard_screen.dart';
+import 'package:e_management/src/auth/login_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {    
@@ -10,12 +10,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'E-Management',
+      title: 'B-Management',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.deepPurple,
       ),
-      home: DashboardScreen(),
+      home: LoginScreen(),
     );
   }
 }

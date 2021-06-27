@@ -96,7 +96,6 @@ class _ListAchatScreenState extends State<ListAchatScreen> {
           PdfApi.openFile(pdfFile);
         });
   }
-
 }
 
 class AchatItemWidget extends StatefulWidget {
@@ -176,15 +175,15 @@ class _AchatItemWidgetState extends State<AchatItemWidget> {
                         padding: const EdgeInsets.only(bottom: 8),
                         child: Text(achat.nameProduct,
                             style: TextStyle(
-                              fontWeight: FontWeight.bold, 
-                              fontSize: 20, 
-                              overflow: TextOverflow.ellipsis
-                            )
-                            ),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                                overflow: TextOverflow.ellipsis)),
                       ),
                       Text('${achat.categorie} -> ${achat.sousCategorie}',
-                          style:
-                              TextStyle(color: Colors.grey[700], fontSize: 16, overflow: TextOverflow.ellipsis))
+                          style: TextStyle(
+                              color: Colors.grey[700],
+                              fontSize: 16,
+                              overflow: TextOverflow.ellipsis))
                     ],
                   ),
                 ),
@@ -205,8 +204,7 @@ class _AchatItemWidgetState extends State<AchatItemWidget> {
                   ),
                   Container(
                     padding: const EdgeInsets.only(bottom: 8),
-                    child: Text(
-                        'Stock: ${achatQty - sumQty} ${achat.unity}',
+                    child: Text('Stock: ${achatQty - sumQty} ${achat.unity}',
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 12)),
                   )
@@ -234,54 +232,18 @@ class _AchatItemWidgetState extends State<AchatItemWidget> {
 
     double qty = double.parse(achat.quantity);
 
-    double qtyAchat1 = (qty / 1);
-    double qtyAchat2 = (qty / 2);
-    double qtyAchat3 = (qty / 3);
-    double qtyAchat4 = (qty / 4);
-    double qtyAchat5 = (qty / 5);
-    double qtyAchat6 = (qty / 6);
-    double qtyAchat7 = (qty / 7);
-    double qtyAchat8 = (qty / 8);
-    double qtyAchat9 = (qty / 9);
-    double qtyAchat10 = (qty / 10);
-    double qtyAchat12 = (qty / 12);
-    double qtyAchat15 = (qty / 15);
-    double qtyAchat18 = (qty / 18);
-    double qtyAchat19 = (qty / 18 - 1);
-    double qtyAchat20 = (qty / 20);
+    double qtyVente = sumQty * 100 / qty;
 
-    if (sumQty == qtyAchat1) {
-      return Colors.red[900];
-    } else if (sumQty <= qtyAchat2) {
+    print(qtyVente);
+
+    if(qtyVente <= 30.0) {
       return Colors.green[200];
-    } else if (sumQty <= qtyAchat3) {
-      return Colors.orange[100];
-    } else if (sumQty <= qtyAchat4) {
+    } else if (qtyVente <= 50.0) {
       return Colors.orange[300];
-    } else if (sumQty <= qtyAchat5) {
-      return Colors.orange[500];
-    } else if (sumQty <= qtyAchat6) {
+    } else if (qtyVente <= 80.0) {
       return Colors.orange[700];
-    } else if (sumQty <= qtyAchat7) {
-      return Colors.orange[900];
-    } else if (sumQty <= qtyAchat8) {
-      return Colors.red[500];
-    } else if (sumQty <= qtyAchat9) {
-      return Colors.red[600];
-    } else if (sumQty <= qtyAchat10) {
-      return Colors.red[700];
-    } else if (sumQty <= qtyAchat12) {
+    } else if (qtyVente <= 100.0) {
       return Colors.red[800];
-    } else if (sumQty <= qtyAchat15) {
-      return Colors.red[900];
-    } else if (sumQty <= qtyAchat18) {
-      return Colors.pink[800];
-    } else if (sumQty <= qtyAchat19) {
-      return Colors.pink[900];
-    } else if (sumQty <= qtyAchat20) {
-      return Colors.purple[900];
-    } else {
-      return Colors.lightBlue[100];
     }
   }
 }

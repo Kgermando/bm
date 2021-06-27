@@ -1,6 +1,8 @@
 import 'package:chart_sparkline/chart_sparkline.dart';
 import 'package:e_management/resources/products_database.dart';
+import 'package:e_management/src/auth/login_screen.dart';
 import 'package:e_management/src/models/vente_model.dart';
+import 'package:e_management/src/produits/ventes/add_vente_screen.dart';
 import 'package:e_management/src/screens/sidebar_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -19,16 +21,28 @@ class _DashboardScreenState extends State<DashboardScreen> {
             title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Text('E-Management'),
+            Text('B-Management'),
             ElevatedButton.icon(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
+              },
               icon: Icon(Icons.power_settings_new),
               label: Text(''),
             ),
           ],
-        )),
-        drawer: SideBarScreen(),
-        body: VenteDashboardScreen());
+        )
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => AddVenteScreen()));
+        },
+        tooltip: 'Ajoutez ventes',
+        child: Icon(Icons.add),
+      ),
+      drawer: SideBarScreen(),
+      body: VenteDashboardScreen()
+    );
   }
 }
 
@@ -49,7 +63,8 @@ class _VenteDashboardScreenState extends State<VenteDashboardScreen> {
   }
 
   void loadVente() async {
-    List<VenteModel>? ventes = await ProductDatabase.instance.getAllVenteByDate();
+    List<VenteModel>? ventes =
+        await ProductDatabase.instance.getAllVenteByDate();
     setState(() {
       venteList = ventes;
       // print(venteList);
@@ -74,11 +89,13 @@ class _VenteDashboardScreenState extends State<VenteDashboardScreen> {
             children: [
               Container(
                 child: Text('Ventes journalières',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 14.0)),
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0)),
               ),
               Container(
-                child: Text('$sum FC', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 28.0)),
+                child: Text('$sum FC',
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 28.0)),
               ),
               Container(
                 // width: 300.0,
@@ -91,7 +108,6 @@ class _VenteDashboardScreenState extends State<VenteDashboardScreen> {
                   pointsMode: PointsMode.all,
                   pointSize: 8.0,
                   pointColor: Colors.blue,
-
                   lineGradient: LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,

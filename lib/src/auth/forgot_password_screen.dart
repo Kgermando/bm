@@ -1,35 +1,15 @@
-import 'package:e_management/src/auth/forgot_password_screen.dart';
-import 'package:e_management/src/auth/register_screen.dart';
-import 'package:e_management/src/screens/dashboard_screen.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:e_management/src/auth/login_screen.dart';
 import 'package:flutter/material.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class ForgotPasswordScreen extends StatefulWidget {
+  const ForgotPasswordScreen({ Key? key }) : super(key: key);
 
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _ForgotPasswordScreenState createState() => _ForgotPasswordScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: LoginWidgetForm(),
-    );
-  }
-}
-
-class LoginWidgetForm extends StatefulWidget {
-  const LoginWidgetForm({Key? key}) : super(key: key);
-
-  @override
-  _LoginWidgetFormState createState() => _LoginWidgetFormState();
-}
-
-class _LoginWidgetFormState extends State<LoginWidgetForm> {
-  String? username;
-  String? password;
+class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
+  String? email;
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +38,6 @@ class _LoginWidgetFormState extends State<LoginWidgetForm> {
                   children: [
                     loginTextBuild(),
                     containerBuilder(),
-                    signUpButtonBuild(),
                   ],
                 ),
               )
@@ -82,61 +61,26 @@ class _LoginWidgetFormState extends State<LoginWidgetForm> {
     );
   }
 
-  Widget usernameBuild() {
+  Widget emailBuild() {
     return Padding(
-      padding: EdgeInsets.all(8),
+      padding: EdgeInsets.all(20),
       child: TextFormField(
         keyboardType: TextInputType.text,
         onChanged: (value) {
           setState(() {
-            username = value;
+            email = value;
           });
         },
         decoration: InputDecoration(
             prefixIcon: Icon(
-              Icons.person,
+              Icons.email,
               color: Colors.purple,
             ),
-            labelText: 'Nom d\'utilisateur'),
+            labelText: 'Entrez votre adresse email'),
       ),
     );
   }
 
-  Widget passwordBuild() {
-    return Padding(
-      padding: EdgeInsets.all(8),
-      child: TextFormField(
-        keyboardType: TextInputType.visiblePassword,
-        obscureText: true,
-        onChanged: (value) {
-          setState(() {
-            password = value;
-          });
-        },
-        decoration: InputDecoration(
-          prefixIcon: Icon(
-            Icons.lock,
-            color: Colors.purple,
-          ),
-          labelText: 'Password',
-        ),
-      ),
-    );
-  }
-
-  Widget forgotPasswordBuild() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        TextButton(
-            onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => ForgotPasswordScreen()));
-            },
-            child: Text('Mot de passe oublié?'))
-      ],
-    );
-  }
 
   Widget loginButtonBuild() {
     return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -154,10 +98,10 @@ class _LoginWidgetFormState extends State<LoginWidgetForm> {
               ),
               onPressed: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => DashboardScreen()));
+                    MaterialPageRoute(builder: (context) => LoginScreen()));
               },
               child: Text(
-                'CONNEXION',
+                'SOUMETTRE',
                 style: TextStyle(
                   color: Colors.white,
                   letterSpacing: 1.5,
@@ -168,22 +112,6 @@ class _LoginWidgetFormState extends State<LoginWidgetForm> {
     ]);
   }
 
-  Widget buildOrRow() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Container(
-          margin: EdgeInsets.only(bottom: 20),
-          child: Text(
-            '- OU -',
-            style: TextStyle(
-              fontWeight: FontWeight.w400,
-            ),
-          ),
-        )
-      ],
-    );
-  }
 
   Widget loginTextBuild() {
     return Padding(
@@ -192,7 +120,7 @@ class _LoginWidgetFormState extends State<LoginWidgetForm> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Text(
-            "Connectez-vous ici",
+            "Récupration du mot de passe",
             style: TextStyle(
                 fontSize: MediaQuery.of(context).size.height / 30,
                 fontWeight: FontWeight.w700,
@@ -222,12 +150,8 @@ class _LoginWidgetFormState extends State<LoginWidgetForm> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 logoBuild(),
-                usernameBuild(),
-                passwordBuild(),
-                forgotPasswordBuild(),
+                emailBuild(),
                 loginButtonBuild(),
-                buildOrRow(),
-                // buildSocialBtnRow(),
               ],
             ),
           ),
@@ -236,39 +160,5 @@ class _LoginWidgetFormState extends State<LoginWidgetForm> {
     );
   }
 
-  Widget signUpButtonBuild() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Padding(
-            padding: EdgeInsets.only(top: 10),
-            child: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => RegisterScreen()));
-                },
-                child: RichText(
-                    text: TextSpan(children: [
-                  TextSpan(
-                    text: 'Créez votre compte  ',
-                    style: TextStyle(
-                      color: Colors.white70,
-                      fontSize: MediaQuery.of(context).size.height / 40,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                  TextSpan(
-                    text: 'ici',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: MediaQuery.of(context).size.height / 40,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  )
-                ]))))
-      ],
-    );
-  }
+
 }

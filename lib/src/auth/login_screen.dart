@@ -130,16 +130,18 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               onPressed: () {
-                var isLoginOK = AuthService().login(_telephone.text, _password.text);
-                if () {
-                   Navigator.push(
-                    context, 
-                    MaterialPageRoute(builder: (context) => DashboardScreen())
-                  );
-
-                } else {
-                  return
-                }
+                print('valeur telephone $_telephone.text');
+                print('valeur password $_password.text');
+                AuthService().login(_telephone.text, _password.text).then((val) {
+                  print('valeur login $val');
+                  if (val.data['success']) {
+                    token = val.data['token'];
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => DashboardScreen()));
+                  }
+                });
                 
 
               },

@@ -1,13 +1,14 @@
 import 'dart:convert';
 
 import 'package:e_management/global/environment.dart';
+import 'package:e_management/src/models/login_model.dart';
 import 'package:e_management/src/models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 
 class AuthService with ChangeNotifier {
-  static const _TOKEN_KEY = 'token';
+  static const _TOKEN_KEY = 'jwt';
 
   User? user;
 
@@ -15,16 +16,16 @@ class AuthService with ChangeNotifier {
 
   static Future<String?> getToken() async {
     final _storage = new FlutterSecureStorage();
-    return await _storage.read(key: 'token');
+    return await _storage.read(key: 'jwt');
   }
 
   static Future<void> deleteToken() async {
     final _storage = new FlutterSecureStorage();
-    await _storage.delete(key: 'token');
+    await _storage.delete(key: 'jwt');
   }
 
 
-  Future<bool> login(String telephone, String password) async {
+  Future<dynamic> login(String telephone, String password) async {
     Map data = {'telephone': telephone, 'password': password};
     var loginUrl = Uri.parse("$Environment.serverUrl/auth/login");
     var body = jsonEncode(data);
@@ -36,7 +37,7 @@ class AuthService with ChangeNotifier {
     if (resp.statusCode == 200) {
       final loginResponse = loginModelFromJson(resp.body);
       user = loginResponse.user;
-      await _guardarToken(loginResponse.token);
+      await _guardarToken(loginResponse.jwt);
       return true;
     }
 
@@ -79,7 +80,7 @@ class AuthService with ChangeNotifier {
     if (resp.statusCode == 200) {
       final registerResponse = loginModelFromJson(resp.body);
       user = registerResponse.user;
-      await _guardarToken(registerResponse.token);
+      await _guardarToken(registerResponse.jwt);
       return true;
     } else {
       final respBody = jsonDecode(resp.body);
@@ -88,16 +89,16 @@ class AuthService with ChangeNotifier {
   }
 
   Future<bool> isLoggedIn() async {
-    final token = await this._storage.read(key: 'token');
+    final jwt = await this._storage.read(key: 'jwt');
     var getuserUrl = Uri.parse("$Environment.serverUrl/auth/user");
 
-    final resp = await http.get(getuserUrl, headers: {'Content-Type': 'application/json', 'x-token': token!});
+    final resp = await http.get(getuserUrl, headers: {'Content-Type': 'application/json', 'x-token': jwt!});
 
 
     if (resp.statusCode == 200) {
       final userResponse = loginModelFromJson(resp.body);
       user = userResponse.user;
-      await _guardarToken(userResponse.token);
+      await _guardarToken(userResponse.jwt);
       return true;
     } else {
       logout();
@@ -105,8 +106,8 @@ class AuthService with ChangeNotifier {
     }
   }
 
-  Future<void> _guardarToken(String token) async =>
-      await _storage.write(key: _TOKEN_KEY, value: token);
+  Future<void> _guardarToken(String jwt) async =>
+      await _storage.write(key: _TOKEN_KEY, value: jwt);
 
   Future<void> logout() async => await _storage.delete(key: _TOKEN_KEY);
 }

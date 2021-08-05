@@ -1,5 +1,7 @@
+import 'package:e_management/services/auth_service.dart';
 import 'package:e_management/src/auth/forgot_password_screen.dart';
 import 'package:e_management/src/auth/register_screen.dart';
+import 'package:e_management/src/screens/dashboard_screen.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -127,7 +129,20 @@ class _LoginScreenState extends State<LoginScreen> {
                   borderRadius: BorderRadius.circular(30.0),
                 ),
               ),
-              onPressed: () {},
+              onPressed: () {
+                var isLoginOK = AuthService().login(_telephone.text, _password.text);
+                if () {
+                   Navigator.push(
+                    context, 
+                    MaterialPageRoute(builder: (context) => DashboardScreen())
+                  );
+
+                } else {
+                  return
+                }
+                
+
+              },
               child: Text(
                 'CONNEXION',
                 style: TextStyle(

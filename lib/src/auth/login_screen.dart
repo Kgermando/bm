@@ -1,7 +1,5 @@
 import 'package:e_management/src/auth/forgot_password_screen.dart';
 import 'package:e_management/src/auth/register_screen.dart';
-import 'package:e_management/src/screens/dashboard_screen.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -12,59 +10,41 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: LoginWidgetForm(),
-    );
-  }
-}
-
-class LoginWidgetForm extends StatefulWidget {
-  const LoginWidgetForm({Key? key}) : super(key: key);
-
-  @override
-  _LoginWidgetFormState createState() => _LoginWidgetFormState();
-}
-
-class _LoginWidgetFormState extends State<LoginWidgetForm> {
-  String? username;
-  String? password;
+  final TextEditingController _telephone = TextEditingController();
+  final TextEditingController _password = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        top: true,
         child: Scaffold(
-          resizeToAvoidBottomInset: false,
-          backgroundColor: Color(0xfff2f3f7),
-          body: Stack(
-            children: [
-              Container(
-                height: MediaQuery.of(context).size.height * 0.7,
-                width: MediaQuery.of(context).size.width,
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: Colors.purple,
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: const Radius.circular(70),
-                        bottomRight: const Radius.circular(70),
-                      )),
-                ),
-              ),
-              SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    loginTextBuild(),
-                    containerBuilder(),
-                    signUpButtonBuild(),
-                  ],
-                ),
-              )
-            ],
+      backgroundColor: Color(0xfff2f3f7),
+      body: Stack(
+        children: [
+          Container(
+            height: MediaQuery.of(context).size.height * 0.5,
+            width: MediaQuery.of(context).size.width,
+            child: Container(
+              decoration: BoxDecoration(
+                  color: Colors.purple,
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: const Radius.circular(70),
+                    bottomRight: const Radius.circular(70),
+                  )),
+            ),
           ),
-        ));
+          SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                loginTextBuild(),
+                containerBuilder(),
+                signUpButtonBuild(),
+              ],
+            ),
+          )
+        ],
+      ),
+    ));
   }
 
   Widget logoBuild() {
@@ -82,16 +62,12 @@ class _LoginWidgetFormState extends State<LoginWidgetForm> {
     );
   }
 
-  Widget usernameBuild() {
+  Widget telephoneBuild() {
     return Padding(
       padding: EdgeInsets.all(8),
       child: TextFormField(
-        keyboardType: TextInputType.text,
-        onChanged: (value) {
-          setState(() {
-            username = value;
-          });
-        },
+        keyboardType: TextInputType.phone,
+        controller: _telephone,
         decoration: InputDecoration(
             prefixIcon: Icon(
               Icons.person,
@@ -108,11 +84,7 @@ class _LoginWidgetFormState extends State<LoginWidgetForm> {
       child: TextFormField(
         keyboardType: TextInputType.visiblePassword,
         obscureText: true,
-        onChanged: (value) {
-          setState(() {
-            password = value;
-          });
-        },
+        controller: _password,
         decoration: InputDecoration(
           prefixIcon: Icon(
             Icons.lock,
@@ -131,7 +103,10 @@ class _LoginWidgetFormState extends State<LoginWidgetForm> {
       children: [
         TextButton(
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => ForgotPasswordScreen()));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ForgotPasswordScreen()));
             },
             child: Text('Mot de passe oublié?'))
       ],
@@ -143,7 +118,7 @@ class _LoginWidgetFormState extends State<LoginWidgetForm> {
       Container(
           height: 1.4 * (MediaQuery.of(context).size.height / 20),
           width: 5 * (MediaQuery.of(context).size.width / 10),
-          margin: EdgeInsets.only(bottom: 20),
+          margin: EdgeInsets.only(bottom: 5),
           child: ElevatedButton(
               style: ElevatedButton.styleFrom(
                 textStyle: const TextStyle(fontSize: 10),
@@ -152,10 +127,7 @@ class _LoginWidgetFormState extends State<LoginWidgetForm> {
                   borderRadius: BorderRadius.circular(30.0),
                 ),
               ),
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => DashboardScreen()));
-              },
+              onPressed: () {},
               child: Text(
                 'CONNEXION',
                 style: TextStyle(
@@ -173,7 +145,7 @@ class _LoginWidgetFormState extends State<LoginWidgetForm> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Container(
-          margin: EdgeInsets.only(bottom: 20),
+          margin: EdgeInsets.only(bottom: 5),
           child: Text(
             '- OU -',
             style: TextStyle(
@@ -212,7 +184,7 @@ class _LoginWidgetFormState extends State<LoginWidgetForm> {
             Radius.circular(20),
           ),
           child: Container(
-            height: MediaQuery.of(context).size.height * 0.7,
+            // height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width * 0.8,
             decoration: BoxDecoration(
               color: Colors.white,
@@ -222,7 +194,7 @@ class _LoginWidgetFormState extends State<LoginWidgetForm> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 logoBuild(),
-                usernameBuild(),
+                telephoneBuild(),
                 passwordBuild(),
                 forgotPasswordBuild(),
                 loginButtonBuild(),
@@ -241,7 +213,7 @@ class _LoginWidgetFormState extends State<LoginWidgetForm> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Padding(
-            padding: EdgeInsets.only(top: 10),
+            padding: EdgeInsets.only(top: 5),
             child: ElevatedButton(
                 onPressed: () {
                   Navigator.push(
@@ -255,7 +227,7 @@ class _LoginWidgetFormState extends State<LoginWidgetForm> {
                     text: 'Créez votre compte  ',
                     style: TextStyle(
                       color: Colors.white70,
-                      fontSize: MediaQuery.of(context).size.height / 40,
+                      fontSize: MediaQuery.of(context).size.height / 50,
                       fontWeight: FontWeight.w400,
                     ),
                   ),
@@ -263,7 +235,7 @@ class _LoginWidgetFormState extends State<LoginWidgetForm> {
                     text: 'ici',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: MediaQuery.of(context).size.height / 40,
+                      fontSize: MediaQuery.of(context).size.height / 50,
                       fontWeight: FontWeight.bold,
                     ),
                   )

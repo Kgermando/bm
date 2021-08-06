@@ -75,7 +75,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Icons.person,
               color: Colors.purple,
             ),
-            labelText: 'Nom d\'utilisateur'),
+            labelText: 'Téléphone'),
       ),
     );
   }

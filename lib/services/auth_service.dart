@@ -12,7 +12,7 @@ class AuthService with ChangeNotifier {
 
   User? user;
 
-  final _storage =  FlutterSecureStorage();
+  final _storage = FlutterSecureStorage();
 
   static Future<String?> getToken() async {
     final _storage = new FlutterSecureStorage();
@@ -24,9 +24,7 @@ class AuthService with ChangeNotifier {
     await _storage.delete(key: 'jwt');
   }
 
-
   Future<dynamic> login(String telephone, String password) async {
-
     Map data = {'telephone': telephone, 'password': password};
 
     var loginUrl = Uri.parse("${Environment.serverUrl}/auth/login");
@@ -54,8 +52,6 @@ class AuthService with ChangeNotifier {
       String typeAbonnement,
       DateTime createdAt,
       DateTime updatedAt) async {
-
-
     final data = {
       'firstName': firstName,
       'lastName': lastName,
@@ -70,11 +66,8 @@ class AuthService with ChangeNotifier {
 
     var registerUrl = Uri.parse("${Environment.serverUrl}/auth/register");
 
-    final resp = await http.post(
-       registerUrl,
-        body: jsonEncode(data),
-        headers: {'Content-Type': 'application/json'}
-      );
+    final resp = await http.post(registerUrl,
+        body: jsonEncode(data), headers: {'Content-Type': 'application/json'});
 
     if (resp.statusCode == 200) {
       final registerResponse = loginModelFromJson(resp.body);
@@ -91,8 +84,8 @@ class AuthService with ChangeNotifier {
     final jwt = await this._storage.read(key: 'jwt');
     var getuserUrl = Uri.parse("${Environment.serverUrl}/auth/user");
 
-    final resp = await http.get(getuserUrl, headers: {'Content-Type': 'application/json', 'x-token': jwt!});
-
+    final resp = await http.get(getuserUrl,
+        headers: {'Content-Type': 'application/json', 'x-token': jwt!});
 
     if (resp.statusCode == 200) {
       final userResponse = loginModelFromJson(resp.body);

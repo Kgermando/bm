@@ -8,15 +8,16 @@ LoginModel loginModelFromJson(String str) =>
 String loginModelToJson(LoginModel data) => json.encode(data.toJson());
 
 class LoginModel {
-  String ok;
-  User? user;
-  String jwt;
-
-  LoginModel({
+    LoginModel({
     required this.ok,
     required this.user,
     required this.jwt,
   });
+
+  bool ok;
+  User? user;
+  String jwt;
+
 
   factory LoginModel.fromJson(Map<String, dynamic> json) => LoginModel(
     ok: json["ok"], 
@@ -26,8 +27,8 @@ class LoginModel {
 
 
   Map<String, dynamic> toJson() => {
-        "ok": ok,
-        "user": user!.toJson(),
-        "jwt": jwt,
-      };
+    "ok": ok,
+    "user": user!.toJson(),
+    "jwt": jwt,
+  };
 }

@@ -12,7 +12,7 @@ class AuthService with ChangeNotifier {
 
   User? user;
 
-  final _storage = new FlutterSecureStorage();
+  final _storage =  FlutterSecureStorage();
 
   static Future<String?> getToken() async {
     final _storage = new FlutterSecureStorage();
@@ -26,22 +26,22 @@ class AuthService with ChangeNotifier {
 
 
   Future<dynamic> login(String telephone, String password) async {
+
     Map data = {'telephone': telephone, 'password': password};
-    var loginUrl = Uri.parse("$Environment.serverUrl/auth/login");
+
+    var loginUrl = Uri.parse("${Environment.serverUrl}/auth/login");
     var body = jsonEncode(data);
-    var headers = {'Content-Type': 'application/json'};
+    var headers = {'Content-Type': 'application/json; charset=UTF-8'};
 
     final resp = await http.post(loginUrl, body: body, headers: headers);
 
-
-    if (resp.statusCode == 200) {
+    if (resp.statusCode == 201) {
       final loginResponse = loginModelFromJson(resp.body);
       user = loginResponse.user;
       await _guardarToken(loginResponse.jwt);
-      return true;
+    } else {
+      throw Exception('Failed to login');
     }
-
-    return false;
   }
 
   Future<dynamic> register(
@@ -73,14 +73,13 @@ class AuthService with ChangeNotifier {
     final resp = await http.post(
        registerUrl,
         body: jsonEncode(data),
-        headers: {'Content-Type': 'application/json'});
-
-
+        headers: {'Content-Type': 'application/json'}
+      );
 
     if (resp.statusCode == 200) {
       final registerResponse = loginModelFromJson(resp.body);
       user = registerResponse.user;
-      await _guardarToken(registerResponse.jwt);
+      // await _guardarToken(registerResponse.jwt);
       return true;
     } else {
       final respBody = jsonDecode(resp.body);
@@ -90,7 +89,7 @@ class AuthService with ChangeNotifier {
 
   Future<bool> isLoggedIn() async {
     final jwt = await this._storage.read(key: 'jwt');
-    var getuserUrl = Uri.parse("$Environment.serverUrl/auth/user");
+    var getuserUrl = Uri.parse("${Environment.serverUrl}/auth/user");
 
     final resp = await http.get(getuserUrl, headers: {'Content-Type': 'application/json', 'x-token': jwt!});
 

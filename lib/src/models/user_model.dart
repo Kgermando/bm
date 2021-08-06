@@ -14,8 +14,8 @@ class User {
   String nameBusiness;
   String province;
   String typeAbonnement;
-  DateTime createdAt;
-  DateTime updatedAt;
+  String? createdAt;
+  String? updatedAt;
 
 
   User({
@@ -41,8 +41,8 @@ class User {
         nameBusiness: json["nameBusiness"],
         province: json["province"],
         typeAbonnement: json["typeAbonnement"],
-        createdAt: DateTime.parse(json["createdAt"]),
-        updatedAt: DateTime.parse(json["updatedAt"]),
+        createdAt: json["createdAt"],
+        updatedAt: json["updatedAt"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -54,7 +54,7 @@ class User {
         "nameBusiness": nameBusiness,
         "province": province,
         "typeAbonnement": typeAbonnement,
-        "createdAt": createdAt.toIso8601String(),
-        "updatedAt": updatedAt.toIso8601String(),
+        "createdAt": createdAt,
+        "updatedAt": updatedAt,
       };
 }

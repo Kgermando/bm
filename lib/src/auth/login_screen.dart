@@ -130,16 +130,24 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               onPressed: () {
-                print('valeur telephone $_telephone.text');
-                print('valeur password $_password.text');
+                print('valeur telephone ${_telephone.text}');
+                print('valeur password ${_password.text}');
                 AuthService().login(_telephone.text, _password.text).then((val) {
                   print('valeur login $val');
-                  if (val.data['success']) {
-                    token = val.data['token'];
+                  if (val) { 
                     Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) => DashboardScreen()));
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text("Login erreur!"),
+                      backgroundColor: Colors.green[700],
+                    ));
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text("Login erreur!"),
+                      backgroundColor: Colors.red[700],
+                    ));
                   }
                 });
                 

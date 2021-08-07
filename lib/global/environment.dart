@@ -1,5 +1,4 @@
 
-
 class Environment {
   static String serverUrl = "http://192.168.43.230:3000/api";
 

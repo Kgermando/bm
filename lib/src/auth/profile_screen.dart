@@ -2,14 +2,14 @@ import 'package:e_management/resources/dio_client.dart';
 import 'package:e_management/src/models/user_model.dart';
 import 'package:flutter/material.dart';
 
-class Profile extends StatefulWidget {
-  const Profile({ Key? key }) : super(key: key);
+class ProfileScreen extends StatefulWidget {
+  const ProfileScreen({ Key? key }) : super(key: key);
 
   @override
-  _ProfileState createState() => _ProfileState();
+  _ProfileScreenState createState() => _ProfileScreenState();
 }
 
-class _ProfileState extends State<Profile> {
+class _ProfileScreenState extends State<ProfileScreen> {
   final DioClient _client = DioClient();
 
   @override

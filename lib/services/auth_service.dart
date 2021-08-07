@@ -33,7 +33,7 @@ class AuthService with ChangeNotifier {
 
     final resp = await http.post(loginUrl, body: body, headers: headers);
 
-    if (resp.statusCode == 201) {
+    if (resp.statusCode == 200 || resp.statusCode == 201) {
       print(resp.body);
       // final loginResponse = loginModelFromJson(resp.body);
       // user = loginResponse.user;

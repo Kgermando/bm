@@ -2,33 +2,25 @@ import 'dart:convert';
 
 import 'package:e_management/src/models/user_model.dart';
 
-LoginModel loginModelFromJson(String str) =>
-    LoginModel.fromJson(json.decode(str));
+LoginModel loginModelFromJson(String jwt) => LoginModel.fromJson(json.decode(jwt));
 
 String loginModelToJson(LoginModel data) => json.encode(data.toJson());
 
 class LoginModel {
-    LoginModel({
-    required this.ok,
+  LoginModel({
     required this.user,
     required this.jwt,
   });
 
-  bool ok;
   User? user;
   String jwt;
 
-
   factory LoginModel.fromJson(Map<String, dynamic> json) => LoginModel(
-    ok: json["ok"], 
-    user: User.fromJson(json["user"]),
-    jwt: json["jwt"]
-  );
-
+      user: User.fromJson(json["user"]),
+      jwt: json["jwt"]);
 
   Map<String, dynamic> toJson() => {
-    "ok": ok,
-    "user": user!.toJson(),
-    "jwt": jwt,
-  };
+        "user": user!.toJson(),
+        "jwt": jwt,
+      };
 }

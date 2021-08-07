@@ -6,16 +6,16 @@ User userFromJson(String str) => User.fromJson(json.decode(str));
 String userToJson(User data) => json.encode(data.toJson());
 
 class User {
-  String id;
-  String firstName;
-  String lastName;
-  String email;
-  String telephone;
-  String nameBusiness;
-  String province;
-  String typeAbonnement;
-  String? createdAt;
-  String? updatedAt;
+  int? id;
+  String? firstName;
+  String? lastName;
+  String? email;
+  String? telephone;
+  String? nameBusiness;
+  String? province;
+  String? typeAbonnement;
+  // DateTime? createdAt;
+  // DateTime? updatedAt;
 
 
   User({
@@ -27,11 +27,11 @@ class User {
     required this.nameBusiness,
     required this.province,
     required this.typeAbonnement,
-    required this.createdAt,
-    required this.updatedAt,
+    // required this.createdAt,
+    // required this.updatedAt,
   });
 
-
+ 
   factory User.fromJson(Map<String, dynamic> json) => User(
         id: json["id"],
         firstName: json["firstName"],
@@ -41,8 +41,8 @@ class User {
         nameBusiness: json["nameBusiness"],
         province: json["province"],
         typeAbonnement: json["typeAbonnement"],
-        createdAt: json["createdAt"],
-        updatedAt: json["updatedAt"],
+        // createdAt: json["createdAt"],
+        // updatedAt: json["updatedAt"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -54,7 +54,7 @@ class User {
         "nameBusiness": nameBusiness,
         "province": province,
         "typeAbonnement": typeAbonnement,
-        "createdAt": createdAt,
-        "updatedAt": updatedAt,
+        // "createdAt": createdAt,
+        // "updatedAt": updatedAt,
       };
 }

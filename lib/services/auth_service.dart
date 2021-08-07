@@ -34,11 +34,14 @@ class AuthService with ChangeNotifier {
     final resp = await http.post(loginUrl, body: body, headers: headers);
 
     if (resp.statusCode == 201) {
-      final loginResponse = loginModelFromJson(resp.body);
-      user = loginResponse.user;
-      await _guardarToken(loginResponse.jwt);
+      print(resp.body);
+      // final loginResponse = loginModelFromJson(resp.body);
+      // user = loginResponse.user;
+      // await _guardarToken(loginResponse.jwt);
+      await _guardarToken("jwt");
+      return true;
     } else {
-      throw Exception('Failed to login');
+      return false;
     }
   }
 
@@ -88,9 +91,9 @@ class AuthService with ChangeNotifier {
         headers: {'Content-Type': 'application/json', 'x-token': jwt!});
 
     if (resp.statusCode == 200) {
-      final userResponse = loginModelFromJson(resp.body);
-      user = userResponse.user;
-      await _guardarToken(userResponse.jwt);
+      // final userResponse = loginModelFromJson(resp.body);
+      // user = userResponse.user;
+      // await _guardarToken(userResponse.jwt);
       return true;
     } else {
       logout();

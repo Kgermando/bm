@@ -128,19 +128,19 @@ class _LoginScreenState extends State<LoginScreen> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30.0),
                 ),
-              ),
+              ), 
               onPressed: () {
                 print('valeur telephone ${_telephone.text}');
                 print('valeur password ${_password.text}');
                 AuthService().login(_telephone.text, _password.text).then((val) {
                   print('valeur login $val');
-                  if (val) { 
+                  if (val) {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) => DashboardScreen()));
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content: Text("Login erreur!"),
+                      content: Text("Login succès!"),
                       backgroundColor: Colors.green[700],
                     ));
                   } else {
@@ -150,8 +150,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     ));
                   }
                 });
-                
-
               },
               child: Text(
                 'CONNEXION',

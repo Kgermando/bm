@@ -36,7 +36,7 @@ class _ProfileState extends State<Profile> {
                       style: TextStyle(fontSize: 16.0),
                     ),
                     Text(
-                      userData.email,
+                      userData.email!,
                       style: TextStyle(fontSize: 16.0),
                     ),
                   ],

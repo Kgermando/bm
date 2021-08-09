@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
             if (!snapshot.hasData) return CircularProgressIndicator();
             if (snapshot.data != "") {
               var str = snapshot.data;
-              print(str);
+              print(str); 
               // var jwt = str.toString().split(".");
               if (str.toString().length != 3) {
                 return LoginScreen();

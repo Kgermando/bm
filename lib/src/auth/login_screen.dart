@@ -130,11 +130,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   borderRadius: BorderRadius.circular(30.0),
                 ),
               ), 
-              onPressed: () async {
+              onPressed: () {
                 print('valeur telephone ${_telephone.text}');
                 print('valeur password ${_password.text}');
 
-                await AuthService().login(_telephone.text, _password.text).then((val) {
+                AuthService().login(_telephone.text, _password.text).then((val) {
                   print('valeur login $val');
                   if (val) {
                     Navigator.push(

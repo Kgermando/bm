@@ -1,5 +1,6 @@
 import 'package:chart_sparkline/chart_sparkline.dart';
 import 'package:e_management/resources/products_database.dart';
+import 'package:e_management/services/auth_service.dart';
 import 'package:e_management/src/auth/login_screen.dart';
 import 'package:e_management/src/auth/profile_screen.dart';
 import 'package:e_management/src/models/menu_item.dart';
@@ -66,7 +67,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
       case MenuItems.itemSettings:
         Navigator.of(context)
             .push(MaterialPageRoute(builder: (context) => SettingsScreen()));
-
         break;
       case MenuItems.itemProfile:
         Navigator.of(context)
@@ -75,10 +75,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
         break;
       case MenuItems.itemLogout:
         // Remove stockage jwt here.
-        Navigator.of(context)
-          .pushAndRemoveUntil(MaterialPageRoute(builder: 
-          (context) => LoginScreen()), (route) => false);
-
+        AuthService().logout();
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => LoginScreen()),
+            (route) => false);
         break;
     }
   }

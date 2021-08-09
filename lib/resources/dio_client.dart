@@ -5,17 +5,16 @@ import 'package:e_management/src/models/user_model.dart';
 class DioClient {
   final Dio _dio = Dio(
     BaseOptions(
-      baseUrl: 'http://localhost:3000/api',
+      baseUrl: 'http://192.168.43.230:3000/api',
       connectTimeout: 5000,
       receiveTimeout: 3000,
     ),
   )..interceptors.add(Logging());
 
-  Future<User?> getUser({required String id}) async {
+  Future<User?> getUser() async {
     User? user;
-
     try {
-      Response userData = await _dio.get('/auth/user');
+      Response userData = await _dio.get('http://192.168.43.230:3000/api/auth/user');
 
       print('User Info: ${userData.data}');
 

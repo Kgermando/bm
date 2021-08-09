@@ -5,7 +5,7 @@ import 'package:e_management/src/produits/ventes/add_vente_screen.dart';
 import 'package:e_management/src/produits/ventes/list_vente_screen.dart';
 import 'package:e_management/src/screens/contact_screen.dart';
 import 'package:e_management/src/screens/dashboard_screen.dart';
-import 'package:e_management/src/screens/shareapp_screen.dart';
+import 'package:e_management/src/screens/setting_screen.dart';
 import 'package:flutter/material.dart';
 
 class SideBarScreen extends StatelessWidget {
@@ -122,7 +122,7 @@ class SideBarScreen extends StatelessWidget {
               Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => ShareAppScreen())
+                builder: (context) => SettingsScreen())
               );
             },
           ),

@@ -1,12 +1,21 @@
 import 'package:e_management/src/auth/login_screen.dart';
+import 'package:e_management/src/screens/dashboard_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-void main() {    
+final storage = FlutterSecureStorage();
+
+void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+  Future<String> get jwtOrEmpty async {
+    var jwt = await storage.read(key: "jwt");
+    if (jwt == null) return "";
+    return jwt;
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -15,7 +24,23 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.deepPurple,
       ),
-      home: LoginScreen(),
+      home: FutureBuilder(
+          future: jwtOrEmpty,
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) return CircularProgressIndicator();
+            if (snapshot.data != "") {
+              var str = snapshot.data;
+              print(str);
+              // var jwt = str.toString().split(".");
+              if (str.toString().length != 3) {
+                return LoginScreen();
+              } else {
+                return DashboardScreen();
+              }
+            } else {
+              return LoginScreen();
+            }
+          }),
     );
   }
 }

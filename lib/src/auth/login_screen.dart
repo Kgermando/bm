@@ -4,6 +4,7 @@ import 'package:e_management/src/auth/register_screen.dart';
 import 'package:e_management/src/screens/dashboard_screen.dart';
 import 'package:flutter/material.dart';
 
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
@@ -129,10 +130,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   borderRadius: BorderRadius.circular(30.0),
                 ),
               ), 
-              onPressed: () {
+              onPressed: () async {
                 print('valeur telephone ${_telephone.text}');
                 print('valeur password ${_password.text}');
-                AuthService().login(_telephone.text, _password.text).then((val) {
+
+                await AuthService().login(_telephone.text, _password.text).then((val) {
                   print('valeur login $val');
                   if (val) {
                     Navigator.push(

@@ -17,9 +17,12 @@ class MenuItems {
   );
 
   static const itemProfile = MenuItem(
-    text: 'Settings',
+    text: 'Profile',
     icon: Icons.person,
   );
 
-  static const itemLogout = MenuItem(text: 'Settings', icon: Icons.logout);
+  static const itemLogout = MenuItem(
+    text: 'Deconnexion', 
+    icon: Icons.logout
+  );
 }

@@ -1,16 +1,15 @@
-import 'package:e_management/resources/dio_client.dart';
+import 'package:e_management/services/auth_service.dart';
 import 'package:e_management/src/models/user_model.dart';
 import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({ Key? key }) : super(key: key);
+  const ProfileScreen({Key? key}) : super(key: key);
 
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  final DioClient _client = DioClient();
 
   @override
   Widget build(BuildContext context) {
@@ -20,10 +19,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
       body: Center(
         child: FutureBuilder<User?>(
-          future: _client.getUser(id: '1'),
+          future: AuthService().isLoggedIn(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               User? userInfo = snapshot.data;
+              print("User $userInfo ");
+  
               if (userInfo != null) {
                 var userData = userInfo;
                 return Column(
@@ -44,9 +45,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
               }
             }
             return CircularProgressIndicator();
+            
           },
         ),
       ),
+
+
     );
   }
 }

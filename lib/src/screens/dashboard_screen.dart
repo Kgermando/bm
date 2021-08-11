@@ -5,7 +5,7 @@ import 'package:e_management/src/auth/login_screen.dart';
 import 'package:e_management/src/auth/profile_screen.dart';
 import 'package:e_management/src/models/menu_item.dart';
 import 'package:e_management/src/models/vente_model.dart';
-import 'package:e_management/src/produits/ventes/add_vente_screen.dart';
+import 'package:e_management/src/produits/ventes/add_vente_form.dart';
 import 'package:e_management/src/screens/setting_screen.dart';
 import 'package:e_management/src/screens/sidebar_screen.dart';
 import 'package:e_management/src/utils/menu_items.dart';
@@ -43,7 +43,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => AddVenteScreen()));
+                MaterialPageRoute(builder: (context) => AddVenteForm()));
           },
           tooltip: 'Ajoutez ventes',
           child: Icon(Icons.add),

@@ -1,6 +1,6 @@
 import 'package:e_management/resources/products_database.dart';
 import 'package:e_management/src/models/vente_model.dart';
-import 'package:e_management/src/produits/ventes/add_vente_screen.dart';
+import 'package:e_management/src/produits/ventes/add_vente_form.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -16,7 +16,7 @@ class VenteDetailScreen extends StatelessWidget {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Text('${vente.nameProduct}'),
+            Text('${vente.sousCategorie}'),
             Container(
               child: Row(
                 children: [
@@ -79,7 +79,7 @@ class VenteDetailScreen extends StatelessWidget {
               child: Icon(Icons.arrow_right_outlined),
             ),
           ),
-          Text(vente.nameProduct,
+          Text(vente.sousCategorie,
               style: TextStyle(fontWeight: FontWeight.w700, fontSize: 36)),
         ],
       ),
@@ -148,7 +148,7 @@ class VenteDetailScreen extends StatelessWidget {
 
     await ProductDatabase.instance.deleteVente(ventes!);
     SnackBar(
-      content: Text("${vente.nameProduct} vient d'être supprimé!"),
+      content: Text("${vente.sousCategorie} vient d'être supprimé!"),
       backgroundColor: Colors.red[700],
     );
 
@@ -161,7 +161,7 @@ class VenteDetailScreen extends StatelessWidget {
       onPressed: () async {
 
         await Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => AddVenteScreen(vente: vente),
+          builder: (context) => AddVenteForm(),
         ));
 
       });
@@ -175,7 +175,7 @@ class VenteDetailScreen extends StatelessWidget {
 
         Navigator.of(context).pop();
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text("${vente.nameProduct} vient d'être supprimé!"),
+          content: Text("${vente.sousCategorie} vient d'être supprimé!"),
           backgroundColor: Colors.red[700],
         ));
         },

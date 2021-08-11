@@ -1,6 +1,6 @@
 import 'package:e_management/resources/products_database.dart';
 import 'package:e_management/src/models/dette_model.dart';
-import 'package:e_management/src/produits/dette/add_dette_screen.dart';
+import 'package:e_management/src/produits/dette/add_dette_form.dart';
 import 'package:e_management/src/produits/dette/detail_dette_screen.dart';
 import 'package:e_management/src/screens/sidebar_screen.dart';
 import 'package:flutter/material.dart';
@@ -44,7 +44,7 @@ class _ListDetteScreenState extends State<ListDetteScreen> {
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => AddDetteScreen()));
+                MaterialPageRoute(builder: (context) => AddDetteForm()));
           },
           tooltip: 'Ajoutez dettes',
           child: Icon(Icons.add),
@@ -111,7 +111,7 @@ class DetteItemWidget extends StatelessWidget {
                     children: [
                       Container(
                         padding: const EdgeInsets.only(bottom: 8),
-                        child: Text(dette.nameProduct,
+                        child: Text(dette.sousCategorie,
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 20,
                                 overflow: TextOverflow.ellipsis)),

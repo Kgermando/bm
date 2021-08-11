@@ -1,11 +1,11 @@
 import 'package:e_management/src/models/vente_model.dart';
 import 'package:e_management/src/pdf/pdf_api.dart';
 import 'package:e_management/src/pdf/pdf_product_api.dart';
+import 'package:e_management/src/produits/achats/add_achat_form.dart';
 import 'package:e_management/src/produits/achats/detail_achat_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:e_management/resources/products_database.dart';
 import 'package:e_management/src/models/achat_model.dart';
-import 'package:e_management/src/produits/achats/add_achat_screen.dart';
 import 'package:e_management/src/screens/sidebar_screen.dart';
 
 class ListAchatScreen extends StatefulWidget {
@@ -51,7 +51,7 @@ class _ListAchatScreenState extends State<ListAchatScreen> {
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => AddAchatScreen()));
+                MaterialPageRoute(builder: (context) => AddAchatForm()));
           },
           tooltip: 'Ajoutez achats',
           child: Icon(Icons.add),
@@ -132,7 +132,8 @@ class _AchatItemWidgetState extends State<AchatItemWidget> {
     var filter = venteList.where((element) =>
         achat.categorie == element.categorie &&
         achat.sousCategorie == element.sousCategorie &&
-        achat.nameProduct == element.nameProduct);
+        achat.type == element.type && 
+        achat.identifiant == element.identifiant);
 
     // Quantités
     var filterQty = filter.map((e) => double.parse(e.quantity));
@@ -173,7 +174,7 @@ class _AchatItemWidgetState extends State<AchatItemWidget> {
                     children: [
                       Container(
                         padding: const EdgeInsets.only(bottom: 8),
-                        child: Text(achat.nameProduct,
+                        child: Text(achat.sousCategorie,
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 20,
@@ -223,7 +224,9 @@ class _AchatItemWidgetState extends State<AchatItemWidget> {
     var filter = venteList.where((element) =>
         achat.categorie == element.categorie &&
         achat.sousCategorie == element.sousCategorie &&
-        achat.nameProduct == element.nameProduct);
+        achat.type == element.type &&
+        achat.type == element.type
+      );
 
     // Quantités
     var filterQty = filter.map((e) => double.parse(e.quantity));

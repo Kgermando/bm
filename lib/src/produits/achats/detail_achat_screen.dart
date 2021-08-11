@@ -1,7 +1,7 @@
 import 'package:e_management/resources/products_database.dart';
 import 'package:e_management/src/models/achat_model.dart';
 import 'package:e_management/src/models/vente_model.dart';
-import 'package:e_management/src/produits/achats/add_achat_screen.dart';
+import 'package:e_management/src/produits/achats/add_achat_form.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -64,7 +64,7 @@ class _AchatDetailScreenState extends State<AchatDetailScreen> {
           Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => AddAchatScreen(achat: achat)
+                builder: (context) => AddAchatForm()
               )
             );
         },
@@ -122,7 +122,7 @@ class _AchatDetailScreenState extends State<AchatDetailScreen> {
               child: Icon(Icons.arrow_right_outlined),
             ),
           ),
-          Text(achat.nameProduct,
+          Text(achat.sousCategorie,
               style: TextStyle(fontWeight: FontWeight.w700, fontSize: 36)),
         ],
       ),
@@ -190,7 +190,9 @@ class _AchatDetailScreenState extends State<AchatDetailScreen> {
     var filter = venteList.where((element) =>
         achat.categorie == element.categorie &&
         achat.sousCategorie == element.sousCategorie &&
-        achat.nameProduct == element.nameProduct);
+        achat.type == element.type && 
+        achat.identifiant == element.identifiant
+      );
     // print('$filter filter data');
 
     // Quantités
@@ -253,7 +255,9 @@ class _AchatDetailScreenState extends State<AchatDetailScreen> {
     var filter = venteList.where((element) =>
         achat.categorie == element.categorie &&
         achat.sousCategorie == element.sousCategorie &&
-        achat.nameProduct == element.nameProduct);
+        achat.type == element.type &&
+        achat.identifiant == element.identifiant
+      );
 
     // Quantités
     var filterQty = filter.map((e) => int.parse(e.quantity));
@@ -317,7 +321,7 @@ class _AchatDetailScreenState extends State<AchatDetailScreen> {
         icon: Icon(Icons.edit_outlined),
         onPressed: () async {
           await Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => AddAchatScreen(achat: achat),
+            builder: (context) => AddAchatForm(),
           ));
         });
   }
@@ -330,7 +334,7 @@ class _AchatDetailScreenState extends State<AchatDetailScreen> {
 
         Navigator.of(context).pop();
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text("${achat.nameProduct} vient d'être supprimé!"),
+          content: Text("${achat.sousCategorie} vient d'être supprimé!"),
           backgroundColor: Colors.red[700],
         ));
       },

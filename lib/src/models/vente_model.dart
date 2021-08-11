@@ -6,7 +6,8 @@ class VenteFields {
     id,
     categorie,
     sousCategorie,
-    nameProduct,
+    type,
+    identifiant,
     quantity,
     price, // Prix unitaire
     date
@@ -15,7 +16,8 @@ class VenteFields {
   static final String id = '_id';
   static final String categorie = 'categorie';
   static final String sousCategorie = 'sousCategorie';
-  static final String nameProduct = 'nameProduct';
+  static final String type = 'type';
+  static final String identifiant = 'identifiant';
   static final String quantity = 'quantity';
   static final String unity = 'unity';
   static final String price = 'price';
@@ -26,7 +28,8 @@ class VenteModel {
   final int? id;
   final String categorie;
   final String sousCategorie;
-  final String nameProduct;
+  final String type;
+  final String identifiant;
   final String quantity;
   final String unity;
   final String price;
@@ -37,7 +40,8 @@ class VenteModel {
     this.id,
     required this.categorie,
     required this.sousCategorie,
-    required this.nameProduct,
+    required this.type,
+    required this.identifiant,
     required this.quantity,
     required this.unity,
     required this.price,
@@ -50,7 +54,8 @@ class VenteModel {
     int? id,
     String? categorie,
     String? sousCategorie,
-    String? nameProduct,
+    String? type,
+    String? identifiant,
     String? quantity,
     String? unity,
     String? price,
@@ -60,7 +65,8 @@ class VenteModel {
     id: id ?? this.id,
     categorie: categorie ?? this.categorie,
     sousCategorie: sousCategorie ?? this.sousCategorie,
-    nameProduct: nameProduct ?? this.nameProduct,
+    type: type ?? this.type,
+    identifiant: type ?? this.identifiant,
     quantity: quantity ?? this.quantity,
     unity: unity ?? this.unity,
     price: price ?? this.price,
@@ -71,7 +77,8 @@ class VenteModel {
     id: json[VenteFields.id] as int?,
     categorie: json[VenteFields.categorie] as String,
     sousCategorie: json[VenteFields.sousCategorie] as String,
-    nameProduct: json[VenteFields.nameProduct] as String,
+    type: json[VenteFields.type] as String,
+    identifiant: json[VenteFields.identifiant] as String,
     quantity: json[VenteFields.quantity] as String,
     unity: json[VenteFields.unity] as String,
     price: json[VenteFields.price] as String,
@@ -82,7 +89,8 @@ class VenteModel {
     VenteFields.id: id,
     VenteFields.categorie: categorie,
     VenteFields.sousCategorie: sousCategorie,
-    VenteFields.nameProduct: nameProduct,
+    VenteFields.type: type,
+    VenteFields.identifiant: identifiant,
     VenteFields.quantity: quantity,
     VenteFields.unity: unity,
     VenteFields.price: price,

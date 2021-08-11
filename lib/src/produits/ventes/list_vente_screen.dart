@@ -1,6 +1,6 @@
 import 'package:e_management/resources/products_database.dart';
 import 'package:e_management/src/models/vente_model.dart';
-import 'package:e_management/src/produits/ventes/add_vente_screen.dart';
+import 'package:e_management/src/produits/ventes/add_vente_form.dart';
 import 'package:e_management/src/produits/ventes/detail_vente_screen.dart';
 import 'package:e_management/src/screens/sidebar_screen.dart';
 import 'package:flutter/material.dart';
@@ -44,7 +44,7 @@ class _ListVenteScreenState extends State<ListVenteScreen> {
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => AddVenteScreen()));
+                MaterialPageRoute(builder: (context) => AddVenteForm()));
           },
           tooltip: 'Ajoutez ventes',
           child: Icon(Icons.add),
@@ -114,7 +114,7 @@ class VenteItemWidget extends StatelessWidget {
                     children: [
                       Container(
                         padding: const EdgeInsets.only(bottom: 8),
-                        child: Text(vente.nameProduct,
+                        child: Text(vente.sousCategorie,
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 20, overflow: TextOverflow.ellipsis)),
                       ),

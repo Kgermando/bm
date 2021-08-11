@@ -1,7 +1,7 @@
 import 'package:e_management/resources/products_database.dart';
 import 'package:e_management/src/models/dette_model.dart';
 import 'package:e_management/src/models/vente_model.dart';
-import 'package:e_management/src/produits/dette/add_dette_screen.dart';
+import 'package:e_management/src/produits/dette/add_dette_form.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -16,7 +16,7 @@ class DetailDetteScreen extends StatelessWidget {
           title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          Text('${dette.nameProduct}'),
+          Text('${dette.sousCategorie}'),
           Container(
             child: Row(
               children: [
@@ -73,7 +73,7 @@ class DetailDetteScreen extends StatelessWidget {
               child: Icon(Icons.arrow_right_outlined),
             ),
           ),
-          Text(dette.nameProduct,
+          Text(dette.sousCategorie,
               style: TextStyle(fontWeight: FontWeight.w700, fontSize: 36)),
         ],
       ),
@@ -134,7 +134,7 @@ class DetailDetteScreen extends StatelessWidget {
         icon: Icon(Icons.edit_outlined),
         onPressed: () async {
           await Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => AddDetteScreen(dette: dette),
+            builder: (context) => AddDetteForm(),
           ));
         });
   }
@@ -147,7 +147,7 @@ class DetailDetteScreen extends StatelessWidget {
 
         Navigator.of(context).pop();
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text("${dette.nameProduct} vient d'être supprimé!"),
+          content: Text("${dette.sousCategorie} vient d'être supprimé!"),
           backgroundColor: Colors.red[700],
         ));
       },
@@ -158,7 +158,8 @@ class DetailDetteScreen extends StatelessWidget {
     final dettes = VenteModel(
       categorie: dette.categorie,
       sousCategorie: dette.sousCategorie,
-      nameProduct: dette.nameProduct,
+      type: dette.type,
+      identifiant: dette.identifiant,
       quantity: dette.quantity,
       unity: dette.unity,
       price: dette.price,
@@ -173,7 +174,7 @@ class DetailDetteScreen extends StatelessWidget {
         Navigator.of(context).pop();
 
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text("${dette.nameProduct} ajouté aux ventes!"),
+          content: Text("${dette.sousCategorie} ajouté aux ventes!"),
           backgroundColor: Colors.green[700],
         ));
       }

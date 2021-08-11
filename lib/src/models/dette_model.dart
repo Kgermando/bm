@@ -5,7 +5,8 @@ class DetteFields {
     id,
     categorie,
     sousCategorie,
-    nameProduct,
+    type,
+    identifiant,
     quantity,
     price,
     date,
@@ -15,7 +16,8 @@ class DetteFields {
   static final String id = '_id';
   static final String categorie = 'categorie';
   static final String sousCategorie = 'sousCategorie';
-  static final String nameProduct = 'nameProduct';
+  static final String type = 'type';
+  static final String identifiant = 'identifiant';
   static final String quantity = 'quantity';
   static final String unity = 'unity';
   static final String price = 'price';
@@ -27,7 +29,8 @@ class DetteModel {
   final int? id;
   final String categorie;
   final String sousCategorie;
-  final String nameProduct;
+  final String type;
+  final String identifiant;
   final String quantity;
   final String unity;
   final String price;
@@ -38,7 +41,8 @@ class DetteModel {
     this.id,
     required this.categorie,
     required this.sousCategorie,
-    required this.nameProduct,
+    required this.type,
+    required this.identifiant,
     required this.quantity,
     required this.unity,
     required this.price,
@@ -51,7 +55,8 @@ class DetteModel {
         int? id,
         String? categorie,
         String? sousCategorie,
-        String? nameProduct,
+        String? type,
+        String? identifiant,
         String? quantity,
         String? unity,
         String? price,
@@ -63,7 +68,8 @@ class DetteModel {
         id: id ?? this.id,
         categorie: categorie ?? this.categorie,
         sousCategorie: sousCategorie ?? this.sousCategorie,
-        nameProduct: nameProduct ?? this.nameProduct,
+        type: type ?? this.type,
+        identifiant: type ?? this.identifiant,
         quantity: quantity ?? this.quantity,
         unity: unity ?? this.unity,
         price: price ?? this.price,
@@ -76,7 +82,8 @@ class DetteModel {
         // id: json['id'] == null ? null : BigInt.parse(json['id'] as String),
         categorie: json[DetteFields.categorie] as String,
         sousCategorie: json[DetteFields.sousCategorie] as String,
-        nameProduct: json[DetteFields.nameProduct] as String,
+        type: json[DetteFields.type] as String,
+        identifiant: json[DetteFields.identifiant] as String,
         quantity: json[DetteFields.quantity] as String,
         unity: json[DetteFields.unity] as String,
         price: json[DetteFields.price] as String,
@@ -88,7 +95,8 @@ class DetteModel {
         DetteFields.id: id,
         DetteFields.categorie: categorie,
         DetteFields.sousCategorie: sousCategorie,
-        DetteFields.nameProduct: nameProduct,
+        DetteFields.type: type,
+        DetteFields.identifiant: identifiant,
         DetteFields.quantity: quantity,
         DetteFields.unity: unity,
         DetteFields.price: price,

@@ -48,7 +48,7 @@ class AchatFormWidget extends StatelessWidget {
     'Sel',
     'Divers',
     'Autres'
-  ];
+  ]; 
 
   final String sousCategorieValue = 'Selectionnez le sous categorie';
   static var _sousCategorie = [

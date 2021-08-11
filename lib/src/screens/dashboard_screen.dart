@@ -23,12 +23,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Text('B-Management'),
-            ],
-          ),
+          title: Text('B-Management'),
           actions: [
             PopupMenuButton<MenuItem>(
               onSelected: (item) => onSelected(context, item),
@@ -49,7 +44,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
           child: Icon(Icons.add),
         ),
         drawer: SideBarScreen(),
-        body: VenteDashboardScreen());
+        body: VenteDashboardScreen()
+    );
   }
 
   PopupMenuItem<MenuItem> buildItem(MenuItem item) => PopupMenuItem(

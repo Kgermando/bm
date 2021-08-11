@@ -1,8 +1,14 @@
+import 'package:e_management/services/auth_service.dart';
+import 'package:e_management/src/auth/login_screen.dart';
+import 'package:e_management/src/auth/profile_screen.dart';
+import 'package:e_management/src/models/menu_item.dart';
 import 'package:e_management/src/models/vente_model.dart';
 import 'package:e_management/src/pdf/pdf_api.dart';
 import 'package:e_management/src/pdf/pdf_product_api.dart';
 import 'package:e_management/src/produits/achats/add_achat_form.dart';
 import 'package:e_management/src/produits/achats/detail_achat_screen.dart';
+import 'package:e_management/src/screens/setting_screen.dart';
+import 'package:e_management/src/utils/menu_items.dart';
 import 'package:flutter/material.dart';
 import 'package:e_management/resources/products_database.dart';
 import 'package:e_management/src/models/achat_model.dart';
@@ -30,51 +36,84 @@ class _ListAchatScreenState extends State<ListAchatScreen> {
       achatsPdfList = achatpdfList;
     });
   }
-
+//  printPdf(),
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-            title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Text('Liste des achats'),
-            printPdf(),
-            ElevatedButton.icon(
-              onPressed: () {},
-              icon: Icon(Icons.power_settings_new),
-              label: Text(''),
-            ),
-          ],
-        )),
-        drawer: SideBarScreen(),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => AddAchatForm()));
-          },
-          tooltip: 'Ajoutez achats',
-          child: Icon(Icons.add),
-        ),
-        body: FutureBuilder<List<AchatModel>>(
-            future: ProductDatabase.instance.getAllAchats(),
-            builder: (BuildContext context,
-                AsyncSnapshot<List<AchatModel>> snapshot) {
-              if (snapshot.hasData) {
-                List<AchatModel>? achats = snapshot.data;
-                return RefreshIndicator(
-                  onRefresh: getData,
-                  child: ListView.builder(
-                      itemCount: achats!.length,
-                      itemBuilder: (context, index) {
-                        final achat = achats[index];
-                        return AchatItemWidget(achat: achat);
-                      }),
-                );
-              } else {
-                return Center(child: CircularProgressIndicator());
-              }
-            }));
+      appBar: AppBar(
+        title: Text('Liste des achats'),
+        actions: [
+          printPdf(),
+          PopupMenuButton<MenuItem>(
+            onSelected: (item) => onSelected(context, item),
+            itemBuilder: (context) => [
+              ...MenuItems.itemsFirst.map(buildItem).toList(),
+              PopupMenuDivider(),
+              ...MenuItems.itemsSecond.map(buildItem).toList(),
+            ],
+          )
+        ],
+      ),
+      drawer: SideBarScreen(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => AddAchatForm()));
+        },
+        tooltip: 'Ajoutez achats',
+        child: Icon(Icons.add),
+      ),
+      body: FutureBuilder<List<AchatModel>>(
+          future: ProductDatabase.instance.getAllAchats(),
+          builder: (BuildContext context,
+              AsyncSnapshot<List<AchatModel>> snapshot) {
+            if (snapshot.hasData) {
+              List<AchatModel>? achats = snapshot.data;
+              return RefreshIndicator(
+                onRefresh: getData,
+                child: ListView.builder(
+                    itemCount: achats!.length,
+                    itemBuilder: (context, index) {
+                      final achat = achats[index];
+                      return AchatItemWidget(achat: achat);
+                    }),
+              );
+            } else {
+              return Center(child: CircularProgressIndicator());
+            }
+        }
+      )
+    ); 
+  }
+
+  PopupMenuItem<MenuItem> buildItem(MenuItem item) => PopupMenuItem(
+      value: item,
+      child: Row(
+        children: [
+          Icon(item.icon, color: Colors.black, size: 20),
+          const SizedBox(width: 12),
+          Text(item.text)
+        ],
+      ));
+
+  void onSelected(BuildContext context, MenuItem item) {
+    switch (item) {
+      case MenuItems.itemSettings:
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => SettingsScreen()));
+        break;
+      case MenuItems.itemProfile:
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => ProfileScreen()));
+        break;
+      case MenuItems.itemLogout:
+        // Remove stockage jwt here.
+        AuthService().logout();
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => LoginScreen()),
+            (route) => false);
+        break;
+    }
   }
 
   Widget printPdf() {

@@ -1,3 +1,5 @@
+import 'package:e_management/services/auth_service.dart';
+import 'package:e_management/src/models/user_model.dart';
 import 'package:e_management/src/screens/dashboard_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -9,17 +11,18 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
+  final _form = GlobalKey<FormState>();
+
   String? firstName;
   String? lastName;
-  String? username;
   String? email;
   String? telephone;
   String? province;
   String? nameBusiness;
   String? typeAbonnement;
   String? password;
-  String? confirmPassword;
-  int? roleId;
+  String? passwordConfirm;
+  // int? roleId;
 
   final String provinceValue = 'Kinshasa';
 
@@ -73,6 +76,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             ),
           ),
           SingleChildScrollView(
+            key: _form,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -125,14 +129,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 logoBuild(),
                 firstNameBuild(),
                 lastNameBuild(),
-                userNameBuild(),
                 emailBuild(),
                 telephoneBuild(),
                 provinceBuild(),
                 nameBusinessBuild(),
-                typeAbonnementBuild(),
+                // typeAbonnementBuild(),
                 passwordBuild(),
-                confirmPasswordBuild(),
+                passwordConfirmBuild(),
                 registerButtonBuild(),
               ],
             ),
@@ -193,26 +196,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
               color: Colors.purple,
             ),
             labelText: 'Nom'),
-      ),
-    );
-  }
-
-  Widget userNameBuild() {
-    return Padding(
-      padding: EdgeInsets.all(8),
-      child: TextFormField(
-        keyboardType: TextInputType.text,
-        onChanged: (value) {
-          setState(() {
-            username = value;
-          });
-        },
-        decoration: InputDecoration(
-            prefixIcon: Icon(
-              Icons.person,
-              color: Colors.purple,
-            ),
-            labelText: 'Nom d\'utilisateur'),
       ),
     );
   }
@@ -313,25 +296,25 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  Widget typeAbonnementBuild() {
-    return Padding(
-      padding: EdgeInsets.all(8),
-      child: TextFormField(
-        keyboardType: TextInputType.text,
-        onChanged: (value) {
-          setState(() {
-            typeAbonnement = value;
-          });
-        },
-        decoration: InputDecoration(
-            prefixIcon: Icon(
-              Icons.attach_money,
-              color: Colors.purple,
-            ),
-            labelText: 'Type d\'abonnement'),
-      ),
-    );
-  }
+  // Widget typeAbonnementBuild() {
+  //   return Padding(
+  //     padding: EdgeInsets.all(8),
+  //     child: TextFormField(
+  //       keyboardType: TextInputType.text,
+  //       onChanged: (value) {
+  //         setState(() {
+  //           typeAbonnement = value;
+  //         });
+  //       },
+  //       decoration: InputDecoration(
+  //           prefixIcon: Icon(
+  //             Icons.attach_money,
+  //             color: Colors.purple,
+  //           ),
+  //           labelText: 'Type d\'abonnement'),
+  //     ),
+  //   );
+  // }
 
   Widget passwordBuild() {
     return Padding(
@@ -353,14 +336,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  Widget confirmPasswordBuild() {
+  Widget passwordConfirmBuild() {
     return Padding(
       padding: EdgeInsets.all(8),
       child: TextFormField(
         keyboardType: TextInputType.text,
+        // validator: (pwd) => passwordConfirm != password
+        //     ? 'Le mot de passe ne correspond pas'
+        //     : null,
         onChanged: (value) {
           setState(() {
-            confirmPassword = value;
+            passwordConfirm = value;
           });
         },
         decoration: InputDecoration(
@@ -388,8 +374,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
               ),
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => DashboardScreen()));
+                print(firstName);
+                print(lastName);
+                print(email);
+                print(telephone);
+                print(province);
+                print(nameBusiness);
+                // print(typeAbonnement);
+                print(password);
+                print(passwordConfirm);
+
+                createUser();
               },
               child: Text(
                 'INSCRIPTION',
@@ -401,5 +396,26 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
               )))
     ]);
+  }
+
+  Future createUser() async {
+    final user = User(
+        firstName: firstName.toString(),
+        lastName: lastName.toString(),
+        email: email.toString(),
+        telephone: telephone.toString(),
+        nameBusiness: nameBusiness.toString(),
+        province: province.toString(),
+        typeAbonnement: "OPEN",
+        password: password.toString(),
+        passwordConfirm: passwordConfirm.toString());
+
+    await AuthService().register(user);
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => DashboardScreen()));
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text("${user.firstName} ${user.lastName} ajouté!"),
+      backgroundColor: Colors.green[700],
+    ));
   }
 }

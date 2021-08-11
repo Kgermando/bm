@@ -14,12 +14,14 @@ class User {
   String? nameBusiness;
   String? province;
   String? typeAbonnement;
+  String? password;
+  String? passwordConfirm;
   // DateTime? createdAt;
   // DateTime? updatedAt;
 
 
   User({
-    required this.id,
+    this.id,
     required this.firstName,
     required this.lastName,
     required this.email,
@@ -27,12 +29,14 @@ class User {
     required this.nameBusiness,
     required this.province,
     required this.typeAbonnement,
+    required this.password,
+    required this.passwordConfirm,
     // required this.createdAt,
     // required this.updatedAt,
   });
 
  
-  factory User.fromJson(Map<String, dynamic> json) => User(
+  factory User.fromJson(Map<dynamic, dynamic> json) => User(
         id: json["id"],
         firstName: json["firstName"],
         lastName: json["lastName"],
@@ -41,11 +45,13 @@ class User {
         nameBusiness: json["nameBusiness"],
         province: json["province"],
         typeAbonnement: json["typeAbonnement"],
+        password: json["password"],
+        passwordConfirm: json["passwordConfirm"],
         // createdAt: json["createdAt"],
         // updatedAt: json["updatedAt"],
       );
 
-  Map<String, dynamic> toJson() => {
+  Map<dynamic, dynamic> toJson() => {
         "id": id,
         "firstName": firstName,
         "lastName": lastName,
@@ -54,6 +60,8 @@ class User {
         "nameBusiness": nameBusiness,
         "province": province,
         "typeAbonnement": typeAbonnement,
+        "password": password,
+        "passwordConfirm": passwordConfirm,
         // "createdAt": createdAt,
         // "updatedAt": updatedAt,
       };

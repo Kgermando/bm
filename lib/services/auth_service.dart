@@ -47,45 +47,25 @@ class AuthService with ChangeNotifier {
     }
   }
 
-  Future<User> register(
-      String firstName,
-      String lastName,
-      String email,
-      String telephone,
-      String nameBusiness,
-      String province,
-      String typeAbonnement,
-      String password,
-      String confirmPassword) async {
-    final data = {
-      'firstName': firstName,
-      'lastName': lastName,
-      'email': email,
-      'telephone': telephone,
-      'nameBusiness': nameBusiness,
-      'province': province,
-      'typeAbonnement': typeAbonnement,
-      'password': password,
-      'confirmPassword': confirmPassword
-    };
+  Future<User> register(User user) async {
 
-    if (password != confirmPassword) {
-      throw Exception('Password and confirm Password do not match');
-    }
+    // if (password != confirmPassword) {
+    //   throw Exception('Password and confirm Password do not match');
+    // }
 
     var registerUrl = Uri.parse("${Environment.serverUrl}/auth/register");
 
     final resp = await http.post(registerUrl,
-        body: jsonEncode(data), headers: {'Content-Type': 'application/json'});
+        body: jsonEncode(user), headers: {'Content-Type': 'application/json'});
 
     if (resp.statusCode == 201) {
       // final registerResponse = loginModelFromJson(resp.body);
       // user = registerResponse.user;
       // await _guardarToken(registerResponse.jwt);
 
-      await _storage.write(key: 'jwt', value: json.decode(resp.body)['token']);
-      await _storage.write(
-              key: 'userId', value: json.decode(resp.body)['user']['_id']);
+      // await _storage.write(key: 'jwt', value: json.decode(resp.body)['token']);
+      // await _storage.write(
+      //         key: 'userId', value: json.decode(resp.body)['user']['_id']);
       return User.fromJson(json.decode(resp.body)['user']);
     } else {
       throw Exception(json.decode(resp.body)['message']);
@@ -107,8 +87,9 @@ class AuthService with ChangeNotifier {
       // return true;
       return userFromJson(resp.body);
     } else {
-      logout();
+      // logout();
       // return false;
+      throw Exception(json.decode(resp.body)['message']);
     }
   }
 

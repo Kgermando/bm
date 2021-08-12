@@ -11,6 +11,7 @@ class DetteFields {
     price,
     date,
     personne,
+    datePayement,
   ];
 
   static final String id = '_id';
@@ -23,6 +24,7 @@ class DetteFields {
   static final String price = 'price';
   static final String date = 'date';
   static final String personne = 'personne';
+  static final String datePayement = 'datePayement';
 }
 
 class DetteModel {
@@ -36,6 +38,7 @@ class DetteModel {
   final String price;
   final DateTime date;
   final String personne;
+  final String datePayement;
 
   const DetteModel({
     this.id,
@@ -48,6 +51,7 @@ class DetteModel {
     required this.price,
     required this.date,
     required this.personne,
+    required this.datePayement,
   });
 
   DetteModel copy(
@@ -62,6 +66,7 @@ class DetteModel {
         String? price,
         DateTime? date,
         String? personne,
+        String? datePayement,
       }
         ) =>
       DetteModel(
@@ -75,6 +80,7 @@ class DetteModel {
         price: price ?? this.price,
         date: date ?? this.date,
         personne: personne ?? this.personne,
+        datePayement: datePayement ?? this.datePayement
       );
 
   static DetteModel fromJson(Map<String, Object?> json) => DetteModel(
@@ -89,6 +95,7 @@ class DetteModel {
         price: json[DetteFields.price] as String,
         date: DateTime.parse(json[DetteFields.date] as String),
         personne: json[DetteFields.personne] as String,
+        datePayement: json[DetteFields.datePayement] as String,
       );
 
   Map<String, Object?> toJson() => {
@@ -102,5 +109,6 @@ class DetteModel {
         DetteFields.price: price,
         DetteFields.date: date.toIso8601String(),
         DetteFields.personne: personne,
+        DetteFields.datePayement: datePayement,
       };
 }

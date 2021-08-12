@@ -75,7 +75,8 @@ class ProductDatabase {
         ${DetteFields.unity} $textType,
         ${DetteFields.price} $textType,
         ${DetteFields.date} $textType,
-        ${DetteFields.personne} $textType
+        ${DetteFields.personne} $textType,
+        ${DetteFields.datePayement} $textType
       )
       '''
     );

@@ -17,6 +17,7 @@ class AddVenteForm extends StatefulWidget {
 class _AddVenteFormState extends State<AddVenteForm> {
   final _form = GlobalKey<FormState>();
 
+ 
   // Categorie
   final List<String> categories = DropdownCategorie().categorie;
 
@@ -37,28 +38,51 @@ class _AddVenteFormState extends State<AddVenteForm> {
       DropdownSousCategorie().serialSousCategorie;
   final List<String> biscuitsCategorie =
       DropdownSousCategorie().biscuitsSousCategorie;
-  final List<String> sucresCategorie =
-      DropdownSousCategorie().sucresSousCategorie;
-  final List<String> selsCategorie = DropdownSousCategorie().selsSousCategorie;
   final List<String> diversCategorie =
       DropdownSousCategorie().diversSousCategorie;
-  final List<String> autresCategorie =
-      DropdownSousCategorie().autresSousCategorie;
   final List<String> laitBeauteCategorie =
       DropdownSousCategorie().laitBeauteSousCategorie;
   final List<String> hygienesCategorie =
       DropdownSousCategorie().hygienesSousCategorie;
   final List<String> vinCategorie = DropdownSousCategorie().vinSousCategorie;
+  final List<String> alcoolSousCategorie =
+      DropdownSousCategorie().alcoolSousCategorie;
 
   // Type
   final List<String> laitTypeCategorie = DropdownType().laitType;
+  final List<String> boissonsType = DropdownType().boissonsType;
+  final List<String> bierreType = DropdownType().bierreType;
+  final List<String> fournitureType = DropdownType().fournitureType;
+  final List<String> huilesVegetaleType = DropdownType().huilesVegetaleType;
+  final List<String> serialVegetaleType = DropdownType().serialVegetaleType;
+  final List<String> biscuitsType = DropdownType().biscuitsType;
+  final List<String> laitBeauteType = DropdownType().laitBeauteType;
+  final List<String> vinType = DropdownType().vinType;
 
   // Identifiant
   final List<String> laitIdentifiant = DropdownIdentifiant().laitIdentifiant;
+  final List<String> biossonsIdentifiant =
+      DropdownIdentifiant().biossonsIdentifiant;
+  final List<String> fournituresIdentifiant =
+      DropdownIdentifiant().fournituresIdentifiant;
+  final List<String> serialIdentifiant =
+      DropdownIdentifiant().serialIdentifiant;
+  final List<String> biscuitsIdentifiant =
+      DropdownIdentifiant().biscuitsIdentifiant;
+  final List<String> laitBeauteIdentifiant =
+      DropdownIdentifiant().laitBeauteIdentifiant;
 
   // Unités
   final List<String> unites = DropdownUnity().unites;
   final List<String> unitesLait = DropdownUnity().unitesLait;
+  final List<String> unitesBoissons = DropdownUnity().unitesBoissons;
+  final List<String> unitesBierre = DropdownUnity().unitesBierre;
+  final List<String> unitesFournitures = DropdownUnity().unitesFournitures;
+  final List<String> unitesHuileVegetale = DropdownUnity().unitesHuileVegetale;
+  final List<String> unitesSerial = DropdownUnity().unitesSerial;
+  final List<String> unitesBiscuits = DropdownUnity().unitesBiscuits;
+  final List<String> unitesLaitBeaute = DropdownUnity().unitesLaitBeaute;
+
 
   List<String> venteSousCat = [];
   List<String> venteType = [];
@@ -153,41 +177,58 @@ class _AddVenteFormState extends State<AddVenteForm> {
             venteUnity = unitesLait;
           } else if (produit == 'Boissons') {
             venteSousCat = boissonsCategorie;
-            venteUnity = unites;
+            venteType = boissonsType;
+            venteIdentifiant = biossonsIdentifiant;
+            venteUnity = unitesBoissons;
           } else if (produit == 'Bières') {
             venteSousCat = bieresCategorie;
+            venteType = bierreType;
+            venteIdentifiant = biossonsIdentifiant;
+            venteUnity = unitesBierre;
           } else if (produit == 'Fournitures') {
             venteSousCat = fournituresCategorie;
-            venteUnity = unites;
+            venteType = fournitureType;
+            venteIdentifiant = fournituresIdentifiant;
+            venteUnity = unitesFournitures;
           } else if (produit == 'Huiles végétales') {
             venteSousCat = huilesVegetaleCategorie;
-            venteUnity = unites;
+            venteType = huilesVegetaleType;
+            venteIdentifiant = serialIdentifiant;
+            venteUnity = unitesHuileVegetale;
           } else if (produit == 'Serial') {
             venteSousCat = serialCategorie;
-            venteUnity = unites;
+            venteType = serialVegetaleType;
+            venteIdentifiant = serialIdentifiant;
+            venteUnity = unitesSerial;
           } else if (produit == 'Biscuits') {
             venteSousCat = biscuitsCategorie;
-            venteUnity = unites;
-          } else if (produit == 'Sucres') {
-            venteSousCat = sucresCategorie;
-            venteUnity = unites;
-          } else if (produit == 'Sels') {
-            venteSousCat = selsCategorie;
-            venteUnity = unites;
+            venteType = biscuitsType;
+            venteIdentifiant = biscuitsIdentifiant;
+            venteUnity = unitesBiscuits;
           } else if (produit == 'Laits de beautés') {
             venteSousCat = laitBeauteCategorie;
-            venteUnity = unites;
-          } else if (produit == 'Divers') {
-            venteSousCat = diversCategorie;
-            venteUnity = unites;
+            venteType = laitBeauteType;
+            venteIdentifiant = laitBeauteIdentifiant;
+            venteUnity = unitesLaitBeaute;
           } else if (produit == 'Hygiènes') {
             venteSousCat = hygienesCategorie;
+            venteType = vinType;
+            venteIdentifiant = biscuitsIdentifiant;
             venteUnity = unites;
           } else if (produit == 'Vin') {
             venteSousCat = vinCategorie;
-            venteUnity = unites;
-          } else if (produit == 'Autres') {
-            venteSousCat = autresCategorie;
+            venteType = vinType;
+            venteIdentifiant = laitBeauteIdentifiant;
+            venteUnity = unitesBoissons;
+          } else if (produit == 'Alcool') {
+            venteSousCat = alcoolSousCategorie;
+            venteType = vinType;
+            venteIdentifiant = laitBeauteIdentifiant;
+            venteUnity = unitesBoissons;
+          } else if (produit == 'Divers') {
+            venteSousCat = diversCategorie;
+            venteType = vinType;
+            venteIdentifiant = biscuitsIdentifiant;
             venteUnity = unites;
           } else {
             venteSousCat = [];

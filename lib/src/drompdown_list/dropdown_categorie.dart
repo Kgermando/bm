@@ -10,8 +10,6 @@ class DropdownCategorie {
     'Huiles végétales',
     'Serial',
     'Biscuits',
-    'Sucres',
-    'Sels',
     'Laits de beautés',
     'Divers',
     'Hygiènes',

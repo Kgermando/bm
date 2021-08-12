@@ -115,12 +115,16 @@ class DetailDetteScreen extends StatelessWidget {
           // ),
           Padding(
             padding: const EdgeInsets.only(top: 20.0),
-            child: Row(
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text('Dette de ${dette.personne}',
                     style: TextStyle(fontWeight: FontWeight.w800, color: Colors.black, fontSize: 20)),
+
+                Text('A payé le ${DateFormat("dd.MM.yy HH:mm").format(dette.datePayement as DateTime)}',
+                    style:
+                        TextStyle(fontWeight: FontWeight.w400, fontSize: 20)),
               ],
             ),
           ),

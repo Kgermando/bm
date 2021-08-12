@@ -5,6 +5,7 @@ import 'package:e_management/src/drompdown_list/dropdown_sous_cat.dart';
 import 'package:e_management/src/drompdown_list/dropdown_type.dart';
 import 'package:e_management/src/drompdown_list/dropdown_unity.dart';
 import 'package:e_management/src/models/dette_model.dart';
+import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 
 class AddDetteForm extends StatefulWidget {
@@ -16,8 +17,7 @@ class AddDetteForm extends StatefulWidget {
 
 class _AddDetteFormState extends State<AddDetteForm> {
   final _form = GlobalKey<FormState>();
-
-  // Categorie
+ // Categorie
   final List<String> categories = DropdownCategorie().categorie;
 
   // SousCategorie
@@ -37,28 +37,52 @@ class _AddDetteFormState extends State<AddDetteForm> {
       DropdownSousCategorie().serialSousCategorie;
   final List<String> biscuitsCategorie =
       DropdownSousCategorie().biscuitsSousCategorie;
-  final List<String> sucresCategorie =
-      DropdownSousCategorie().sucresSousCategorie;
-  final List<String> selsCategorie = DropdownSousCategorie().selsSousCategorie;
   final List<String> diversCategorie =
       DropdownSousCategorie().diversSousCategorie;
-  final List<String> autresCategorie =
-      DropdownSousCategorie().autresSousCategorie;
   final List<String> laitBeauteCategorie =
       DropdownSousCategorie().laitBeauteSousCategorie;
   final List<String> hygienesCategorie =
       DropdownSousCategorie().hygienesSousCategorie;
   final List<String> vinCategorie = DropdownSousCategorie().vinSousCategorie;
+  final List<String> alcoolSousCategorie =
+      DropdownSousCategorie().alcoolSousCategorie;
 
   // Type
   final List<String> laitTypeCategorie = DropdownType().laitType;
+  final List<String> boissonsType = DropdownType().boissonsType;
+  final List<String> bierreType = DropdownType().bierreType;
+  final List<String> fournitureType = DropdownType().fournitureType;
+  final List<String> huilesVegetaleType = DropdownType().huilesVegetaleType;
+  final List<String> serialVegetaleType = DropdownType().serialVegetaleType;
+  final List<String> biscuitsType = DropdownType().biscuitsType;
+  final List<String> laitBeauteType = DropdownType().laitBeauteType;
+  final List<String> vinType = DropdownType().vinType;
 
   // Identifiant
   final List<String> laitIdentifiant = DropdownIdentifiant().laitIdentifiant;
+  final List<String> biossonsIdentifiant =
+      DropdownIdentifiant().biossonsIdentifiant;
+  final List<String> fournituresIdentifiant =
+      DropdownIdentifiant().fournituresIdentifiant;
+  final List<String> serialIdentifiant =
+      DropdownIdentifiant().serialIdentifiant;
+  final List<String> biscuitsIdentifiant =
+      DropdownIdentifiant().biscuitsIdentifiant;
+  final List<String> laitBeauteIdentifiant =
+      DropdownIdentifiant().laitBeauteIdentifiant;
 
   // Unités
   final List<String> unites = DropdownUnity().unites;
   final List<String> unitesLait = DropdownUnity().unitesLait;
+  final List<String> unitesBoissons = DropdownUnity().unitesBoissons;
+  final List<String> unitesBierre = DropdownUnity().unitesBierre;
+  final List<String> unitesFournitures = DropdownUnity().unitesFournitures;
+  final List<String> unitesHuileVegetale = DropdownUnity().unitesHuileVegetale;
+  final List<String> unitesSerial = DropdownUnity().unitesSerial;
+  final List<String> unitesBiscuits = DropdownUnity().unitesBiscuits;
+  final List<String> unitesLaitBeaute = DropdownUnity().unitesLaitBeaute;
+
+
 
   List<String> detteSousCat = [];
   List<String> detteType = [];
@@ -73,6 +97,7 @@ class _AddDetteFormState extends State<AddDetteForm> {
   String? unity;
   String? price;
   String? personne;
+  String? datePayement;
 
   @override
   Widget build(BuildContext context) {
@@ -93,7 +118,6 @@ class _AddDetteFormState extends State<AddDetteForm> {
                 sousCategorieField(),
                 typeField(),
                 identifiantField(),
-                personeField(),
                 Row(
                   children: [
                     Expanded(
@@ -108,6 +132,8 @@ class _AddDetteFormState extends State<AddDetteForm> {
                   ],
                 ),
                 priceField(),
+                personeField(),
+                datePayementField(),
                 saveForm()
               ],
             ),
@@ -150,45 +176,61 @@ class _AddDetteFormState extends State<AddDetteForm> {
             detteSousCat = laitsCategorie;
             detteType = laitTypeCategorie;
             detteIdentifiant = laitIdentifiant;
-            detteUnity = unites;
+            detteUnity = unitesLait;
           } else if (produit == 'Boissons') {
             detteSousCat = boissonsCategorie;
-            detteUnity = unites;
+            detteType = boissonsType;
+            detteIdentifiant = biossonsIdentifiant;
+            detteUnity = unitesBoissons;
           } else if (produit == 'Bières') {
             detteSousCat = bieresCategorie;
-            detteUnity = unites;
+            detteType = bierreType;
+            detteIdentifiant = biossonsIdentifiant;
+            detteUnity = unitesBierre;
           } else if (produit == 'Fournitures') {
             detteSousCat = fournituresCategorie;
-            detteUnity = unites;
+            detteType = fournitureType;
+            detteIdentifiant = fournituresIdentifiant;
+            detteUnity = unitesFournitures;
           } else if (produit == 'Huiles végétales') {
             detteSousCat = huilesVegetaleCategorie;
-            detteUnity = unites;
+            detteType = huilesVegetaleType;
+            detteIdentifiant = serialIdentifiant;
+            detteUnity = unitesHuileVegetale;
           } else if (produit == 'Serial') {
             detteSousCat = serialCategorie;
-            detteUnity = unites;
+            detteType = serialVegetaleType;
+            detteIdentifiant = serialIdentifiant;
+            detteUnity = unitesSerial;
           } else if (produit == 'Biscuits') {
             detteSousCat = biscuitsCategorie;
-            detteUnity = unites;
-          } else if (produit == 'Sucres') {
-            detteSousCat = sucresCategorie;
-            detteUnity = unites;
-          } else if (produit == 'Sels') {
-            detteSousCat = selsCategorie;
-            detteUnity = unites;
+            detteType = biscuitsType;
+            detteIdentifiant = biscuitsIdentifiant;
+            detteUnity = unitesBiscuits;
           } else if (produit == 'Laits de beautés') {
             detteSousCat = laitBeauteCategorie;
-            detteUnity = unites;
-          } else if (produit == 'Divers') {
-            detteSousCat = diversCategorie;
-            detteUnity = unites;
+            detteType = laitBeauteType;
+            detteIdentifiant = laitBeauteIdentifiant;
+            detteUnity = unitesLaitBeaute;
           } else if (produit == 'Hygiènes') {
             detteSousCat = hygienesCategorie;
+            detteType = vinType;
+            detteIdentifiant = biscuitsIdentifiant;
             detteUnity = unites;
           } else if (produit == 'Vin') {
             detteSousCat = vinCategorie;
-            detteUnity = unites;
-          } else if (produit == 'Autres') {
-            detteSousCat = autresCategorie;
+            detteType = vinType;
+            detteIdentifiant = laitBeauteIdentifiant;
+            detteUnity = unitesBoissons;
+          } else if (produit == 'Alcool') {
+            detteSousCat = alcoolSousCategorie;
+            detteType = vinType;
+            detteIdentifiant = laitBeauteIdentifiant;
+            detteUnity = unitesBoissons;
+          } else if (produit == 'Divers') {
+            detteSousCat = diversCategorie;
+            detteType = vinType;
+            detteIdentifiant = biscuitsIdentifiant;
             detteUnity = unites;
           } else {
             detteSousCat = [];
@@ -387,6 +429,35 @@ class _AddDetteFormState extends State<AddDetteForm> {
     );
   }
 
+  Widget datePayementField() {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 20.0),
+      child: DateTimePicker(
+        type: DateTimePickerType.dateTimeSeparate,
+        decoration: InputDecoration(
+          labelText: 'Date de paiement',
+          labelStyle: TextStyle(),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(5.0),
+          ),
+        ),
+        initialValue: '',
+        // locale: Locale('fr', 'FR'),
+        firstDate: DateTime(2021),
+        lastDate: DateTime(2050),
+        // dateLabelText: 'Date',
+        onChanged: (val) {
+          datePayement = val;
+        },
+        // validator: (val) {
+        //   print(val);
+        //   return null;
+        // },
+        onSaved: (val) => print(val),
+      ),
+    );
+  }
+
   Widget saveForm() {
     return ElevatedButton(
       onPressed: () {
@@ -424,6 +495,7 @@ class _AddDetteFormState extends State<AddDetteForm> {
       price: price.toString(),
       date: DateTime.now(),
       personne: personne.toString(),
+      datePayement: datePayement.toString(),
     );
 
     await ProductDatabase.instance.insertDette(dette);

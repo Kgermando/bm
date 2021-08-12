@@ -37,6 +37,8 @@ dependencies:
   http: ^0.13.3
   flutter_secure_storage: ^4.2.1
   dio: ^4.0.0
+  date_time_picker: "^2.1.0"
+  localized: ^2.1.1
 
 dev_dependencies:
   flutter_test:

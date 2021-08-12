@@ -1,9 +1,5 @@
-
-
-
-
 class DropdownSousCategorie {
-   List<String> laitsSousCategorie = [
+  List<String> laitsSousCategorie = [
     'Cowbell',
     'Kerrygol',
     'Nido',
@@ -18,12 +14,13 @@ class DropdownSousCategorie {
     'Fiesta',
     'Swissta',
     'SPA',
+    'Yahourt',
     'Xxl',
     'Bavaria',
     'Power Rouge',
     'Power jaune',
     'Power noire'
-    'Autres'
+        'Autres'
   ];
 
   List<String> alcoolSousCategorie = [
@@ -52,19 +49,54 @@ class DropdownSousCategorie {
     'vin 111'
   ];
 
-  List<String> bieresSousCategorie = [];
+  List<String> bieresSousCategorie = ['Bralima', 'Bracongo'];
 
-  List<String> fournituresSousCategorie = [];
+  List<String> fournituresSousCategorie = [
+    'Stylo',
+    'Cahier',
+    'Latte',
+    'crayon',
+    'Gomme',
+    'Taille crayon',
+    'Boite mathematical',
+    'Papier diplicateur',
+    'Sac',
+    'Marker',
+    'Ardoise',
+    'Tableau',
+    'table',
+    'Bureau',
+    'Banc',
+    'Calculatrice',
+  ];
 
-  List<String> huilesVegetaleSousCategorie = [];
+  List<String> huilesVegetaleSousCategorie = [
+    'Huile jaune',
+    'Huile rouge',
+    'Huile d\'olive'
+  ];
 
-  List<String> serialSousCategorie = [];
+  List<String> serialSousCategorie = [
+    'Riz',
+    'Sucre',
+    'Sel',
+    'Soja',
+    'Blé',
+    'Maîs',
+    'Haricots',
+    ''
+  ];
 
-  List<String> biscuitsSousCategorie = [];
-
-  List<String> sucresSousCategorie = [];
-
-  List<String> selsSousCategorie = [];
+  List<String> biscuitsSousCategorie = [
+    'Biscuits',
+    'Bistella',
+    'Bonbon',
+    'Shiwingom',
+    'Petit Beurt',
+    'Nice',
+    'Beurt',
+    'Margarine'
+  ];
 
   List<String> laitBeauteSousCategorie = [
     'Clair men',
@@ -130,13 +162,31 @@ class DropdownSousCategorie {
     'Genie',
     'Gel douche caro',
     'Gel douche coco plus',
-    'Gel douche aroderme'
+    'Gel douche aroderme',
+    'Detol',
+    'Germol',
+    'Petal',
   ];
 
   List<String> hygienesSousCategorie = [];
 
-  List<String> diversSousCategorie = [];
-
-  List<String> autresSousCategorie = [];
+  List<String> diversSousCategorie = [
+    'Arachides',
+    'Gingimbre',
+    'Aloès vera',
+    'Patate douce',
+    'Banane plantin',
+    'Aie',
+    'Poivre',
+    'Tomate',
+    'Feuille de manioc',
+    'Amarande',
+    'Citron',
+    'Orange',
+    'Pommes',
+    'Ananas',
+    'Pamplemous',
+    'Concombre',
+  ];
 
 }

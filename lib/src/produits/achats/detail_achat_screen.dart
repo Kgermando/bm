@@ -116,14 +116,26 @@ class _AchatDetailScreenState extends State<AchatDetailScreen> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Text(achat.sousCategorie,
-              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20)),
+              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 30)),
           SizedBox(
             child: Container(
               child: Icon(Icons.arrow_right_outlined),
             ),
           ),
-          Text(achat.sousCategorie,
-              style: TextStyle(fontWeight: FontWeight.w700, fontSize: 36)),
+          Text(achat.type,
+            style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
+            overflow: TextOverflow.ellipsis
+          ),
+          SizedBox(
+            child: Container(
+              child: Icon(Icons.arrow_right_outlined),
+            ),
+          ),
+          Text(
+            achat.identifiant,
+            style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20),
+            overflow: TextOverflow.ellipsis
+          ),
         ],
       ),
     ));

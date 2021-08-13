@@ -1,8 +1,6 @@
 
 class DropdownCategorie {
     List<String> categorie = [
-    'Alcool',
-    'Energie',
     'Laits',
     'Boissons',
     'Bières',
@@ -14,6 +12,7 @@ class DropdownCategorie {
     'Divers',
     'Hygiènes',
     'Vin',
+    'Alcool',
     'Autres'
   ];
 

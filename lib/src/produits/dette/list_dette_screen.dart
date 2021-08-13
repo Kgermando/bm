@@ -1,14 +1,11 @@
 import 'package:e_management/resources/products_database.dart';
-import 'package:e_management/services/auth_service.dart';
-import 'package:e_management/src/auth/login_screen.dart';
-import 'package:e_management/src/auth/profile_screen.dart';
 import 'package:e_management/src/models/dette_model.dart';
 import 'package:e_management/src/models/menu_item.dart';
 import 'package:e_management/src/produits/dette/add_dette_form.dart';
 import 'package:e_management/src/produits/dette/detail_dette_screen.dart';
-import 'package:e_management/src/screens/setting_screen.dart';
 import 'package:e_management/src/screens/sidebar_screen.dart';
 import 'package:e_management/src/utils/menu_items.dart';
+import 'package:e_management/src/utils/menu_options.dart';
 import 'package:flutter/material.dart';
 
 class ListDetteScreen extends StatefulWidget {
@@ -39,11 +36,11 @@ class _ListDetteScreenState extends State<ListDetteScreen> {
           actions: [
             printPdf(),
             PopupMenuButton<MenuItem>(
-              onSelected: (item) => onSelected(context, item),
+              onSelected: (item) => MenuOptions().onSelected(context, item),
               itemBuilder: (context) => [
-                ...MenuItems.itemsFirst.map(buildItem).toList(),
+                ...MenuItems.itemsFirst.map(MenuOptions().buildItem).toList(),
                 PopupMenuDivider(),
-                ...MenuItems.itemsSecond.map(buildItem).toList(),
+                ...MenuItems.itemsSecond.map(MenuOptions().buildItem).toList(),
               ],
             )
           ],
@@ -86,36 +83,7 @@ class _ListDetteScreenState extends State<ListDetteScreen> {
     );
   }
 
-  PopupMenuItem<MenuItem> buildItem(MenuItem item) => PopupMenuItem(
-      value: item,
-      child: Row(
-        children: [
-          Icon(item.icon, color: Colors.black, size: 20),
-          const SizedBox(width: 12),
-          Text(item.text)
-        ],
-      ));
-
-  void onSelected(BuildContext context, MenuItem item) {
-    switch (item) {
-      case MenuItems.itemSettings:
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => SettingsScreen()));
-        break;
-      case MenuItems.itemProfile:
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => ProfileScreen()));
-
-        break;
-      case MenuItems.itemLogout:
-        // Remove stockage jwt here.
-        AuthService().logout();
-        Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (context) => LoginScreen()),
-            (route) => false);
-        break;
-    }
-  }
+  
 }
 
 class DetteItemWidget extends StatelessWidget {
@@ -158,7 +126,7 @@ class DetteItemWidget extends StatelessWidget {
                     children: [
                       Container(
                         padding: const EdgeInsets.only(bottom: 8),
-                        child: Text(dette.sousCategorie,
+                        child: Text("${dette.type} ${dette.identifiant}",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 20,
                                 overflow: TextOverflow.ellipsis)),

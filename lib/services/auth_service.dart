@@ -39,7 +39,7 @@ class AuthService with ChangeNotifier {
       // await _guardarToken(loginResponse.jwt);
       // final loginRes = userFromJson(resp.body);
       // await _storage.write(key: 'jwt', value: json.decode(resp.body)['token']);
-
+      userFromJson(resp.body);
       await _guardarToken("jwt");
       return true;
     } else {
@@ -47,7 +47,8 @@ class AuthService with ChangeNotifier {
     }
   }
 
-  Future<User> register(User user) async {
+
+  Future<dynamic> register(User user) async {
 
     // if (password != confirmPassword) {
     //   throw Exception('Password and confirm Password do not match');
@@ -66,12 +67,11 @@ class AuthService with ChangeNotifier {
       // await _storage.write(key: 'jwt', value: json.decode(resp.body)['token']);
       // await _storage.write(
       //         key: 'userId', value: json.decode(resp.body)['user']['_id']);
-      return User.fromJson(json.decode(resp.body)['user']);
+      // return User.fromJson(json.decode(resp.body)['user']);
     } else {
       throw Exception(json.decode(resp.body)['message']);
     }
   }
-
 
   Future<User?> isLoggedIn() async {
     final String? jwt = await this._storage.read(key: 'jwt');
@@ -92,7 +92,6 @@ class AuthService with ChangeNotifier {
       throw Exception(json.decode(resp.body)['message']);
     }
   }
-
 
   Future<void> _guardarToken(String jwt) async =>
       await _storage.write(key: _TOKEN_KEY, value: jwt);

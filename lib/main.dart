@@ -2,8 +2,7 @@ import 'package:e_management/src/auth/login_screen.dart';
 import 'package:e_management/src/screens/dashboard_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-// import 'package:flutter_localizations/flutter_localizations.dart';
-// import 'package:localized/localized.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 final storage = FlutterSecureStorage();
 
@@ -12,7 +11,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  Future<String> get jwtOrEmpty async {
+  Future<String> get jwtOrEmpty async {  
     var jwt = await storage.read(key: "jwt");
     if (jwt == null) return "";
     return jwt;
@@ -44,12 +43,12 @@ class MyApp extends StatelessWidget {
           }
         }
       ),
-      // localizationsDelegates: [
-      //   GlobalWidgetsLocalizations.delegate,
-      //   GlobalMaterialLocalizations.delegate,
-      //   GlobalCupertinoLocalizations.delegate,
-      // ],
-      // supportedLocales: [Locale('en', 'US')],
+      localizationsDelegates: [
+        GlobalWidgetsLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: [Locale('fr', 'FR')],
     );
   }
 }

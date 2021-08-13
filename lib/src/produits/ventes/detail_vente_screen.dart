@@ -79,8 +79,19 @@ class VenteDetailScreen extends StatelessWidget {
               child: Icon(Icons.arrow_right_outlined),
             ),
           ),
-          Text(vente.sousCategorie,
-              style: TextStyle(fontWeight: FontWeight.w700, fontSize: 36)),
+          Text(vente.type,
+            style: TextStyle(fontWeight: FontWeight.w700, fontSize: 36),
+            overflow: TextOverflow.ellipsis
+          ),
+          SizedBox(
+            child: Container(
+              child: Icon(Icons.arrow_right_outlined),
+            ),
+          ),
+          Text(vente.identifiant,
+            style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20),
+            overflow: TextOverflow.ellipsis
+          ),
         ],
       ),
     ));

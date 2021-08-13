@@ -1,6 +1,7 @@
 import 'package:e_management/services/auth_service.dart';
+import 'package:e_management/src/auth/login_screen.dart';
 import 'package:e_management/src/models/user_model.dart';
-import 'package:e_management/src/screens/dashboard_screen.dart';
+import 'package:e_management/src/utils/province.dart';
 import 'package:flutter/material.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -24,36 +25,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
   String? passwordConfirm;
   // int? roleId;
 
-  final String provinceValue = 'Kinshasa';
+  final List<String> provinces =
+      Province().provinces;
 
-  static var _provinces = <String>[
-    'Bas-Uele',
-    'Équateur',
-    'Haut-Katanga,'
-        'Haut-Lomami',
-    'Haut-Uele',
-    'Ituri	Bunia',
-    'Kasaï	Tshikapa',
-    'Kasaï central',
-    'Kasaï oriental',
-    'Kinshasa',
-    'Kongo-Central',
-    'Kwango',
-    'Kwilu',
-    'Lomami',
-    'Lualaba',
-    'Mai-Ndombe',
-    'Maniema',
-    'Mongala',
-    'Nord-Kivu',
-    'Nord-Ubangi',
-    'Sankuru',
-    'Sud-Kivu',
-    'Sud-Ubangi',
-    'Tanganyika',
-    'Tshopo',
-    'Tshuapa',
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +38,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       body: Stack(
         children: [
           Container(
-            height: MediaQuery.of(context).size.height * 0.7,
+            height: MediaQuery.of(context).size.height * 0.5,
             width: MediaQuery.of(context).size.width,
             child: Container(
               decoration: BoxDecoration(
@@ -109,39 +83,42 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   Widget containerBuilder() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        ClipRRect(
-          borderRadius: BorderRadius.all(
-            Radius.circular(20),
-          ),
-          child: Container(
-            // height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width * 0.8,
-            decoration: BoxDecoration(
-              color: Colors.white,
+    return SingleChildScrollView(
+      scrollDirection: Axis.vertical,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.all(
+              Radius.circular(20),
             ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                logoBuild(),
-                firstNameBuild(),
-                lastNameBuild(),
-                emailBuild(),
-                telephoneBuild(),
-                provinceBuild(),
-                nameBusinessBuild(),
-                // typeAbonnementBuild(),
-                passwordBuild(),
-                passwordConfirmBuild(),
-                registerButtonBuild(),
-              ],
+            child: Container(
+              // height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width * 0.8,
+              decoration: BoxDecoration(
+                color: Colors.white,
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  logoBuild(),
+                  firstNameBuild(),
+                  lastNameBuild(),
+                  emailBuild(),
+                  telephoneBuild(),
+                  provinceBuild(),
+                  nameBusinessBuild(),
+                  // typeAbonnementBuild(),
+                  passwordBuild(),
+                  passwordConfirmBuild(),
+                  registerButtonBuild(),
+                ],
+              ),
             ),
-          ),
-        )
-      ],
+          )
+        ],
+      ),
     );
   }
 
@@ -243,35 +220,30 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget provinceBuild() {
     return Padding(
       padding: EdgeInsets.all(8),
-      child: Column(
-        children: [
-          DropdownButtonFormField<String>(
-            decoration: InputDecoration(
-                prefixIcon: Icon(
-                  Icons.place,
-                  color: Colors.purple,
-                ),
-                labelText: 'Province'),
-            value: provinceValue,
-            icon: const Icon(Icons.arrow_drop_down),
-            iconSize: 20,
-            elevation: 16,
-            isDense: true,
-            isExpanded: true,
-            style: const TextStyle(color: Colors.deepPurple),
-            onChanged: (value) {
-              setState(() {
-                province = value;
-              });
-            },
-            items: _provinces.map<DropdownMenuItem<String>>((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(value),
-              );
-            }).toList(),
-          )
-        ],
+      child: DropdownButtonFormField<String>(
+        decoration: InputDecoration(
+          labelText: 'Province',
+          prefixIcon: Icon(
+            Icons.place,
+            color: Colors.purple,
+          ),
+        ),
+        // hint: Text('Province'),
+        value: province,
+        isExpanded: true,
+        style: const TextStyle(color: Colors.deepPurple),
+        items: provinces.map((String value) {
+          return DropdownMenuItem<String>(
+            value: value,
+            child: Text(value),
+          );
+        }).toList(),
+        onChanged: (produit) {
+          setState(() {
+            // type = null;
+            province = produit;
+          });
+        },
       ),
     );
   }
@@ -364,7 +336,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       Container(
           height: 1.4 * (MediaQuery.of(context).size.height / 20),
           width: 5 * (MediaQuery.of(context).size.width / 10),
-          margin: EdgeInsets.only(bottom: 20),
+          margin: EdgeInsets.only(top: 20, bottom: 20),
           child: ElevatedButton(
               style: ElevatedButton.styleFrom(
                 textStyle: const TextStyle(fontSize: 10),
@@ -412,7 +384,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
     await AuthService().register(user);
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => DashboardScreen()));
+        context, MaterialPageRoute(builder: (context) => LoginScreen()));
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text("${user.firstName} ${user.lastName} ajouté!"),
       backgroundColor: Colors.green[700],

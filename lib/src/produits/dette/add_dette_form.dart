@@ -442,17 +442,13 @@ class _AddDetteFormState extends State<AddDetteForm> {
           ),
         ),
         initialValue: '',
-        // locale: Locale('fr', 'FR'),
+        locale: Locale('fr', 'FR'), 
         firstDate: DateTime(2021),
         lastDate: DateTime(2050),
         // dateLabelText: 'Date',
         onChanged: (val) {
           datePayement = val;
         },
-        // validator: (val) {
-        //   print(val);
-        //   return null;
-        // },
         onSaved: (val) => print(val),
       ),
     );

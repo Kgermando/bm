@@ -2,6 +2,7 @@ import 'package:e_management/services/auth_service.dart';
 import 'package:e_management/src/auth/forgot_password_screen.dart';
 import 'package:e_management/src/auth/register_screen.dart';
 import 'package:e_management/src/screens/dashboard_screen.dart';
+import 'package:e_management/themes.dart';
 import 'package:flutter/material.dart';
 
 
@@ -30,7 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
             width: MediaQuery.of(context).size.width,
             child: Container(
               decoration: BoxDecoration(
-                  color: Colors.purple,
+                  color: MyThemes.primary,
                   borderRadius: BorderRadius.only(
                     bottomLeft: const Radius.circular(70),
                     bottomRight: const Radius.circular(70),
@@ -130,7 +131,7 @@ class _LoginScreenState extends State<LoginScreen> {
         decoration: InputDecoration(
             prefixIcon: Icon(
               Icons.person,
-              color: Colors.purple,
+              color: MyThemes.primary,
             ),
             labelText: 'Téléphone'),
       ),
@@ -147,7 +148,7 @@ class _LoginScreenState extends State<LoginScreen> {
         decoration: InputDecoration(
           prefixIcon: Icon(
             Icons.lock,
-            color: Colors.purple,
+            color: MyThemes.primary,
           ),
           labelText: 'Password',
         ),

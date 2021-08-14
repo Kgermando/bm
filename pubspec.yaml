@@ -41,6 +41,9 @@ dependencies:
   dio: ^4.0.0
   date_time_picker: "^2.1.0"
   flutter_local_notifications: ^8.1.1+1
+  animated_theme_switcher: ^2.0.1-nullsafety.0
+  shared_preferences: ^2.0.5
+  image_picker: ^0.7.4
 
 dev_dependencies:
   flutter_test:

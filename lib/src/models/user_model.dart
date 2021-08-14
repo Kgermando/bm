@@ -1,26 +1,18 @@
-
-import 'dart:convert';
-
-User userFromJson(String str) => User.fromJson(json.decode(str));
-
-String userToJson(User data) => json.encode(data.toJson());
-
 class User {
-  int? id;
-  String? firstName;
-  String? lastName;
-  String? email;
-  String? telephone;
-  String? nameBusiness;
-  String? province;
-  String? typeAbonnement;
-  String? password;
-  String? passwordConfirm;
-  // DateTime? createdAt;
-  // DateTime? updatedAt;
+  final int? id;
+  final String firstName;
+  final String lastName;
+  final String email;
+  final String telephone;
+  final String nameBusiness;
+  final String province;
+  final String typeAbonnement;
+  final String? password;
+  final String? passwordConfirm;
+  final String? imagePath;
+  final bool? isDarkMode;
 
-
-  User({
+  const User({
     this.id,
     required this.firstName,
     required this.lastName,
@@ -29,14 +21,40 @@ class User {
     required this.nameBusiness,
     required this.province,
     required this.typeAbonnement,
-    required this.password,
-    required this.passwordConfirm,
-    // required this.createdAt,
-    // required this.updatedAt,
+    this.password,
+    this.passwordConfirm,
+    this.imagePath,
+    this.isDarkMode,
   });
 
- 
-  factory User.fromJson(Map<String, dynamic> json) => User(
+  User copy({
+    String? firstName,
+    String? lastName,
+    String? email,
+    String? telephone,
+    String? nameBusiness,
+    String? province,
+    String? typeAbonnement,
+    String? password,
+    String? passwordConfirm,
+    String? imagePath,
+    bool? isDarkMode,
+  }) =>
+      User(
+          firstName: firstName ?? this.firstName,
+          lastName: lastName ?? this.lastName,
+          email: email ?? this.email,
+          telephone: telephone ?? this.telephone,
+          nameBusiness: nameBusiness ?? this.nameBusiness,
+          province: province ?? this.province,
+          typeAbonnement: typeAbonnement ?? this.typeAbonnement,
+          password: password ?? this.password,
+          passwordConfirm: passwordConfirm ?? this.passwordConfirm,
+          imagePath: imagePath ?? this.imagePath,
+          isDarkMode: isDarkMode ?? this.isDarkMode,
+        );
+
+  static User fromJson(Map<String, dynamic> json) => User(
         id: json["id"],
         firstName: json["firstName"],
         lastName: json["lastName"],
@@ -45,10 +63,10 @@ class User {
         nameBusiness: json["nameBusiness"],
         province: json["province"],
         typeAbonnement: json["typeAbonnement"],
-        password: json["password"],
-        passwordConfirm: json["passwordConfirm"],
-        // createdAt: json["createdAt"],
-        // updatedAt: json["updatedAt"],
+        // password: json["password"],
+        // passwordConfirm: json["passwordConfirm"],
+        imagePath: json['imagePath'],
+        isDarkMode: json['isDarkMode'],
       );
 
   Map<dynamic, dynamic> toJson() => {
@@ -62,7 +80,7 @@ class User {
         "typeAbonnement": typeAbonnement,
         "password": password,
         "passwordConfirm": passwordConfirm,
-        // "createdAt": createdAt,
-        // "updatedAt": updatedAt,
+        'imagePath': imagePath,
+        'isDarkMode': isDarkMode,
       };
 }

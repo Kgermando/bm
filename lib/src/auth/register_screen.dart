@@ -2,6 +2,7 @@ import 'package:e_management/services/auth_service.dart';
 import 'package:e_management/src/auth/login_screen.dart';
 import 'package:e_management/src/models/user_model.dart';
 import 'package:e_management/src/utils/province.dart';
+import 'package:e_management/themes.dart';
 import 'package:flutter/material.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -42,7 +43,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             width: MediaQuery.of(context).size.width,
             child: Container(
               decoration: BoxDecoration(
-                  color: Colors.purple,
+                  color: MyThemes.primary,
                   borderRadius: BorderRadius.only(
                     bottomLeft: const Radius.circular(70),
                     bottomRight: const Radius.circular(70),
@@ -150,7 +151,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         decoration: InputDecoration(
             prefixIcon: Icon(
               Icons.person_outline_sharp,
-              color: Colors.purple,
+              color: MyThemes.primary,
             ),
             labelText: 'Prénom'),
       ),
@@ -170,7 +171,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         decoration: InputDecoration(
             prefixIcon: Icon(
               Icons.person_outline_sharp,
-              color: Colors.purple,
+              color: MyThemes.primary,
             ),
             labelText: 'Nom'),
       ),
@@ -190,7 +191,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         decoration: InputDecoration(
             prefixIcon: Icon(
               Icons.email,
-              color: Colors.purple,
+              color: MyThemes.primary,
             ),
             labelText: 'Adresse email'),
       ),
@@ -210,7 +211,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         decoration: InputDecoration(
             prefixIcon: Icon(
               Icons.phone,
-              color: Colors.purple,
+              color: MyThemes.primary,
             ),
             labelText: 'Téléphone'),
       ),
@@ -225,13 +226,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
           labelText: 'Province',
           prefixIcon: Icon(
             Icons.place,
-            color: Colors.purple,
+            color: MyThemes.primary,
           ),
         ),
         // hint: Text('Province'),
         value: province,
         isExpanded: true,
-        style: const TextStyle(color: Colors.deepPurple),
         items: provinces.map((String value) {
           return DropdownMenuItem<String>(
             value: value,
@@ -261,7 +261,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         decoration: InputDecoration(
             prefixIcon: Icon(
               Icons.business,
-              color: Colors.purple,
+              color: MyThemes.primary,
             ),
             labelText: 'Nom de votre activité'),
       ),
@@ -281,7 +281,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   //       decoration: InputDecoration(
   //           prefixIcon: Icon(
   //             Icons.attach_money,
-  //             color: Colors.purple,
+  //             color: MyThemes.primary,
   //           ),
   //           labelText: 'Type d\'abonnement'),
   //     ),
@@ -301,7 +301,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         decoration: InputDecoration(
             prefixIcon: Icon(
               Icons.password,
-              color: Colors.purple,
+              color: MyThemes.primary,
             ),
             labelText: 'Mot de passe'),
       ),
@@ -324,7 +324,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         decoration: InputDecoration(
             prefixIcon: Icon(
               Icons.password,
-              color: Colors.purple,
+              color: MyThemes.primary,
             ),
             labelText: 'Confirmer votre mot de passe'),
       ),

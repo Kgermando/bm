@@ -1,10 +1,12 @@
 import 'dart:convert';
 
 import 'package:e_management/global/environment.dart';
+import 'package:e_management/services/user_preferences.dart';
 import 'package:e_management/src/models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthService with ChangeNotifier {
   static const _TOKEN_KEY = 'jwt';
@@ -12,6 +14,7 @@ class AuthService with ChangeNotifier {
   User? user;
 
   final _storage = FlutterSecureStorage();
+  late SharedPreferences sharedPreferences;
 
   static Future<String?> getToken() async {
     final _storage = new FlutterSecureStorage();
@@ -34,12 +37,8 @@ class AuthService with ChangeNotifier {
 
     if (resp.statusCode == 200 || resp.statusCode == 201) {
       print(resp.body);
-      // final loginResponse = loginModelFromJson(resp.body);
-      // user = loginResponse.user;
-      // await _guardarToken(loginResponse.jwt);
-      // final loginRes = userFromJson(resp.body);
-      // await _storage.write(key: 'jwt', value: json.decode(resp.body)['token']);
-      userFromJson(resp.body);
+      final user = json.decode(resp.body);
+      UserPreferences.save(_TOKEN_KEY, user);
       await _guardarToken("jwt");
       return true;
     } else {
@@ -47,9 +46,7 @@ class AuthService with ChangeNotifier {
     }
   }
 
-
   Future<dynamic> register(User user) async {
-
     // if (password != confirmPassword) {
     //   throw Exception('Password and confirm Password do not match');
     // }
@@ -85,7 +82,7 @@ class AuthService with ChangeNotifier {
       // user = userResponse.user;
       // await _guardarToken("jwt");
       // return true;
-      return userFromJson(resp.body);
+      // return userFromJson(resp.body);
     } else {
       // logout();
       // return false;
@@ -96,5 +93,8 @@ class AuthService with ChangeNotifier {
   Future<void> _guardarToken(String jwt) async =>
       await _storage.write(key: _TOKEN_KEY, value: jwt);
 
-  Future<void> logout() async => await _storage.delete(key: _TOKEN_KEY);
+  Future<void> logout() async { 
+    // await sharedPreferences.clear();
+    await _storage.delete(key: _TOKEN_KEY);
+  }
 }

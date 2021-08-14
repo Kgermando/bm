@@ -1,4 +1,4 @@
-import 'package:e_management/services/auth_service.dart';
+import 'package:e_management/services/user_preferences.dart';
 import 'package:e_management/src/models/user_model.dart';
 import 'package:flutter/material.dart';
 
@@ -19,12 +19,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
       body: Center(
         child: FutureBuilder<User?>(
-          future: AuthService().isLoggedIn(),
+          future: UserPreferences.read(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               User? userInfo = snapshot.data;
-              print("User $userInfo ");
-  
               if (userInfo != null) {
                 var userData = userInfo;
                 return Column(
@@ -37,7 +35,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       style: TextStyle(fontSize: 16.0),
                     ),
                     Text(
-                      userData.email!,
+                      userData.email,
                       style: TextStyle(fontSize: 16.0),
                     ),
                   ],

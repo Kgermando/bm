@@ -1,7 +1,6 @@
 import 'package:e_management/resources/products_database.dart';
 import 'package:e_management/src/models/achat_model.dart';
 import 'package:e_management/src/models/vente_model.dart';
-import 'package:e_management/src/stats/semaine.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -39,21 +38,6 @@ class _AnStatsState extends State<AnStats> {
     });
   }
   
-  List<SalesData> data = [
-    SalesData('Jan', 35),
-    SalesData('Feb', 28),
-    SalesData('Mar', 34),
-    SalesData('Apr', 32),
-    SalesData('May', 150),
-    SalesData('Jun', 200),
-    SalesData('Jui', 105),
-    SalesData('Aou', 90),
-    SalesData('Sep', 20),
-    SalesData('Oct', 120),
-    SalesData('Nov', 80),
-    SalesData('Dec', 60),
-  ];
-
   @override
   Widget build(BuildContext context) {
       var dataPrice = venteList.map((e) => int.parse(e.price)).toList();
@@ -123,8 +107,7 @@ class _AnStatsState extends State<AnStats> {
                     dataSource: venteList,
                     xValueMapper: (VenteModel vente, _) =>
                         (DateFormat("yyyy").format(vente.date).toString()), 
-                    yValueMapper: (VenteModel vente, _) =>
-                        int.parse(vente.price),
+                    yValueMapper: (VenteModel vente, _) => int.parse(vente.price),
                     name: 'Ventes',
                     // Enable data label
                     dataLabelSettings: DataLabelSettings(isVisible: true))

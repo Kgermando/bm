@@ -1,7 +1,6 @@
 import 'package:e_management/resources/products_database.dart';
 import 'package:e_management/src/models/achat_model.dart';
 import 'package:e_management/src/models/vente_model.dart';
-import 'package:e_management/src/stats/semaine.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -49,13 +48,6 @@ class _MouthStatsState extends State<MouthStats> {
     int sumAchat = 0;
     dataPriceAchat.forEach((data) => sumAchat += data);
 
-    List<SalesData> data = [
-      SalesData('1S', 35),
-      SalesData('2S', 28),
-      SalesData('3S', 34),
-      SalesData('4S', 32),
-      SalesData('5S', 150),
-    ];
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -116,8 +108,7 @@ class _MouthStatsState extends State<MouthStats> {
                       dataSource: venteList,
                       xValueMapper: (VenteModel vente, _) =>
                           (DateFormat("MM/yyyy").format(vente.date).toString()),
-                      yValueMapper: (VenteModel vente, _) =>
-                          int.parse(vente.price),
+                      yValueMapper: (VenteModel vente, _) => int.parse(vente.price),
                       name: 'Ventes',
                       // Enable data label
                       dataLabelSettings: DataLabelSettings(isVisible: true))

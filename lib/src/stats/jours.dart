@@ -1,7 +1,6 @@
 import 'package:e_management/resources/products_database.dart';
 import 'package:e_management/src/models/achat_model.dart';
 import 'package:e_management/src/models/vente_model.dart';
-import 'package:e_management/src/stats/semaine.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';

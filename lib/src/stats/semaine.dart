@@ -38,17 +38,6 @@ class _SemaineStatsState extends State<SemaineStats> {
     });
   }
   
-  
-  List<SalesData> data = [
-    SalesData('Lun', 35),
-    SalesData('Mar', 28),
-    SalesData('Mer', 34),
-    SalesData('Jeu', 32),
-    SalesData('Ven', 150),
-    SalesData('Sam', 200),
-    SalesData('Dim', 105)
-  ];
-
   @override
   Widget build(BuildContext context) {
     var dataPrice = venteList.map((e) => int.parse(e.price)).toList();
@@ -118,8 +107,7 @@ class _SemaineStatsState extends State<SemaineStats> {
                     dataSource: venteList,
                     xValueMapper: (VenteModel vente, _) =>
                         (DateFormat("dd/MM").format(vente.date).toString()),
-                    yValueMapper: (VenteModel vente, _) =>
-                        int.parse(vente.price),
+                    yValueMapper: (VenteModel vente, _) => int.parse(vente.price),
                     name: 'Ventes',
                     // Enable data label
                     dataLabelSettings: DataLabelSettings(isVisible: true))

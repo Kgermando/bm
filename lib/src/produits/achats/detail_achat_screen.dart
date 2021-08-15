@@ -1,5 +1,6 @@
 import 'package:e_management/resources/products_database.dart';
 import 'package:e_management/src/models/achat_model.dart';
+import 'package:e_management/src/models/dette_model.dart';
 import 'package:e_management/src/models/vente_model.dart';
 import 'package:e_management/src/produits/achats/add_achat_form.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,7 @@ class _AchatDetailScreenState extends State<AchatDetailScreen> {
   _AchatDetailScreenState(this.achat);
 
   List<VenteModel> venteList = [];
+  List<DetteModel> detteList = [];
 
   bool loading = false;
 
@@ -33,6 +35,13 @@ class _AchatDetailScreenState extends State<AchatDetailScreen> {
     setState(() {
       venteList = ventes;
       // print(venteList);
+    });
+  }
+
+  void loadDette() async {
+    List<DetteModel> dette = await ProductDatabase.instance.getAllDette();
+    setState(() {
+      detteList = dette;
     });
   }
 
@@ -62,31 +71,27 @@ class _AchatDetailScreenState extends State<AchatDetailScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => AddAchatForm()
-              )
-            );
+              context, MaterialPageRoute(builder: (context) => AddAchatForm()));
         },
         tooltip: 'Ajoutez achats',
         child: Icon(Icons.edit),
       ),
-      body: loading 
-        ? Center(child: CircularProgressIndicator())
-        : Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              header(),
-              headerTitle(),
-              achattitle(),
-              achats(),
-              ventetitle(),
-              ventes(),
-              benfices(),
-            ],
-          ),
-        ),
+      body: loading
+          ? Center(child: CircularProgressIndicator())
+          : Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  header(),
+                  headerTitle(),
+                  achattitle(),
+                  achats(),
+                  ventetitle(),
+                  ventes(),
+                  benfices(),
+                ],
+              ),
+            ),
     );
   }
 
@@ -123,19 +128,16 @@ class _AchatDetailScreenState extends State<AchatDetailScreen> {
             ),
           ),
           Text(achat.type,
-            style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
-            overflow: TextOverflow.ellipsis
-          ),
+              style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
+              overflow: TextOverflow.ellipsis),
           SizedBox(
             child: Container(
               child: Icon(Icons.arrow_right_outlined),
             ),
           ),
-          Text(
-            achat.identifiant,
-            style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20),
-            overflow: TextOverflow.ellipsis
-          ),
+          Text(achat.identifiant,
+              style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20),
+              overflow: TextOverflow.ellipsis),
         ],
       ),
     ));
@@ -202,24 +204,20 @@ class _AchatDetailScreenState extends State<AchatDetailScreen> {
     var filter = venteList.where((element) =>
         achat.categorie == element.categorie &&
         achat.sousCategorie == element.sousCategorie &&
-        achat.type == element.type && 
-        achat.identifiant == element.identifiant
-      );
-    // print('$filter filter data');
+        achat.type == element.type &&
+        achat.identifiant == element.identifiant);
 
     // Quantités
     var filterQty = filter.map((e) => int.parse(e.quantity));
-    // print('$filterQty filter qty');
+
     int sumQty = 0;
     filterQty.forEach((qty) => sumQty += qty);
-    // print('$sumQty quantit"s des produits vendus');
 
     // Prix
     var filterPrice = filter.map((e) => int.parse(e.price));
-    // print('$filterPrice filter price');
+
     int sumPrice = 0;
     filterPrice.forEach((price) => sumPrice += price);
-    // print('$sumPrice sommes des produits vendus');
 
     return Container(
       padding: EdgeInsets.only(top: 20.0),
@@ -261,72 +259,75 @@ class _AchatDetailScreenState extends State<AchatDetailScreen> {
     );
   }
 
-
   Widget benfices() {
     // Filter
     var filter = venteList.where((element) =>
         achat.categorie == element.categorie &&
         achat.sousCategorie == element.sousCategorie &&
         achat.type == element.type &&
-        achat.identifiant == element.identifiant
-      );
+        achat.identifiant == element.identifiant);
 
     // Quantités
     var filterQty = filter.map((e) => int.parse(e.quantity));
-    int sumQty = 0;
-    filterQty.forEach((qty) => sumQty += qty);
+    int sumQtyVente = 0;
+    filterQty.forEach((qty) => sumQtyVente += qty);
 
     // Prix
     var filterPrice = filter.map((e) => int.parse(e.price));
-    int sumPrice = 0;
-    filterPrice.forEach((price) => sumPrice += price);
+    int sumPriceVente = 0;
+    filterPrice.forEach((price) => sumPriceVente += price);
 
     int qtyAchat = int.parse(achat.quantity);
     int prixAchat = int.parse(achat.price);
 
+
+    var filterDette = detteList.where((element) =>
+        achat.categorie == element.categorie &&
+        achat.sousCategorie == element.sousCategorie &&
+        achat.type == element.type &&
+        achat.identifiant == element.identifiant);
+
+    var filterQtyDette = filterDette.map((e) => int.parse(e.quantity));
+    int sumQtyDette = 0;
+    filterQtyDette.forEach((qty) => sumQtyDette += qty);
+
+
     return Container(
-      padding: EdgeInsets.only(top: 20.0),
+        padding: EdgeInsets.only(top: 20.0),
         child: Card(
             child: Padding(
-      padding: EdgeInsets.only(top: 28.0, bottom: 10.0),
-      child: Column(
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          padding: EdgeInsets.only(top: 28.0, bottom: 10.0),
+          child: Column(
             children: [
-              Text('Restes des ${achat.unity}',
-                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 14)),
-              Text('Revenues',
-                  style: TextStyle(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 16
-                    )
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Restes des ${achat.unity}',
+                      style:
+                          TextStyle(fontWeight: FontWeight.w700, fontSize: 14)),
+                  Text('Revenues',
+                      style:
+                          TextStyle(fontWeight: FontWeight.w700, fontSize: 16)),
+                ],
+              ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('${qtyAchat - sumQtyVente - sumQtyDette} ${achat.unity}',
+                      style:TextStyle(fontWeight: FontWeight.w700, fontSize: 20)),
+                  Text('${sumPriceVente - prixAchat} FC',
+                      style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 30,
+                          color: Colors.green[800])),
+                ],
               ),
             ],
           ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text('${qtyAchat - sumQty} ${achat.unity}',
-                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20)
-              ),
-              Text('${sumPrice - prixAchat} FC',
-                  style: TextStyle(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 30,
-                      color: Colors.green[800]
-                    )
-              ),
-            ],
-          ),
-          
-        ],
-      ),
-    )));
+        )));
   }
-
 
   Widget editButton(BuildContext context) {
     return IconButton(

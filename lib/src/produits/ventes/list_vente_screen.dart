@@ -25,7 +25,7 @@ class _ListVenteScreenState extends State<ListVenteScreen> {
 
   Future<void> getData() async {
     setState(() {
-      ProductDatabase.instance.getAllVenteByDate();
+      ProductDatabase.instance.getAllVente();
     });
   }
 
@@ -56,7 +56,7 @@ class _ListVenteScreenState extends State<ListVenteScreen> {
         ),
         drawer: SideBarScreen(),
         body: FutureBuilder<List<VenteModel>>(
-            future: ProductDatabase.instance.getAllVenteByDate(),
+            future: ProductDatabase.instance.getAllVente(),
             builder: (BuildContext context,
                 AsyncSnapshot<List<VenteModel>> snapshot) {
               if (snapshot.hasData) {

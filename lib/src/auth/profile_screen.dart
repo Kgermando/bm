@@ -27,62 +27,147 @@ class _ProfileScreenState extends State<ProfileScreen> {
             if (userInfo != null) {
               var userData = userInfo;
               return Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(8.0),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Image.asset("assets/images/profile.jpg", height: 150.0, width: 150.0, fit: BoxFit.cover,),
+                    Image.asset("assets/images/profile.jpg", height: 80.0, width: 80.0, fit: BoxFit.cover,),
                     SizedBox(height: 8.0),
                     Text(
                       '${userData.firstName} ${userData.lastName}',
-                      style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.w800),
+                      style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w800),
                     ),
                     SizedBox(height: 16.0,),
                     
-                    Row(
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        IconButton(
-                            onPressed: () {},
-                            icon: Icon(Icons.phone,
-                                size: 40.0, color: MyThemes.primary)),
-                        Spacer(),
-                        IconButton(
-                            onPressed: () {},
-                            icon: Icon(Icons.business,
-                                size: 40.0, color: MyThemes.primary)),
-                        Spacer(),
-                        IconButton(
-                            onPressed: () {},
-                            icon: Icon(Icons.money,
-                                size: 40.0, color: MyThemes.primary))
-                      ],
-                    ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Card(
+                              elevation: 3.0,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  children: [
+                                    IconButton(
+                                      onPressed: () {},
+                                      icon: Icon(Icons.phone,
+                                          size: 20.0, color: MyThemes.primary)),
 
-                    SizedBox(
-                      height: 10.0,
-                    ),
+                                    Text(
+                                      '${userData.telephone}',
+                                      style: TextStyle(
+                                          fontSize: 10.0,
+                                          fontWeight: FontWeight.w800),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Card(
+                              elevation: 3.0,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  children: [
+                                    IconButton(
+                                      onPressed: () {},
+                                      icon: Icon(Icons.business,
+                                          size: 20.0, color: Colors.purpleAccent)),
 
-                    Row(
-                      children: [
-                        Text(
-                          '${userData.telephone}',
-                          style: TextStyle(
-                              fontSize: 20.0, fontWeight: FontWeight.w800),
+                                    Text(
+                                      '${userData.nameBusiness}',
+                                      style: TextStyle(
+                                          fontSize: 10.0,
+                                          fontWeight: FontWeight.w800),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                                    
+                            ),
+                            Card(
+                              elevation: 3.0,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  children: [
+                                    IconButton(
+                                      onPressed: () {},
+                                      icon: Icon(Icons.money,
+                                          size: 20.0, color: Colors.green)),
+
+                                    Text(
+                                      '${userData.typeAbonnement}',
+                                      style: TextStyle(
+                                          fontSize: 10.0,
+                                          fontWeight: FontWeight.w800),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            )
+                          ],
                         ),
-                        Spacer(),
-                        Text(
-                          '${userData.nameBusiness}',
-                          style: TextStyle(
-                              fontSize: 20.0, fontWeight: FontWeight.w800),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Card(
+                              elevation: 3.0,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  children: [
+                                    IconButton(
+                                        onPressed: () {},
+                                        icon: Icon(Icons.email,
+                                            size: 20.0,
+                                            color: MyThemes.primary)),
+                                    Text(
+                                      '${userData.email}',
+                                      style: TextStyle(
+                                          fontSize: 10.0,
+                                          fontWeight: FontWeight.w800),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Card(
+                              elevation: 3.0,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  children: [
+                                    IconButton(
+                                        onPressed: () {},
+                                        icon: Icon(Icons.place,
+                                            size: 20.0,
+                                            color: Colors.purpleAccent)),
+                                    Text(
+                                      '${userData.province}',
+                                      style: TextStyle(
+                                          fontSize: 10.0,
+                                          fontWeight: FontWeight.w800),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                        Spacer(),
-                        Text(
-                          '${userData.typeAbonnement}',
-                          style: TextStyle(
-                              fontSize: 20.0, fontWeight: FontWeight.w800),
-                        ),
+                        
+                        
                       ],
                     ),
                     

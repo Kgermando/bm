@@ -1,9 +1,10 @@
-import 'package:chart_sparkline/chart_sparkline.dart';
-import 'package:e_management/resources/products_database.dart';
 import 'package:e_management/src/models/menu_item.dart';
-import 'package:e_management/src/models/vente_model.dart';
 import 'package:e_management/src/produits/ventes/add_vente_form.dart';
 import 'package:e_management/src/screens/sidebar_screen.dart';
+import 'package:e_management/src/stats/an.dart';
+import 'package:e_management/src/stats/jours.dart';
+import 'package:e_management/src/stats/mouth.dart';
+import 'package:e_management/src/stats/semaine.dart';
 import 'package:e_management/src/utils/menu_items.dart';
 import 'package:e_management/src/utils/menu_options.dart';
 import 'package:flutter/material.dart';
@@ -15,111 +16,73 @@ class DashboardScreen extends StatefulWidget {
   _DashboardScreenState createState() => _DashboardScreenState();
 }
 
-class _DashboardScreenState extends State<DashboardScreen> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text('B-Management'),
-          actions: [
-            PopupMenuButton<MenuItem>(
-              onSelected: (item) => MenuOptions().onSelected(context, item),
-              itemBuilder: (context) => [
-                ...MenuItems.itemsFirst.map(MenuOptions().buildItem).toList(),
-                PopupMenuDivider(),
-                ...MenuItems.itemsSecond.map(MenuOptions().buildItem).toList(),
-              ],
-            )
-          ],
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => AddVenteForm()));
-          },
-          tooltip: 'Ajoutez ventes',
-          child: Icon(Icons.add),
-        ),
-        drawer: SideBarScreen(),
-        body: VenteDashboardScreen()
-    );
-  }
-
-}
-
-class VenteDashboardScreen extends StatefulWidget {
-  const VenteDashboardScreen({Key? key}) : super(key: key);
-
-  @override
-  _VenteDashboardScreenState createState() => _VenteDashboardScreenState();
-}
-
-class _VenteDashboardScreenState extends State<VenteDashboardScreen> {
-  List<VenteModel> venteList = [];
+class _DashboardScreenState extends State<DashboardScreen>
+    with SingleTickerProviderStateMixin {
+  late TabController controller;
 
   @override
   void initState() {
     super.initState();
-    loadVente();
-  }
-
-  void loadVente() async {
-    List<VenteModel>? ventes =
-        await ProductDatabase.instance.getAllVenteByDate();
-    setState(() {
-      venteList = ventes;
-      // print(venteList);
+    controller = TabController(length: 4, vsync: this);
+    controller.addListener(() {
+      setState(() {});
     });
   }
 
   @override
-  Widget build(BuildContext context) {
-    // var data = [0.0, 1.0, 1.5, 2.0, 0.0, 0.0, -0.5, -1.0, -0.5, 0.0, 0.0];
-    var dataPrice = venteList.map((e) => double.parse(e.price)).toList();
-    // print(dataPrice);
-    double sum = 0;
-    dataPrice.forEach((data) => sum += data);
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
 
-    return Container(
-      height: 300.0,
-      child: Card(
-        elevation: 10.0,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              Container(
-                child: Text('Ventes journalières',
-                    style:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0)),
-              ),
-              Container(
-                child: Text('$sum FC',
-                    style:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 28.0)),
-              ),
-              Container(
-                // width: 300.0,
-                height: 200.0,
-                child: Sparkline(
-                  data: dataPrice,
-                  sharpCorners: true,
-                  lineColor: Colors.purple,
-                  lineWidth: 6.0,
-                  pointsMode: PointsMode.all,
-                  pointSize: 8.0,
-                  pointColor: Colors.blue,
-                  lineGradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [Colors.purple, Colors.purple],
-                  ),
-                ),
-              ),
+  @override
+  Widget build(BuildContext context) {
+    return DefaultTabController(
+      length: 4,
+      child: Scaffold(
+          appBar: AppBar(
+            title: Text('Business-Management '),  // ${controller.index + 1}
+            actions: [
+              PopupMenuButton<MenuItem>(
+                onSelected: (item) => MenuOptions().onSelected(context, item),
+                itemBuilder: (context) => [
+                  ...MenuItems.itemsFirst.map(MenuOptions().buildItem).toList(),
+                  PopupMenuDivider(),
+                  ...MenuItems.itemsSecond
+                      .map(MenuOptions().buildItem)
+                      .toList(),
+                ],
+              )
             ],
+            bottom: TabBar(
+              controller: controller,
+              // indicatorWeight: 10,
+              tabs: [
+                Tab(text: 'Jour', icon: Icon(Icons.view_day)),
+                Tab(text: 'Semaine', icon: Icon(Icons.weekend)),
+                Tab(text: 'Mois', icon: Icon(Icons.motion_photos_pause_sharp)),
+                Tab(text: 'An', icon: Icon(Icons.price_check)),
+              ],
+            ),
           ),
-        ),
-      ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => AddVenteForm()));
+            },
+            tooltip: 'Ajoutez ventes',
+            child: Icon(Icons.add),
+          ),
+          drawer: SideBarScreen(),
+          body: TabBarView(
+            controller: controller,
+            children: [
+              JourStats(),
+              SemaineStats(),
+              MouthStats(),
+              AnStats()
+            ],
+          )),
     );
   }
 }

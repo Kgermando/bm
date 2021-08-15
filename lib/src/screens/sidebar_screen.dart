@@ -27,13 +27,19 @@ class SideBarScreen extends StatelessWidget {
                   padding: EdgeInsets.all(0),
                   children: <Widget>[
                     UserAccountsDrawerHeader(
-                      accountEmail: Text(
-                        userData.email,
-                      ),
                       accountName:
                           Text('${userInfo.firstName} ${userInfo.lastName}'),
+                      accountEmail: Text(
+                        userData.telephone,
+                      ),
                       currentAccountPicture: CircleAvatar(
-                        child: Image.asset("assets/images/logo.png"),
+                        child: Image.asset(
+                          "assets/images/profile.jpg",
+                          height: 100.0,
+                          width: 100.0,
+                          fit: BoxFit.cover,
+                        ),
+                        radius: 100.0
                       ),
                       onDetailsPressed: () {
                         Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileScreen()));
@@ -132,7 +138,11 @@ class SideBarScreen extends StatelessWidget {
                 );
               }
             }
-            return CircularProgressIndicator();
+            return Container(
+              width: 10,
+              height: 10,
+              child: CircularProgressIndicator()
+            );
           }),
     );
   }

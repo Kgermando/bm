@@ -46,9 +46,8 @@ class ProductDatabase {
         ${AchatFields.price} $textType,
         ${AchatFields.date} $textType
       )
-      '''
-    );
-    
+      ''');
+
     await db.execute('''
       CREATE TABLE $tableVente (
         ${VenteFields.id} $idType,
@@ -61,8 +60,7 @@ class ProductDatabase {
         ${VenteFields.price} $textType,
         ${VenteFields.date} $textType
       )
-      '''
-    );
+      ''');
 
     await db.execute('''
       CREATE TABLE $tableDettes (
@@ -78,8 +76,7 @@ class ProductDatabase {
         ${DetteFields.personne} $textType,
         ${DetteFields.datePayement} $textType
       )
-      '''
-    );
+      ''');
   }
 
   // Insert data in database
@@ -128,6 +125,45 @@ class ProductDatabase {
     return result.map((json) => AchatModel.fromJson(json)).toList();
   }
 
+  Future<List<AchatModel>> getAllAchatDay() async {
+    final db = await instance.database;
+    final orderBy = '${AchatFields.date} ASC';
+    var now = new DateTime.now();
+    var nowW = now.subtract(Duration(days: 7));
+    final result = await db
+        .rawQuery('SELECT * FROM $tableAchats WHERE "$nowW" ORDER BY $orderBy');
+    return result.map((json) => AchatModel.fromJson(json)).toList();
+  }
+
+  Future<List<AchatModel>> getAllAchatWeek() async {
+    final db = await instance.database;
+    final orderBy = '${AchatFields.date} ASC';
+    var now = new DateTime.now();
+    var nowW = now.subtract(Duration(days: 7));
+    final result = await db
+        .rawQuery('SELECT * FROM $tableAchats WHERE "$nowW" ORDER BY $orderBy');
+    return result.map((json) => AchatModel.fromJson(json)).toList();
+  }
+
+  Future<List<AchatModel>> getAllAchatMouth() async {
+    final db = await instance.database;
+    final orderBy = '${AchatFields.date} ASC';
+    var now = new DateTime.now();
+    var nowM = new DateTime(now.year, now.month - 1, now.day);
+    final result = await db
+        .rawQuery('SELECT * FROM $tableAchats WHERE "$nowM" ORDER BY $orderBy');
+    return result.map((json) => AchatModel.fromJson(json)).toList();
+  }
+
+  Future<List<AchatModel>> getAllAchatYear() async {
+    final db = await instance.database;
+    final orderBy = '${AchatFields.date} ASC';
+    var now = new DateTime.now();
+    var nowY = new DateTime(now.year - 1, now.month, now.day);
+    final result = await db
+        .rawQuery('SELECT * FROM $tableAchats WHERE "$nowY" ORDER BY $orderBy');
+    return result.map((json) => AchatModel.fromJson(json)).toList();
+  }
 
   // Get All Achat database
   Future<List<AchatModel>> getAllAchatsVente() async {
@@ -137,7 +173,6 @@ class ProductDatabase {
 
     return result.map((json) => AchatModel.fromJson(json)).toList();
   }
-  
 
   // Update Data in database
   Future<int> updataAchat(AchatModel achat) async {
@@ -161,9 +196,6 @@ class ProductDatabase {
       whereArgs: [id],
     );
   }
-
-
-
 
 // VENTES
 
@@ -209,25 +241,58 @@ class ProductDatabase {
     return result.map((json) => VenteModel.fromJson(json)).toList();
   }
 
-    // Get All Achat database
-  Future<List<VenteModel>> getAllVenteByDate() async {
+  // Get All Achat database
+  Future<List<VenteModel>> getAllVenteByDay() async {
     final db = await instance.database;
-    final DateTime now = DateTime.now();
-    final DateFormat formatter = DateFormat('yyyy-MM-dd');
-    final String formatted = formatter.format(now);
-    print(formatted);
+
+    var now = new DateTime.now();
+    var nowD = new DateTime(now.day);
+    var now_1w = now.subtract(Duration(days: 7));
+    var now_1m = new DateTime(now.year, now.month - 1, now.day);
+    var now_1y = new DateTime(now.year - 1, now.month, now.day);
+
+    print('Day $nowD');
+    print('Week $now_1w');
+    print('Mouth $now_1m');
+    print('Year $now_1y');
 
     final orderBy = '${VenteFields.date} ASC';
-    // final date = '${VenteFields.date} $formatted';
-    // final String date = orderBy < formatted;
- 
-    // final resultt = await db.rawQuery(
-    //     'SELECT * FROM $tableVente WHERE $formatted ORDER BY $orderBy');
-    // final resultt = await db.rawQuery(
-    //     'SELECT * FROM $tableVente WHERE date > $formatter ORDER BY $orderBy');
 
-    final result = await db.query(tableVente, orderBy: orderBy);
+    // final result = await db.query(tableVente, orderBy: orderBy);
 
+    final result = await db
+        .rawQuery('SELECT * FROM $tableVente WHERE "$nowD" ORDER BY $orderBy');
+    return result.map((json) => VenteModel.fromJson(json)).toList();
+  }
+
+  Future<List<VenteModel>> getAllVenteByWeek() async {
+    final db = await instance.database;
+    final orderBy = '${VenteFields.date} ASC';
+    var now = new DateTime.now();
+    var nowW = now.subtract(Duration(days: 7));
+    final result = await db
+        .rawQuery('SELECT * FROM $tableVente WHERE "$nowW" ORDER BY $orderBy');
+    return result.map((json) => VenteModel.fromJson(json)).toList();
+  }
+
+  Future<List<VenteModel>> getAllVenteByMouth() async {
+    final db = await instance.database;
+    final orderBy = '${VenteFields.date} ASC';
+    var now = new DateTime.now();
+    var nowM = new DateTime(now.year, now.month - 1, now.day);
+    final result = await db
+        .rawQuery('SELECT * FROM $tableVente WHERE "$nowM" ORDER BY $orderBy');
+    return result.map((json) => VenteModel.fromJson(json)).toList();
+  }
+
+  Future<List<VenteModel>> getAllVenteByYear() async {
+    final db = await instance.database;
+    var now = new DateTime.now();
+    var nowY = new DateTime(now.year - 1, now.month, now.day);
+    final orderBy = '${VenteFields.date} ASC';
+
+    final result = await db
+        .rawQuery('SELECT * FROM $tableVente WHERE "$nowY" ORDER BY $orderBy');
     return result.map((json) => VenteModel.fromJson(json)).toList();
   }
 
@@ -254,10 +319,9 @@ class ProductDatabase {
     );
   }
 
-
   // DETTES
 
-    // Insert data in database
+  // Insert data in database
   Future<DetteModel> insertDette(DetteModel dette) async {
     final db = await instance.database;
 

@@ -22,7 +22,7 @@ class PdfProductApi {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: pw.CrossAxisAlignment.start,
       children: [
-        Text('E-MANAGEMENT',
+        Text('Business-MANAGEMENT',
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0)),
         SizedBox(width: 2 * PdfPageFormat.mm),
         Text('${DateTime.now()}',

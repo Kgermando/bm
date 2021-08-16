@@ -247,14 +247,14 @@ class ProductDatabase {
 
     var now = new DateTime.now();
     var nowD = new DateTime(now.day);
-    var now_1w = now.subtract(Duration(days: 7));
-    var now_1m = new DateTime(now.year, now.month - 1, now.day);
-    var now_1y = new DateTime(now.year - 1, now.month, now.day);
+    // var now_1w = now.subtract(Duration(days: 7));
+    // var now_1m = new DateTime(now.year, now.month - 1, now.day);
+    // var now_1y = new DateTime(now.year - 1, now.month, now.day);
 
-    print('Day $nowD');
-    print('Week $now_1w');
-    print('Mouth $now_1m');
-    print('Year $now_1y');
+    // print('Day $nowD');
+    // print('Week $now_1w');
+    // print('Mouth $now_1m');
+    // print('Year $now_1y');
 
     final orderBy = '${VenteFields.date} ASC';
 

@@ -23,19 +23,30 @@ class _MouthStatsState extends State<MouthStats> {
     loadAchat();
   }
 
+    @override
+  void dispose() {
+    loadVente();
+    loadAchat();
+    super.dispose();
+  }
+
   void loadVente() async {
     List<VenteModel>? ventes =
         await ProductDatabase.instance.getAllVenteByMouth();
-    setState(() {
-      venteList = ventes;
-    });
+    if (this.mounted) {
+      setState(() {
+        venteList = ventes;
+      });
+    }
   }
 
   void loadAchat() async {
     List<AchatModel>? achats = await ProductDatabase.instance.getAllAchatMouth();
-    setState(() {
-      achatList = achats;
-    });
+    if (this.mounted) {
+      setState(() {
+        achatList = achats;
+      });
+    }
   }
 
   @override

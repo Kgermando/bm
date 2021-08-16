@@ -23,19 +23,30 @@ class _AnStatsState extends State<AnStats> {
     loadAchat();
   }
 
+  @override
+  void dispose() {
+    loadVente();
+    loadAchat();
+    super.dispose();
+  }
+
   void loadVente() async {
     List<VenteModel>? ventes =
         await ProductDatabase.instance.getAllVenteByYear();
-    setState(() {
-      venteList = ventes;
-    });
+    if (this.mounted) {
+      setState(() {
+        venteList = ventes;
+      });
+    }
   }
 
   void loadAchat() async {
     List<AchatModel>? achats = await ProductDatabase.instance.getAllAchatYear();
-    setState(() {
-      achatList = achats;
-    });
+    if (this.mounted) {
+      setState(() {
+        achatList = achats;
+      });
+    }
   }
   
   @override

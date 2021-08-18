@@ -247,21 +247,29 @@ class ProductDatabase {
 
     var now = new DateTime.now();
     var nowD = new DateTime(now.day);
+    var nowDD = new DateTime(now.day + 1);
+
+    var after = now.isAfter(nowDD);
+    // var dd = nowD >= nowDD;
     // var now_1w = now.subtract(Duration(days: 7));
     // var now_1m = new DateTime(now.year, now.month - 1, now.day);
     // var now_1y = new DateTime(now.year - 1, now.month, now.day);
 
-    // print('Day $nowD');
+
+    print('Day $nowD');
+
+    print('Day $nowDD');
+
+    print('after $after');
     // print('Week $now_1w');
     // print('Mouth $now_1m');
     // print('Year $now_1y');
 
+    final date = '${VenteFields.date}';
     final orderBy = '${VenteFields.date} ASC';
 
-    // final result = await db.query(tableVente, orderBy: orderBy);
-
-    final result = await db
-        .rawQuery('SELECT * FROM $tableVente WHERE "$nowD" ORDER BY $orderBy');
+    final result = await db.rawQuery(
+        'SELECT * FROM $tableVente WHERE $date > "$nowD" ORDER BY $orderBy');
     return result.map((json) => VenteModel.fromJson(json)).toList();
   }
 

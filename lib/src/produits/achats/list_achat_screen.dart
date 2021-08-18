@@ -250,7 +250,7 @@ class _AchatItemWidgetState extends State<AchatItemWidget> {
 
     double qtyVente = sumQty * 100 / qty;
 
-    print(qtyVente);
+    // print(qtyVente);
 
     if(qtyVente <= 30.0) {
       return Colors.green[200];

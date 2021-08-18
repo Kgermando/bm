@@ -88,7 +88,7 @@ class DropdownSousCategorie {
   ];
 
   List<String> biscuitsSousCategorie = [
-    'Biscuits',
+    'Africa choice',
     'Bistella',
     'Bonbon',
     'Shiwingom',

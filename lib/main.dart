@@ -1,4 +1,5 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
+import 'package:e_management/services/notification_service.dart';
 import 'package:e_management/src/auth/login_screen.dart';
 import 'package:e_management/src/screens/dashboard_screen.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,7 @@ void main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
+  await NotificationService().init(); // Notifications
   runApp(MyApp());
 }
 

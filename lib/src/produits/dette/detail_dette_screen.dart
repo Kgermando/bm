@@ -195,7 +195,5 @@ class DetailDetteScreen extends StatelessWidget {
       }
     );
  
-
-
   }
 }

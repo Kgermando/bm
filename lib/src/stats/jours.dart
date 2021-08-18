@@ -59,7 +59,7 @@ class _JourStatsState extends State<JourStats> {
     int sumAchat = 0;
     dataPriceAchat.forEach((data) => sumAchat += data);
 
-    print(dataPrice);
+    // print(dataPrice);
 
     // where((element) {
     //    final date = element.date;

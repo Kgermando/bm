@@ -459,13 +459,13 @@ class _AddDetteFormState extends State<AddDetteForm> {
       onPressed: () {
         // final formdette = _form.currentState!.validate();
 
-        print("categorie $categorie");
-        print("sousCategorie $sousCategorie");
-        print("type $type");
-        print("identifiant $identifiant");
-        print("quantity $quantity");
-        print("unity $unity");
-        print("price $price");
+        // print("categorie $categorie");
+        // print("sousCategorie $sousCategorie");
+        // print("type $type");
+        // print("identifiant $identifiant");
+        // print("quantity $quantity");
+        // print("unity $unity");
+        // print("price $price");
 
         // print(formdette);
         addDette();

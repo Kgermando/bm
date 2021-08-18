@@ -93,7 +93,6 @@ class DropdownType {
   ];
 
   List<String> biscuitsType = [
-    'Africa choice',
     'Vicse',
     'Bazoka',
     'Chocolat',

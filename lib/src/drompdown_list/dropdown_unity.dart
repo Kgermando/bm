@@ -71,7 +71,7 @@ class DropdownUnity {
   ];
 
    List<String> unitesBiscuits = [
-    'Boite'
+    'Boite',
     'Sacs',
     'Sachets',
     'Verres',

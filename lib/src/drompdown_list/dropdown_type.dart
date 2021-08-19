@@ -10,6 +10,7 @@ class DropdownType {
   ];
 
   List<String> boissonsType = [
+    'Eau',
     'Coca', 
     'Fanta', 
     'Sprite', 

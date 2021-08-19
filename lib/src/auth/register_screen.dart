@@ -4,7 +4,6 @@ import 'package:e_management/src/models/user_model.dart';
 import 'package:e_management/src/utils/province.dart';
 import 'package:e_management/themes.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -14,8 +13,6 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin =
-      FlutterLocalNotificationsPlugin();
 
   final _form = GlobalKey<FormState>();
 
@@ -32,26 +29,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   final List<String> provinces =
       Province().provinces;
-
-  
-  @override
-  void initState() {
-    super.initState();
-    var androidSetting = AndroidInitializationSettings('app_icon');
-    var initializationSettings =
-        InitializationSettings(android: androidSetting, iOS: null);
-
-    _flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-    _flutterLocalNotificationsPlugin.initialize(initializationSettings,
-        onSelectNotification: onSelectNotification
-    );
-  }
-
-  Future<void> onSelectNotification(String? payload) async {
-    debugPrint('$payload');
-
-  }
-
 
   @override
   Widget build(BuildContext context) {

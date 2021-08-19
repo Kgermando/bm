@@ -99,13 +99,16 @@ class DetailDetteScreen extends StatelessWidget {
         child: Padding(
       padding: EdgeInsets.only(top: 28.0, bottom: 10.0),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Text('${dette.quantity} ${dette.unity}',
                   style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20)),
+              Spacer(),
               Text('${dette.price} FC',
                   style: TextStyle(
                       fontWeight: FontWeight.w700,
@@ -124,21 +127,21 @@ class DetailDetteScreen extends StatelessWidget {
           //         style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20)),
           //   ],
           // ),
-          Padding(
-            padding: const EdgeInsets.only(top: 20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('Dette de ${dette.personne}',
-                    style: TextStyle(fontWeight: FontWeight.w800, color: Colors.black, fontSize: 20)),
-
-                Text('A payé le ${DateFormat("dd.MM.yy HH:mm").format(dette.datePayement as DateTime)}',
-                    style:
-                        TextStyle(fontWeight: FontWeight.w400, fontSize: 20)),
-              ],
-            ),
+          SizedBox(height: 40.0,),
+          Text('Dette de ${dette.personne.toUpperCase()}',
+              style: TextStyle(
+                  fontWeight: FontWeight.w800,
+                  color: Colors.blueGrey[900],
+                  fontSize: 28)),
+          
+          SizedBox(
+            height: 10.0,
           ),
+
+          Text(
+              'Date de payement ${DateFormat("dd.MM.yy HH:mm").format(dette.datePayement)}',
+              style: TextStyle(fontWeight: FontWeight.w400, fontSize: 20)),
+      
         ],
       ),
     ));

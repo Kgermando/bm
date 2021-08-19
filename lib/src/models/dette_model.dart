@@ -38,7 +38,7 @@ class DetteModel {
   final String price;
   final DateTime date;
   final String personne;
-  final String datePayement;
+  final DateTime datePayement;
 
   const DetteModel({
     this.id,
@@ -66,7 +66,7 @@ class DetteModel {
         String? price,
         DateTime? date,
         String? personne,
-        String? datePayement,
+        DateTime? datePayement,
       }
         ) =>
       DetteModel(
@@ -95,7 +95,7 @@ class DetteModel {
         price: json[DetteFields.price] as String,
         date: DateTime.parse(json[DetteFields.date] as String),
         personne: json[DetteFields.personne] as String,
-        datePayement: json[DetteFields.datePayement] as String,
+        datePayement: DateTime.parse(json[DetteFields.date] as String),
       );
 
   Map<String, Object?> toJson() => {
@@ -109,6 +109,6 @@ class DetteModel {
         DetteFields.price: price,
         DetteFields.date: date.toIso8601String(),
         DetteFields.personne: personne,
-        DetteFields.datePayement: datePayement,
+        DetteFields.datePayement: datePayement.toIso8601String(),
       };
 }

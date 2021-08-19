@@ -15,7 +15,7 @@ class ProductDatabase {
   Future<Database> get database async {
     if (_database != null) return _database!;
 
-    _database = await _initDB('e_management.db');
+    _database = await _initDB('b_management.db');
 
     return _database!;
   }
@@ -249,18 +249,20 @@ class ProductDatabase {
     var nowD = new DateTime(now.day);
     var nowDD = new DateTime(now.day + 1);
 
-    var after = now.isAfter(nowDD);
     // var dd = nowD >= nowDD;
     // var now_1w = now.subtract(Duration(days: 7));
     // var now_1m = new DateTime(now.year, now.month - 1, now.day);
     // var now_1y = new DateTime(now.year - 1, now.month, now.day);
+
+    // Duration duration = nowDD.difference(nowD);
+
+    // print('difference $duration');
 
 
     print('Day $nowD');
 
     print('Day $nowDD');
 
-    print('after $after');
     // print('Week $now_1w');
     // print('Mouth $now_1m');
     // print('Year $now_1y');

@@ -441,7 +441,6 @@ class _AddDetteFormState extends State<AddDetteForm> {
             borderRadius: BorderRadius.circular(5.0),
           ),
         ),
-        initialValue: '',
         locale: Locale('fr', 'FR'), 
         firstDate: DateTime(2021),
         lastDate: DateTime(2050),
@@ -449,7 +448,7 @@ class _AddDetteFormState extends State<AddDetteForm> {
         onChanged: (val) {
           datePayement = val;
         },
-        onSaved: (val) => print(val),
+        // onSaved: (val) => print(val),
       ),
     );
   }
@@ -491,7 +490,7 @@ class _AddDetteFormState extends State<AddDetteForm> {
       price: price.toString(),
       date: DateTime.now(),
       personne: personne.toString(),
-      datePayement: datePayement.toString(),
+      datePayement: DateTime.parse(datePayement.toString())
     );
 
     await ProductDatabase.instance.insertDette(dette);

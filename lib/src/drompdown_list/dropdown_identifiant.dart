@@ -12,6 +12,7 @@ class DropdownIdentifiant {
     '20kgs',
     '25kgs',
     '50kgs',
+    '---'
   ];
 
   List<String> serialIdentifiant = [ 
@@ -24,6 +25,7 @@ class DropdownIdentifiant {
     '25kgs',
     '50kgs',
     '100kgs',
+    '---'
   ];
 
   List<String> biossonsIdentifiant = [
@@ -33,7 +35,8 @@ class DropdownIdentifiant {
     '700ml',
     '750ml',
     '900ml',
-    '1kgs'
+    '1kgs',
+    '---'
   ];
 
 
@@ -61,6 +64,8 @@ class DropdownIdentifiant {
     '600 pages',
     '800 pages',
     '1000 pages',
+    'HB'
+    '---'
   ];
 
  
@@ -86,6 +91,7 @@ class DropdownIdentifiant {
     '2kgs',
     '3kgs',
     '5kgs',
+    '---'
   ];
 
 

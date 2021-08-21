@@ -52,6 +52,7 @@ class DropdownUnity {
     'Paquets de 6',
     'Paquets de 12',
     'Rames',
+    'Boites',
   ];
 
   List<String> unitesHuileVegetale = [

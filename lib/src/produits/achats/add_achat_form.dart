@@ -446,6 +446,7 @@ class _AddAchatFormState extends State<AddAchatForm> {
     );
 
     await ProductDatabase.instance.insertAchat(achat);
+    if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text("${achat.type} ${achat.identifiant} ajouté!"),
       backgroundColor: Colors.green[700],

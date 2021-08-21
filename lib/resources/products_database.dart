@@ -245,9 +245,9 @@ class ProductDatabase {
   Future<List<VenteModel>> getAllVenteByDay() async {
     final db = await instance.database;
 
-    var now = new DateTime.now();
-    var nowD = new DateTime(now.day);
-    var nowDD = new DateTime(now.day + 1);
+    // var now = new DateTime.now();
+    // var nowD = new DateTime(now.day);
+    // var nowDD = new DateTime(now.day + 1);
 
     // var dd = nowD >= nowDD;
     // var now_1w = now.subtract(Duration(days: 7));
@@ -259,19 +259,25 @@ class ProductDatabase {
     // print('difference $duration');
 
 
-    print('Day $nowD');
+    // print('Day $nowD');
 
-    print('Day $nowDD');
+    // print('Day $nowDD');
 
     // print('Week $now_1w');
     // print('Mouth $now_1m');
     // print('Year $now_1y');
 
-    final date = '${VenteFields.date}';
+    // final date = '${VenteFields.date}';
     final orderBy = '${VenteFields.date} ASC';
 
+    
+
     final result = await db.rawQuery(
-        'SELECT * FROM $tableVente WHERE $date > "$nowD" ORDER BY $orderBy');
+      'SELECT * FROM $tableVente WHERE date >= datetime("now", "-1 day") ORDER BY $orderBy');
+
+    // final result = await db.rawQuery(
+    //     'SELECT * FROM $tableVente WHERE $date > "$nowD" ORDER BY $orderBy');
+
     return result.map((json) => VenteModel.fromJson(json)).toList();
   }
 

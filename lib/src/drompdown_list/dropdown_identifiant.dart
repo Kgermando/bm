@@ -3,7 +3,7 @@
 class DropdownIdentifiant {
   List<String> laitIdentifiant = [
     '20g',
-    '200g',
+    '100g',
     '400g',
     '900g',
     '1800g',

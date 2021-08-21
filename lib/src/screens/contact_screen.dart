@@ -2,6 +2,7 @@ import 'package:e_management/src/models/menu_item.dart';
 import 'package:e_management/src/utils/menu_options.dart';
 import 'package:e_management/src/screens/sidebar_screen.dart';
 import 'package:e_management/src/utils/menu_items.dart';
+import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:flutter/material.dart';
 
 class ContactScreen extends StatelessWidget {
@@ -40,7 +41,7 @@ class _ContactPageState extends State<ContactPage> {
   final _form = GlobalKey<FormState>();
 
   String? subject;
-  String? email;
+  String? emailAdress;
   String? message;
   String? sendDate;
 
@@ -112,10 +113,10 @@ class _ContactPageState extends State<ContactPage> {
             borderRadius: BorderRadius.circular(5.0),
           ),
         ),
-        validator: (email) => email != null && email.isEmpty
+        validator: (emailAdress) => emailAdress != null && emailAdress.isEmpty
             ? 'Ce champ ne peut pas être vide'
             : null,
-        onChanged: (value) => setState(() => email = value.trim()),
+        onChanged: (value) => setState(() => emailAdress = value.trim()),
       ),
     );
   }
@@ -134,10 +135,10 @@ class _ContactPageState extends State<ContactPage> {
             borderRadius: BorderRadius.circular(5.0),
           ),
         ),
-        validator: (email) => email != null && email.isEmpty
+        validator: (message) => message != null && message.isEmpty
             ? 'Ce champ ne peut pas être vide'
             : null,
-        onChanged: (value) => setState(() => email = value.trim()),
+        onChanged: (value) => setState(() => message = value.trim()),
       ),
     );
   }
@@ -148,14 +149,14 @@ class _ContactPageState extends State<ContactPage> {
         // final formAchat = _form.currentState!.validate();
 
         print("categorie $subject");
-        print("sousCategorie $email");
+        print("sousCategorie $emailAdress");
         print("type $message");
         print("Date $sendDate");
 
         // print(formAchat);
         // addAchat();
 
-        Navigator.of(context).pop();
+        send();
       },
       child: Padding(
         padding: const EdgeInsets.only(
@@ -180,9 +181,13 @@ class _ContactPageState extends State<ContactPage> {
                   Icons.phone,
                   size: 20,
                 ),
-                SizedBox(width: 10.0,),
-                Text('+243 81 353 08 38',
-                style: Theme.of(context).textTheme.bodyText1,),
+                SizedBox(
+                  width: 10.0,
+                ),
+                Text(
+                  '+243 81 353 08 38',
+                  style: Theme.of(context).textTheme.bodyText1,
+                ),
               ],
             ),
           ),
@@ -199,7 +204,8 @@ class _ContactPageState extends State<ContactPage> {
                 SizedBox(
                   width: 10.0,
                 ),
-                Text('+243 81 975 32 32', style: Theme.of(context).textTheme.bodyText1),
+                Text('+243 81 975 32 32',
+                    style: Theme.of(context).textTheme.bodyText1),
               ],
             ),
           ),
@@ -216,7 +222,8 @@ class _ContactPageState extends State<ContactPage> {
                 SizedBox(
                   width: 10.0,
                 ),
-                Text('+243 90 339 49 41',
+                Text(
+                  '+243 90 339 49 41',
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
               ],
@@ -235,12 +242,39 @@ class _ContactPageState extends State<ContactPage> {
                 SizedBox(
                   width: 10.0,
                 ),
-                Text('contact@eventdrc.com',style: Theme.of(context).textTheme.bodyText1)
+                Text('contact@eventdrc.com',
+                    style: Theme.of(context).textTheme.bodyText1)
               ],
             ),
           ),
-          
         ],
+      ),
+    );
+  }
+
+  Future<void> send() async {
+    final Email email = Email(
+      body: message!,
+      subject: subject!,
+      recipients: [emailAdress!],
+      // attachmentPaths: attachments,
+      isHTML: false,
+    );
+
+    String platformResponse;
+
+    try {
+      await FlutterEmailSender.send(email);
+      platformResponse = 'success';
+    } catch (error) {
+      platformResponse = error.toString();
+    }
+
+    if (!mounted) return;
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(platformResponse),
       ),
     );
   }

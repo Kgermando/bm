@@ -95,7 +95,7 @@ class DetteModel {
         price: json[DetteFields.price] as String,
         date: DateTime.parse(json[DetteFields.date] as String),
         personne: json[DetteFields.personne] as String,
-        datePayement: DateTime.parse(json[DetteFields.date] as String),
+        datePayement: DateTime.parse(json[DetteFields.datePayement] as String),
       );
 
   Map<String, Object?> toJson() => {

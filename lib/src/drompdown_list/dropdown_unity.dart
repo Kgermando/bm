@@ -23,12 +23,12 @@ class DropdownUnity {
   ];
 
   List<String> unitesLait = [
-    'Sacs',
     'Sachets',
     'Verres',
     'Boites',
     'Bouteilles',
     'Goblets',
+    'Sacs',
     'Kgs',
     'Littres',
   ];

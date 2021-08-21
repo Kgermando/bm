@@ -23,7 +23,7 @@ class _JourStatsState extends State<JourStats> {
     loadAchat();
   }
 
-    @override
+  @override
   void dispose() {
     loadVente();
     loadAchat();
@@ -32,10 +32,10 @@ class _JourStatsState extends State<JourStats> {
 
   void loadVente() async {
     List<VenteModel>? ventes =
-    await ProductDatabase.instance.getAllVenteByDay();
+        await ProductDatabase.instance.getAllVenteByDay();
     if (this.mounted) {
       setState(() {
-         venteList = ventes;
+        venteList = ventes;
       });
     }
   }
@@ -44,28 +44,23 @@ class _JourStatsState extends State<JourStats> {
     List<AchatModel>? achats = await ProductDatabase.instance.getAllAchatDay();
     if (this.mounted) {
       setState(() {
-       achatList = achats;
+        achatList = achats;
       });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    var dataPrice = venteList.map((e) => int.parse(e.price)).toList();
-    int sum = 0;
-    dataPrice.forEach((data) => sum += data);
+    
+    var dataPriceVente = venteList.map((e) => int.parse(e.price)).toList();
+    int sumVente = 0;
+    dataPriceVente.forEach((data) => sumVente += data);
 
     var dataPriceAchat = achatList.map((e) => int.parse(e.price)).toList();
     int sumAchat = 0;
     dataPriceAchat.forEach((data) => sumAchat += data);
 
-    // print(dataPrice);
-
-    // where((element) {
-    //    final date = element.date;
-    //    return now_1w.isBefore(date);
-    //  }
-
+    var revenues = sumVente - sumAchat;
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -82,7 +77,7 @@ class _JourStatsState extends State<JourStats> {
                             fontWeight: FontWeight.bold, fontSize: 14.0)),
                   ),
                   Container(
-                    child: Text('$sum FC',
+                    child: Text('$sumVente FC',
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 20.0)),
                   ),
@@ -99,7 +94,7 @@ class _JourStatsState extends State<JourStats> {
                             color: Colors.green)),
                   ),
                   Container(
-                    child: Text('${sumAchat - sum} FC',
+                    child: Text('$revenues FC',
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 20.0,
@@ -123,13 +118,14 @@ class _JourStatsState extends State<JourStats> {
                 tooltipBehavior: TooltipBehavior(enable: true),
                 series: <ChartSeries<VenteModel, String>>[
                   LineSeries<VenteModel, String>(
-                    dataSource: venteList,
-                    xValueMapper: (VenteModel vente, _) => (DateFormat("HH:mm").format(vente.date).toString()),
-                    yValueMapper: (VenteModel vente, _) => int.parse(vente.price),
-                    name: 'Ventes',
-                    // Enable data label
-                    dataLabelSettings: DataLabelSettings(isVisible: true)
-                  )
+                      dataSource: venteList,
+                      xValueMapper: (VenteModel vente, _) =>
+                          (DateFormat("HH:mm").format(vente.date).toString()),
+                      yValueMapper: (VenteModel vente, _) =>
+                          int.parse(vente.price),
+                      name: 'Ventes',
+                      // Enable data label
+                      dataLabelSettings: DataLabelSettings(isVisible: true))
                 ]),
           ),
           Expanded(
@@ -141,9 +137,10 @@ class _JourStatsState extends State<JourStats> {
                     explode: true,
                     explodeIndex: 0,
                     dataSource: venteList,
-                    xValueMapper: (VenteModel vente, _) => vente.categorie,
-                    yValueMapper: (VenteModel vente, _) => int.parse(vente.price),
-                    dataLabelMapper: (VenteModel vente, _) => vente.categorie,
+                    xValueMapper: (VenteModel vente, _) => vente.sousCategorie,
+                    yValueMapper: (VenteModel vente, _) =>
+                        int.parse(vente.price),
+                    dataLabelMapper: (VenteModel vente, _) => vente.sousCategorie,
                     dataLabelSettings: DataLabelSettings(isVisible: true)),
               ]))
         ],

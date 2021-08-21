@@ -4,11 +4,12 @@ import 'package:e_management/src/drompdown_list/dropdown_identifiant.dart';
 import 'package:e_management/src/drompdown_list/dropdown_sous_cat.dart';
 import 'package:e_management/src/drompdown_list/dropdown_type.dart';
 import 'package:e_management/src/drompdown_list/dropdown_unity.dart';
+import 'package:e_management/src/models/achat_model.dart';
 import 'package:e_management/src/models/vente_model.dart';
 import 'package:flutter/material.dart';
 
 class AddVenteForm extends StatefulWidget {
-  const AddVenteForm({ Key? key }) : super(key: key);
+  const AddVenteForm({Key? key}) : super(key: key);
 
   @override
   _AddVenteFormState createState() => _AddVenteFormState();
@@ -17,7 +18,6 @@ class AddVenteForm extends StatefulWidget {
 class _AddVenteFormState extends State<AddVenteForm> {
   final _form = GlobalKey<FormState>();
 
- 
   // Categorie
   final List<String> categories = DropdownCategorie().categorie;
 
@@ -83,7 +83,6 @@ class _AddVenteFormState extends State<AddVenteForm> {
   final List<String> unitesBiscuits = DropdownUnity().unitesBiscuits;
   final List<String> unitesLaitBeaute = DropdownUnity().unitesLaitBeaute;
 
-
   List<String> venteSousCat = [];
   List<String> venteType = [];
   List<String> venteIdentifiant = [];
@@ -98,44 +97,61 @@ class _AddVenteFormState extends State<AddVenteForm> {
   String? price;
 
   @override
+  void initState() {
+    loadAchats();
+
+    super.initState();
+  }
+
+  List<AchatModel> categorieAchat = [];
+
+  void loadAchats() async {
+    List<AchatModel>? achats = await ProductDatabase.instance.getAllAchats();
+    setState(() {
+      categorieAchat = achats;
+    });
+
+    print('categorieAchat $categorieAchat');
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Nouveau vente"),
-      ),
-      body: SingleChildScrollView(
-        key: _form,
-        scrollDirection: Axis.vertical,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              textField(),
-              categorieField(),
-              sousCategorieField(),
-              typeField(),
-              identifiantField(),
-              Row(
-                children: [
-                  Expanded(
-                    child: quantityField(),
-                  ),
-                  SizedBox(
-                    width: 5.0,
-                  ),
-                  Expanded(
-                    child: unityField(),
-                  )
-                ],
-              ),
-              priceField(),
-              saveForm()
-            ],
-          ),
+        appBar: AppBar(
+          title: Text("Nouveau vente"),
         ),
-      )
-    );
+        body: SingleChildScrollView(
+          key: _form,
+          scrollDirection: Axis.vertical,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                textField(),
+                categorieField(),
+                sousCategorieField(),
+                typeField(),
+                identifiantField(),
+                Row(
+                  children: [
+                    Expanded(
+                      child: quantityField(),
+                    ),
+                    SizedBox(
+                      width: 5.0,
+                    ),
+                    Expanded(
+                      child: unityField(),
+                    )
+                  ],
+                ),
+                priceField(),
+                saveForm()
+              ],
+            ),
+          ),
+        ));
   }
 
   Widget textField() {
@@ -148,8 +164,12 @@ class _AddVenteFormState extends State<AddVenteForm> {
     );
   }
 
-
   Widget categorieField() {
+
+  var catList = categorieAchat.map((e) => e.categorie).toSet();
+
+    print('catList $catList');
+
     return Container(
       margin: const EdgeInsets.only(bottom: 20.0),
       child: DropdownButtonFormField<String>(
@@ -163,7 +183,7 @@ class _AddVenteFormState extends State<AddVenteForm> {
         value: categorie,
         isExpanded: true,
         style: const TextStyle(color: Colors.deepPurple),
-        items: categories.map((String value) {
+        items: catList.map((String value) {
           return DropdownMenuItem<String>(
             value: value,
             child: Text(value),
@@ -449,6 +469,7 @@ class _AddVenteFormState extends State<AddVenteForm> {
     );
 
     await ProductDatabase.instance.insertVente(vente);
+    if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text("${vente.sousCategorie} ajouté!"),
       backgroundColor: Colors.green[700],

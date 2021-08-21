@@ -95,6 +95,7 @@ class DetailDetteScreen extends StatelessWidget {
     // double prix = double.parse(dette.price);
     // double quantite = double.parse(dette.quantity);
     // var = prix / quantite;
+    print("datePayement ${dette.datePayement}");
     return Card(
         child: Padding(
       padding: EdgeInsets.only(top: 28.0, bottom: 10.0),
@@ -141,11 +142,14 @@ class DetailDetteScreen extends StatelessWidget {
           Text(
               'Date de payement ${DateFormat("dd.MM.yy HH:mm").format(dette.datePayement)}',
               style: TextStyle(fontWeight: FontWeight.w400, fontSize: 20)),
+              
       
         ],
       ),
     ));
+    
   }
+  
 
   Widget editButton(BuildContext context) {
     return IconButton(

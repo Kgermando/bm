@@ -45,6 +45,7 @@ dependencies:
   shared_preferences: ^2.0.5
   image_picker: ^0.7.4
   syncfusion_flutter_charts: ^19.2.55+1
+  flutter_email_sender: ^5.0.2
 
 dev_dependencies:
   flutter_test:

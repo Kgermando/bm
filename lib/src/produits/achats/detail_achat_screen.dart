@@ -28,6 +28,7 @@ class _AchatDetailScreenState extends State<AchatDetailScreen> {
   void initState() {
     super.initState();
     loadVente();
+    loadDette();
   }
 
   void loadVente() async {
@@ -261,25 +262,24 @@ class _AchatDetailScreenState extends State<AchatDetailScreen> {
 
   Widget benfices() {
     // Filter
-    var filter = venteList.where((element) =>
+    var filterVente = venteList.where((element) =>
         achat.categorie == element.categorie &&
         achat.sousCategorie == element.sousCategorie &&
         achat.type == element.type &&
         achat.identifiant == element.identifiant);
 
     // Quantités
-    var filterQty = filter.map((e) => int.parse(e.quantity));
+    var filterQtyVente = filterVente.map((e) => int.parse(e.quantity));
     int sumQtyVente = 0;
-    filterQty.forEach((qty) => sumQtyVente += qty);
+    filterQtyVente.forEach((qty) => sumQtyVente += qty);
 
     // Prix
-    var filterPrice = filter.map((e) => int.parse(e.price));
+    var filterPriceVente = filterVente.map((e) => int.parse(e.price));
     int sumPriceVente = 0;
-    filterPrice.forEach((price) => sumPriceVente += price);
+    filterPriceVente.forEach((price) => sumPriceVente += price);
 
     int qtyAchat = int.parse(achat.quantity);
     int prixAchat = int.parse(achat.price);
-
 
     var filterDette = detteList.where((element) =>
         achat.categorie == element.categorie &&
@@ -290,7 +290,6 @@ class _AchatDetailScreenState extends State<AchatDetailScreen> {
     var filterQtyDette = filterDette.map((e) => int.parse(e.quantity));
     int sumQtyDette = 0;
     filterQtyDette.forEach((qty) => sumQtyDette += qty);
-
 
     return Container(
         padding: EdgeInsets.only(top: 20.0),
@@ -316,7 +315,8 @@ class _AchatDetailScreenState extends State<AchatDetailScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text('${qtyAchat - sumQtyVente - sumQtyDette} ${achat.unity}',
-                      style:TextStyle(fontWeight: FontWeight.w700, fontSize: 20)),
+                      style:
+                          TextStyle(fontWeight: FontWeight.w700, fontSize: 20)),
                   Text('${sumPriceVente - prixAchat} FC',
                       style: TextStyle(
                           fontWeight: FontWeight.w700,

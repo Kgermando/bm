@@ -133,9 +133,9 @@ class _SemaineStatsState extends State<SemaineStats> {
               explode: true,
               explodeIndex: 0,
               dataSource: venteList,
-              xValueMapper: (VenteModel vente, _) => vente.categorie,
+              xValueMapper: (VenteModel vente, _) => vente.sousCategorie,
               yValueMapper: (VenteModel vente, _) => int.parse(vente.price),
-              dataLabelMapper: (VenteModel vente, _) => vente.categorie,
+              dataLabelMapper: (VenteModel vente, _) => vente.sousCategorie,
               dataLabelSettings: DataLabelSettings(isVisible: true)),
           ]
           )

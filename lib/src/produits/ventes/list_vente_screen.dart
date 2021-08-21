@@ -6,6 +6,7 @@ import 'package:e_management/src/produits/ventes/detail_vente_screen.dart';
 import 'package:e_management/src/screens/sidebar_screen.dart';
 import 'package:e_management/src/utils/menu_items.dart';
 import 'package:e_management/src/utils/menu_options.dart';
+import 'package:e_management/themes.dart';
 import 'package:flutter/material.dart';
 
 class ListVenteScreen extends StatefulWidget {
@@ -61,7 +62,7 @@ class _ListVenteScreenState extends State<ListVenteScreen> {
                 AsyncSnapshot<List<VenteModel>> snapshot) {
               if (snapshot.hasData) {
                 List<VenteModel>? ventes = snapshot.data;
-                print(ventes);
+                // print(ventes);
                 return RefreshIndicator(
                   onRefresh: getData,
                   child: ListView.builder(
@@ -113,9 +114,9 @@ class VenteItemWidget extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: SizedBox(
                       child: Icon(
-                    Icons.add_chart,
+                    Icons.shop,
                     size: 40.0,
-                    color: Color(0xFF6200EE),
+                    color: MyThemes.primary,
                   )),
                 ),
                 Padding(
@@ -125,13 +126,13 @@ class VenteItemWidget extends StatelessWidget {
                     children: [
                       Container(
                         padding: const EdgeInsets.only(bottom: 8),
-                        child: Text("${vente.type} ${vente.identifiant}",
+                        child: Text("${vente.sousCategorie} ${vente.type} ${vente.identifiant}",
                             style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 20, overflow: TextOverflow.ellipsis)),
+                                fontWeight: FontWeight.bold, fontSize: 14, overflow: TextOverflow.ellipsis)),
                       ),
-                      Text('${vente.categorie} -> ${vente.sousCategorie}',
+                      Text('${vente.categorie}',
                           style:
-                              TextStyle(color: Colors.grey[500], fontSize: 16, overflow: TextOverflow.ellipsis))
+                              TextStyle(color: Colors.grey[500], fontSize: 12, overflow: TextOverflow.ellipsis))
                     ],
                   ),
                 ),
@@ -146,15 +147,15 @@ class VenteItemWidget extends StatelessWidget {
                     child: Text('${vente.price} FC',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                          color: Color(0xFF6200EE),
+                          fontSize: 14,
+                          color: MyThemes.primary,
                         )),
                   ),
                   Container(
                     padding: const EdgeInsets.only(bottom: 8),
                     child: Text('Qty: ${vente.quantity} ${vente.unity}',
                       style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 14)
+                          fontWeight: FontWeight.bold, fontSize: 10)
                         ),
                   )
                 ],

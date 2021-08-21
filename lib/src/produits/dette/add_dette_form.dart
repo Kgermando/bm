@@ -4,6 +4,7 @@ import 'package:e_management/src/drompdown_list/dropdown_identifiant.dart';
 import 'package:e_management/src/drompdown_list/dropdown_sous_cat.dart';
 import 'package:e_management/src/drompdown_list/dropdown_type.dart';
 import 'package:e_management/src/drompdown_list/dropdown_unity.dart';
+import 'package:e_management/src/models/achat_model.dart';
 import 'package:e_management/src/models/dette_model.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
@@ -100,6 +101,24 @@ class _AddDetteFormState extends State<AddDetteForm> {
   String? datePayement;
 
   @override
+  void initState() {
+    loadAchats();
+
+    super.initState();
+  }
+
+  List<AchatModel> categorieAchat = [];
+
+  void loadAchats() async {
+    List<AchatModel>? achats = await ProductDatabase.instance.getAllAchats();
+    setState(() {
+      categorieAchat = achats;
+    });
+
+    print('categorieAchat $categorieAchat');
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
@@ -152,6 +171,8 @@ class _AddDetteFormState extends State<AddDetteForm> {
   }
 
   Widget categorieField() {
+    var catList = categorieAchat.map((e) => e.categorie).toSet();
+
     return Container(
       margin: const EdgeInsets.only(bottom: 20.0),
       child: DropdownButtonFormField<String>(
@@ -165,7 +186,7 @@ class _AddDetteFormState extends State<AddDetteForm> {
         value: categorie,
         isExpanded: true,
         style: const TextStyle(color: Colors.deepPurple),
-        items: categories.map((String value) {
+        items: catList.map((String value) {
           return DropdownMenuItem<String>(
             value: value,
             child: Text(value),
@@ -446,9 +467,10 @@ class _AddDetteFormState extends State<AddDetteForm> {
         lastDate: DateTime(2050),
         // dateLabelText: 'Date',
         onChanged: (val) {
-          datePayement = val;
+          setState(() {
+            datePayement = val;
+          });
         },
-        // onSaved: (val) => print(val),
       ),
     );
   }
@@ -464,7 +486,7 @@ class _AddDetteFormState extends State<AddDetteForm> {
         // print("identifiant $identifiant");
         // print("quantity $quantity");
         // print("unity $unity");
-        // print("price $price");
+        print("price $datePayement");
 
         // print(formdette);
         addDette();
@@ -491,9 +513,13 @@ class _AddDetteFormState extends State<AddDetteForm> {
       date: DateTime.now(),
       personne: personne.toString(),
       datePayement: DateTime.parse(datePayement.toString())
+      
     );
 
+    print("datePayement $datePayement");
+
     await ProductDatabase.instance.insertDette(dette);
+    if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text("${dette.sousCategorie} ajouté!"),
       backgroundColor: Colors.green[700],

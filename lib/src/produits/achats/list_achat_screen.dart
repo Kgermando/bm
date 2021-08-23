@@ -182,10 +182,10 @@ class _AchatItemWidgetState extends State<AchatItemWidget> {
   getPriorityColor() {
     // Filter
     var filterVente = venteList.where((element) =>
-      achat.categorie == element.categorie &&
-      achat.sousCategorie == element.sousCategorie &&
-      achat.type == element.type &&
-      achat.type == element.type);
+        achat.categorie == element.categorie &&
+        achat.sousCategorie == element.sousCategorie &&
+        achat.type == element.type &&
+        achat.identifiant == element.identifiant);
 
     // Quantités
     var filterQtyVente = filterVente.map((e) => double.parse(e.quantity));

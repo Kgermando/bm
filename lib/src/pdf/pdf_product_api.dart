@@ -9,30 +9,42 @@ import 'package:pdf/widgets.dart';
 
 class PdfProductApi {
   List<AchatModel> achatList = [];
-  
 
   Future<void> getData() async {
     List<AchatModel>? achatpdfList =
         await ProductDatabase.instance.getAllAchats();
     achatList = achatpdfList;
-    
   }
-  
 
- static Future<File> generate() async {
+   dataAchat() {
+    final data = achatList
+        .map((item) => {
+              [
+                item.categorie,
+                item.sousCategorie,
+                item.type,
+                item.identifiant,
+                item.quantity,
+                item.unity,
+                item.date,
+              ]
+            })
+        .toList();
+    return data;
+  }
+
+  static Future<File> generate() async {
     final pdf = Document();
 
     pdf.addPage(MultiPage(
         header: (context) => headerBuilder(),
         build: (context) => [
-          pw.SizedBox(height: 50),
-          //  bodyBuilder(),
-        ],
-        footer: (context) => footerBuilder()
-        ));
+              SizedBox(height: 3 * PdfPageFormat.cm),
+              bodyBuilder(),
+            ],
+        footer: (context) => footerBuilder()));
     return PdfApi.saveDocument(name: 'achats.pdf', pdf: pdf);
   }
-
 
   static pw.Widget headerBuilder() {
     return pw.Row(
@@ -48,24 +60,13 @@ class PdfProductApi {
     );
   }
 
-  pw.Widget bodyBuilder() {
-    
-    return pw.Container(
-      
+  static Widget bodyBuilder() {
+    // final data = dataAchat;
+    return Container(
         child: Column(children: [
-      pw.Text('EVENTDRC TECHNOLGY',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0)),
-      pw.Text('EVENTDRC TECHNOLGY',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0)),
-      pw.Text('EVENTDRC TECHNOLGY',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0)),
-      pw.Text('EVENTDRC TECHNOLGY',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0)),
-      pw.Text('EVENTDRC TECHNOLGY',
+      pw.Text('',
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0)),
     ]));
-
-    
   }
 
   static pw.Widget footerBuilder() {

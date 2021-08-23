@@ -60,7 +60,7 @@ class _MenuAchatState extends State<MenuAchat>
               // indicatorWeight: 10,
               tabs: [
                 Tab(text: 'Stocks', icon: Icon(Icons.shopping_bag_sharp)),
-                Tab(text: 'Rupture de stocks', icon: Icon(Icons.amp_stories_sharp ))
+                Tab(text: 'Rupture de stocks', icon: Icon(Icons.shopping_bag_outlined ))
               ],
             ),
           ),

@@ -3,9 +3,7 @@ import 'package:e_management/src/models/user_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserPreferences {
-
   static const _keyUser = 'jwt';
-
 
   static Future<User> read() async {
     final prefs = await SharedPreferences.getInstance();

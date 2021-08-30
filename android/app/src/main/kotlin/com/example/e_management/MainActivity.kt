@@ -1,4 +1,4 @@
-package com.example.e_management
+package com.eventdrc.e_management
 
 import io.flutter.embedding.android.FlutterActivity
 

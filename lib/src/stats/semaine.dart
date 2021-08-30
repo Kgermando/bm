@@ -48,7 +48,7 @@ class _SemaineStatsState extends State<SemaineStats> {
       });
     }
   }
-  
+
   @override
   Widget build(BuildContext context) {
     var dataPrice = venteList.map((e) => int.parse(e.price)).toList();
@@ -61,9 +61,8 @@ class _SemaineStatsState extends State<SemaineStats> {
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Column(
-        children: [
-          Row(
+      child: Column(children: [
+        Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Column(
@@ -118,28 +117,27 @@ class _SemaineStatsState extends State<SemaineStats> {
                     dataSource: venteList,
                     xValueMapper: (VenteModel vente, _) =>
                         (DateFormat("dd/MM").format(vente.date).toString()),
-                    yValueMapper: (VenteModel vente, _) => int.parse(vente.price),
+                    yValueMapper: (VenteModel vente, _) =>
+                        int.parse(vente.price),
                     name: 'Ventes',
                     // Enable data label
                     dataLabelSettings: DataLabelSettings(isVisible: true))
               ]),
         ),
         Expanded(
-          child: SfCircularChart(
-          title: ChartTitle(text: 'Ventes par marchandise'),
-          legend: Legend(isVisible: true),
-          series: <PieSeries<VenteModel, String>>[
-            PieSeries<VenteModel, String>(
-              explode: true,
-              explodeIndex: 0,
-              dataSource: venteList,
-              xValueMapper: (VenteModel vente, _) => vente.sousCategorie,
-              yValueMapper: (VenteModel vente, _) => int.parse(vente.price),
-              dataLabelMapper: (VenteModel vente, _) => vente.sousCategorie,
-              dataLabelSettings: DataLabelSettings(isVisible: true)),
-          ]
-          )
-        )
+            child: SfCircularChart(
+                title: ChartTitle(text: 'Ventes par marchandise'),
+                legend: Legend(isVisible: true),
+                series: <PieSeries<VenteModel, String>>[
+              PieSeries<VenteModel, String>(
+                  explode: true,
+                  explodeIndex: 0,
+                  dataSource: venteList,
+                  xValueMapper: (VenteModel vente, _) => vente.sousCategorie,
+                  yValueMapper: (VenteModel vente, _) => int.parse(vente.price),
+                  dataLabelMapper: (VenteModel vente, _) => vente.sousCategorie,
+                  dataLabelSettings: DataLabelSettings(isVisible: true)),
+            ]))
       ]),
     );
   }

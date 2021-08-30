@@ -16,7 +16,7 @@ class PdfProductApi {
     achatList = achatpdfList;
   }
 
-   dataAchat() {
+  dataAchat() {
     final data = achatList
         .map((item) => {
               [

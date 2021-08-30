@@ -126,6 +126,4 @@ class NotificationService {
   void cancelAllNotifications() async {
     await _flutterLocalNotificationsPlugin.cancelAll();
   }
-
-  
 }

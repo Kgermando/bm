@@ -13,7 +13,6 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-
   final _form = GlobalKey<FormState>();
 
   String? firstName;
@@ -27,8 +26,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   String? passwordConfirm;
   // int? roleId;
 
-  final List<String> provinces =
-      Province().provinces;
+  final List<String> provinces = Province().provinces;
 
   @override
   Widget build(BuildContext context) {

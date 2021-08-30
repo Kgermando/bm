@@ -5,7 +5,6 @@ import 'package:e_management/src/screens/dashboard_screen.dart';
 import 'package:e_management/themes.dart';
 import 'package:flutter/material.dart';
 
-
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
@@ -174,92 +173,78 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Widget loginButtonBuild() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center, 
-      children: [
-        Container(
-          height: 1.4 * (MediaQuery.of(context).size.height / 20),
-          width: 5 * (MediaQuery.of(context).size.width / 10),
-          margin: EdgeInsets.only(bottom: 5),
-          child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              textStyle: const TextStyle(fontSize: 10),
-              elevation: 5.0,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30.0),
-              ),
-            ), 
-            onPressed: () {
-              if (isLoading) {
-                return;
-              }
-              print('valeur telephone ${_telephone.text}');
-              print('valeur password ${_password.text}');
+    return isLoading
+        ? CircularProgressIndicator()
+        : Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+            Container(
+                height: 1.4 * (MediaQuery.of(context).size.height / 20),
+                width: 5 * (MediaQuery.of(context).size.width / 10),
+                margin: EdgeInsets.only(bottom: 5),
+                child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      textStyle: const TextStyle(fontSize: 10),
+                      elevation: 5.0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                      ),
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        isLoading = true;
+                      });
 
-              if (_telephone.text.isEmpty ||
-                    _password.text.isEmpty) {
-                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content: Text("Remplissez tous les champs!"),
-                    backgroundColor: Colors.redAccent[400],
-                  ));
-                  return;
-                }
+                      if (_telephone.text.isEmpty || _password.text.isEmpty) {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text("Remplissez tous les champs!"),
+                          backgroundColor: Colors.redAccent[400],
+                        ));
+                        setState(() {
+                          isLoading = false;
+                        });
+                      } else {
+                        
+                        AuthService()
+                          .login(_telephone.text, _password.text)
+                            .then((value) {
+                          if (value) {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => DashboardScreen()));
 
-              AuthService().login(_telephone.text, _password.text).then((val) {
-                print('valeur login $val');
-                setState(() {
-                    isLoading = true;
-                  });
-                
-                  if (val) { 
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => DashboardScreen()));
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content: Text("Login succès!"),
-                      backgroundColor: Colors.green[700],
-                    ));
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content: Text("Login erreur verifiez vos coordonnées!"),
-                      backgroundColor: Colors.red[700],
-                    ));
-                  }
-                  setState(() {
-                    isLoading = false;
-                  });
-                }
-              );
-
-            },
-            child: Text(
-              'CONNEXION',
-              style: TextStyle(
-                color: Colors.white,
-                letterSpacing: 1.5,
-                fontWeight: FontWeight.w700,
-                fontSize: MediaQuery.of(context).size.height / 50,
-              ),
-            )
-          )
-        ),
-        // Positioned(
-        //   child: (isLoading)
-        //       ? Center(
-        //           child: Container(
-        //               height: 26,
-        //               width: 26,
-        //               child: CircularProgressIndicator(
-        //                 backgroundColor: Colors.purple,
-        //               )))
-        //       : Container(),
-        //   right: 30,
-        //   bottom: 0,
-        //   top: 0,
-        // )
-      ]
-    );
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text("Login succès!"),
+                              backgroundColor: Colors.green[700],
+                            ));
+                            setState(() {
+                              isLoading = false;
+                            });
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text(
+                                  "Login erreur verifiez vos coordonnées!"),
+                              backgroundColor: Colors.red[700],
+                            ));
+                            setState(() {
+                              isLoading = false;
+                            });
+                          }
+                        });
+                        setState(() {
+                          isLoading = false;
+                        });
+                      }
+                    },
+                    child: Text(
+                      'CONNEXION',
+                      style: TextStyle(
+                        color: Colors.white,
+                        letterSpacing: 1.5,
+                        fontWeight: FontWeight.w700,
+                        fontSize: MediaQuery.of(context).size.height / 50,
+                      ),
+                    ))),
+          ]);
   }
 
   Widget buildOrRow() {
@@ -278,8 +263,6 @@ class _LoginScreenState extends State<LoginScreen> {
       ],
     );
   }
-
-
 
   Widget signUpButtonBuild() {
     return Row(

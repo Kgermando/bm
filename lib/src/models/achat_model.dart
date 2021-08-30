@@ -9,6 +9,7 @@ class AchatFields {
     identifiant,
     quantity,
     price, // Prix unitaire
+    prixVente,
     date
   ]; 
 
@@ -20,6 +21,7 @@ class AchatFields {
   static final String quantity = 'quantity';
   static final String unity = 'unity';
   static final String price = 'price';
+  static final String prixVente = 'prixVente';
   static final String date = 'date';
 }
 
@@ -32,6 +34,7 @@ class AchatModel {
   final String quantity;
   final String unity;
   final String price;
+  final String prixVente;
   final DateTime date;
 
   // AchatModel(int id, String categorie, String sousCategorie, String type, String quantity, String price, DateTime date):
@@ -47,6 +50,7 @@ class AchatModel {
     required this.quantity,
     required this.unity,
     required this.price,
+    required this.prixVente,
     required this.date,
   });
 
@@ -59,6 +63,7 @@ class AchatModel {
           String? quantity,
           String? unity,
           String? price,
+          String? prixVente,
           DateTime? date}) =>
       AchatModel(
         id: id ?? this.id,
@@ -69,6 +74,7 @@ class AchatModel {
         quantity: quantity ?? this.quantity,
         unity: unity ?? this.unity,
         price: price ?? this.price,
+        prixVente: price ?? this.prixVente,
         date: date ?? this.date,
       );
 
@@ -81,6 +87,7 @@ class AchatModel {
         quantity: json[AchatFields.quantity] as String,
         unity: json[AchatFields.unity] as String,
         price: json[AchatFields.price] as String,
+        prixVente: json[AchatFields.prixVente] as String,
         date: DateTime.parse(json[AchatFields.date] as String),
       );
 
@@ -93,6 +100,7 @@ class AchatModel {
         AchatFields.quantity: quantity,
         AchatFields.unity: unity,
         AchatFields.price: price,
+         AchatFields.prixVente: prixVente,
         AchatFields.date: date.toIso8601String(),
       };
 }

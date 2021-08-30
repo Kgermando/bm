@@ -2,7 +2,7 @@ import 'package:e_management/src/auth/login_screen.dart';
 import 'package:flutter/material.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
-  const ForgotPasswordScreen({ Key? key }) : super(key: key);
+  const ForgotPasswordScreen({Key? key}) : super(key: key);
 
   @override
   _ForgotPasswordScreenState createState() => _ForgotPasswordScreenState();
@@ -81,7 +81,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     );
   }
 
-
   Widget loginButtonBuild() {
     return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
       Container(
@@ -111,7 +110,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               )))
     ]);
   }
-
 
   Widget loginTextBuild() {
     return Padding(
@@ -159,6 +157,4 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       ],
     );
   }
-
-
 }

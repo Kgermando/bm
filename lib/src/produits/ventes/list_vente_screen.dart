@@ -17,11 +17,10 @@ class ListVenteScreen extends StatefulWidget {
 }
 
 class _ListVenteScreenState extends State<ListVenteScreen> {
-
   @override
   void initState() {
-    super.initState();
     getData();
+    super.initState();
   }
 
   Future<void> getData() async {
@@ -75,16 +74,13 @@ class _ListVenteScreenState extends State<ListVenteScreen> {
               } else {
                 return Center(child: CircularProgressIndicator());
               }
-            }
-          )
-        );
+            }));
   }
 
   Widget printPdf() {
     return ElevatedButton.icon(
         icon: Icon(Icons.print), label: Text(''), onPressed: () async {});
   }
-
 }
 
 class VenteItemWidget extends StatelessWidget {
@@ -96,11 +92,9 @@ class VenteItemWidget extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => VenteDetailScreen(vente: vente)
-            )
-          );
+            context,
+            MaterialPageRoute(
+                builder: (context) => VenteDetailScreen(vente: vente)));
       },
       child: Card(
         margin: EdgeInsets.all(8),
@@ -126,13 +120,18 @@ class VenteItemWidget extends StatelessWidget {
                     children: [
                       Container(
                         padding: const EdgeInsets.only(bottom: 8),
-                        child: Text("${vente.sousCategorie} ${vente.type} ${vente.identifiant}",
+                        child: Text(
+                            "${vente.sousCategorie} ${vente.type} ${vente.identifiant}",
                             style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 14, overflow: TextOverflow.ellipsis)),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                                overflow: TextOverflow.ellipsis)),
                       ),
                       Text('${vente.categorie}',
-                          style:
-                              TextStyle(color: Colors.grey[500], fontSize: 12, overflow: TextOverflow.ellipsis))
+                          style: TextStyle(
+                              color: Colors.grey[500],
+                              fontSize: 12,
+                              overflow: TextOverflow.ellipsis))
                     ],
                   ),
                 ),
@@ -154,9 +153,8 @@ class VenteItemWidget extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.only(bottom: 8),
                     child: Text('Qty: ${vente.quantity} ${vente.unity}',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 10)
-                        ),
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 10)),
                   )
                 ],
               ),

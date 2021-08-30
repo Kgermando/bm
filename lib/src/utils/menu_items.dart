@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class MenuItems {
   static const List<MenuItem> itemsFirst = [
-    itemProfile, 
+    itemProfile,
     itemSettings,
   ];
 
@@ -21,8 +21,5 @@ class MenuItems {
     icon: Icons.settings,
   );
 
-  static const itemLogout = MenuItem(
-    text: 'Déconnexion', 
-    icon: Icons.logout
-  );
+  static const itemLogout = MenuItem(text: 'Déconnexion', icon: Icons.logout);
 }

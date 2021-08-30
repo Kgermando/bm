@@ -44,7 +44,8 @@ class _AddAchatFormState extends State<AddAchatForm> {
   final List<String> hygienesCategorie =
       DropdownSousCategorie().hygienesSousCategorie;
   final List<String> vinCategorie = DropdownSousCategorie().vinSousCategorie;
-  final List<String> alcoolSousCategorie = DropdownSousCategorie().alcoolSousCategorie;
+  final List<String> alcoolSousCategorie =
+      DropdownSousCategorie().alcoolSousCategorie;
 
   // Type
   final List<String> laitTypeCategorie = DropdownType().laitType;
@@ -59,7 +60,8 @@ class _AddAchatFormState extends State<AddAchatForm> {
 
   // Identifiant
   final List<String> laitIdentifiant = DropdownIdentifiant().laitIdentifiant;
-  final List<String> biossonsIdentifiant = DropdownIdentifiant().biossonsIdentifiant;
+  final List<String> biossonsIdentifiant =
+      DropdownIdentifiant().biossonsIdentifiant;
   final List<String> fournituresIdentifiant =
       DropdownIdentifiant().fournituresIdentifiant;
   final List<String> serialIdentifiant =
@@ -68,7 +70,6 @@ class _AddAchatFormState extends State<AddAchatForm> {
       DropdownIdentifiant().biscuitsIdentifiant;
   final List<String> laitBeauteIdentifiant =
       DropdownIdentifiant().laitBeauteIdentifiant;
-
 
   // Unités
   final List<String> unites = DropdownUnity().unites;
@@ -81,7 +82,6 @@ class _AddAchatFormState extends State<AddAchatForm> {
   final List<String> unitesBiscuits = DropdownUnity().unitesBiscuits;
   final List<String> unitesLaitBeaute = DropdownUnity().unitesLaitBeaute;
 
-
   List<String> achatSousCat = [];
   List<String> achatType = [];
   List<String> achatIdentifiant = [];
@@ -93,7 +93,8 @@ class _AddAchatFormState extends State<AddAchatForm> {
   String? identifiant;
   String? quantity;
   String? unity;
-  String? price;
+  String? price;  
+  String? prixVente;
 
   @override
   Widget build(BuildContext context) {
@@ -128,6 +129,7 @@ class _AddAchatFormState extends State<AddAchatForm> {
                 ],
               ),
               priceField(),
+              prixVenteField(),
               saveForm()
             ],
           ),
@@ -184,12 +186,12 @@ class _AddAchatFormState extends State<AddAchatForm> {
             achatUnity = unitesBierre;
           } else if (produit == 'Fournitures') {
             achatSousCat = fournituresCategorie;
-             achatType = fournitureType;
+            achatType = fournitureType;
             achatIdentifiant = fournituresIdentifiant;
             achatUnity = unitesFournitures;
           } else if (produit == 'Huiles végétales') {
             achatSousCat = huilesVegetaleCategorie;
-             achatType = huilesVegetaleType;
+            achatType = huilesVegetaleType;
             achatIdentifiant = serialIdentifiant;
             achatUnity = unitesHuileVegetale;
           } else if (produit == 'Serial') {
@@ -199,7 +201,7 @@ class _AddAchatFormState extends State<AddAchatForm> {
             achatUnity = unitesSerial;
           } else if (produit == 'Biscuits') {
             achatSousCat = biscuitsCategorie;
-             achatType = biscuitsType;
+            achatType = biscuitsType;
             achatIdentifiant = biscuitsIdentifiant;
             achatUnity = unitesBiscuits;
           } else if (produit == 'Laits de beautés') {
@@ -209,7 +211,7 @@ class _AddAchatFormState extends State<AddAchatForm> {
             achatUnity = unitesLaitBeaute;
           } else if (produit == 'Hygiènes') {
             achatSousCat = hygienesCategorie;
-             achatType = vinType;
+            achatType = vinType;
             achatIdentifiant = biscuitsIdentifiant;
             achatUnity = unites;
           } else if (produit == 'Vin') {
@@ -223,7 +225,7 @@ class _AddAchatFormState extends State<AddAchatForm> {
             achatIdentifiant = laitBeauteIdentifiant;
             achatUnity = unitesBoissons;
           } else if (produit == 'Divers') {
-            achatSousCat = diversCategorie; 
+            achatSousCat = diversCategorie;
             achatType = vinType;
             achatIdentifiant = biscuitsIdentifiant;
             achatUnity = unites;
@@ -407,6 +409,30 @@ class _AddAchatFormState extends State<AddAchatForm> {
     );
   }
 
+  Widget prixVenteField() {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 20.0),
+      child: TextFormField(
+        // controller: priceController,
+        keyboardType: TextInputType.phone,
+        decoration: InputDecoration(
+          labelText: 'Prix de vente unitaires',
+          labelStyle: TextStyle(),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(5.0),
+          ),
+        ),
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'Svp, mettez la valeur';
+          }
+          return null;
+        },
+        onChanged: (value) => setState(() => prixVente = value.trim()),
+      ),
+    );
+  }
+
   Widget saveForm() {
     return ElevatedButton(
       onPressed: () {
@@ -442,6 +468,7 @@ class _AddAchatFormState extends State<AddAchatForm> {
       quantity: quantity.toString(),
       unity: unity.toString(),
       price: price.toString(),
+      prixVente: prixVente.toString(),
       date: DateTime.now(),
     );
 

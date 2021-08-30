@@ -51,15 +51,43 @@ class _JourStatsState extends State<JourStats> {
 
   @override
   Widget build(BuildContext context) {
-    
+    var achatData = achatList
+      .map((e) => {e.categorie, e.sousCategorie, e.type, e.identifiant});
+
+    var venteData = venteList
+      .map((e) => {e.categorie, e.sousCategorie, e.type, e.identifiant});
+
+
+
+    print('venteData $venteData');
+
+
+    bool dataCompared = achatData == venteData;
+    print('dataCompared $dataCompared');
+
+    int vtotal = 0;
+    venteList.forEach((element) {
+      if (dataCompared) {
+        var dataPriceVente = venteList.map((e) => int.parse(e.price)).toList();
+        dataPriceVente.forEach((data) => vtotal += data );
+      } else {
+        var dataPriceVente = venteList.map((e) => int.parse(e.price)).toList();
+        dataPriceVente.forEach((data) => vtotal += data);
+      }
+    });
+
+    print(vtotal);
+
+  
+    // Ventes
     var dataPriceVente = venteList.map((e) => int.parse(e.price)).toList();
     int sumVente = 0;
     dataPriceVente.forEach((data) => sumVente += data);
 
+    // Achats
     var dataPriceAchat = achatList.map((e) => int.parse(e.price)).toList();
     int sumAchat = 0;
     dataPriceAchat.forEach((data) => sumAchat += data);
-
     var revenues = sumVente - sumAchat;
 
     return Padding(
@@ -140,7 +168,8 @@ class _JourStatsState extends State<JourStats> {
                     xValueMapper: (VenteModel vente, _) => vente.sousCategorie,
                     yValueMapper: (VenteModel vente, _) =>
                         int.parse(vente.price),
-                    dataLabelMapper: (VenteModel vente, _) => vente.sousCategorie,
+                    dataLabelMapper: (VenteModel vente, _) =>
+                        vente.sousCategorie,
                     dataLabelSettings: DataLabelSettings(isVisible: true)),
               ]))
         ],

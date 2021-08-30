@@ -18,7 +18,7 @@ class AddDetteForm extends StatefulWidget {
 
 class _AddDetteFormState extends State<AddDetteForm> {
   final _form = GlobalKey<FormState>();
- // Categorie
+  // Categorie
   final List<String> categories = DropdownCategorie().categorie;
 
   // SousCategorie
@@ -82,8 +82,6 @@ class _AddDetteFormState extends State<AddDetteForm> {
   final List<String> unitesSerial = DropdownUnity().unitesSerial;
   final List<String> unitesBiscuits = DropdownUnity().unitesBiscuits;
   final List<String> unitesLaitBeaute = DropdownUnity().unitesLaitBeaute;
-
-
 
   List<String> detteSousCat = [];
   List<String> detteType = [];
@@ -462,7 +460,7 @@ class _AddDetteFormState extends State<AddDetteForm> {
             borderRadius: BorderRadius.circular(5.0),
           ),
         ),
-        locale: Locale('fr', 'FR'), 
+        locale: Locale('fr', 'FR'),
         firstDate: DateTime(2021),
         lastDate: DateTime(2050),
         // dateLabelText: 'Date',
@@ -503,18 +501,16 @@ class _AddDetteFormState extends State<AddDetteForm> {
 
   Future addDette() async {
     final dette = DetteModel(
-      categorie: categorie.toString(),
-      sousCategorie: sousCategorie.toString(),
-      type: type.toString(),
-      identifiant: identifiant.toString(),
-      quantity: quantity.toString(),
-      unity: unity.toString(),
-      price: price.toString(),
-      date: DateTime.now(),
-      personne: personne.toString(),
-      datePayement: DateTime.parse(datePayement.toString())
-      
-    );
+        categorie: categorie.toString(),
+        sousCategorie: sousCategorie.toString(),
+        type: type.toString(),
+        identifiant: identifiant.toString(),
+        quantity: quantity.toString(),
+        unity: unity.toString(),
+        price: price.toString(),
+        date: DateTime.now(),
+        personne: personne.toString(),
+        datePayement: DateTime.parse(datePayement.toString()));
 
     print("datePayement $datePayement");
 

@@ -12,7 +12,6 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,14 +32,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Image.asset("assets/images/profile.jpg", height: 80.0, width: 80.0, fit: BoxFit.cover,),
+                    Image.asset(
+                      "assets/images/profile.jpg",
+                      height: 80.0,
+                      width: 80.0,
+                      fit: BoxFit.cover,
+                    ),
                     SizedBox(height: 8.0),
                     Text(
                       '${userData.firstName} ${userData.lastName}',
-                      style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w800),
+                      style: TextStyle(
+                          fontSize: 20.0, fontWeight: FontWeight.w800),
                     ),
-                    SizedBox(height: 16.0,),
-                    
+                    SizedBox(
+                      height: 16.0,
+                    ),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -55,10 +61,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 child: Column(
                                   children: [
                                     IconButton(
-                                      onPressed: () {},
-                                      icon: Icon(Icons.phone,
-                                          size: 20.0, color: MyThemes.primary)),
-
+                                        onPressed: () {},
+                                        icon: Icon(Icons.phone,
+                                            size: 20.0,
+                                            color: MyThemes.primary)),
                                     Text(
                                       '${userData.telephone}',
                                       style: TextStyle(
@@ -77,10 +83,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 child: Column(
                                   children: [
                                     IconButton(
-                                      onPressed: () {},
-                                      icon: Icon(Icons.business,
-                                          size: 20.0, color: Colors.purpleAccent)),
-
+                                        onPressed: () {},
+                                        icon: Icon(Icons.business,
+                                            size: 20.0,
+                                            color: Colors.purpleAccent)),
                                     Text(
                                       '${userData.nameBusiness}',
                                       style: TextStyle(
@@ -91,7 +97,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   ],
                                 ),
                               ),
-                                    
                             ),
                             Card(
                               elevation: 3.0,
@@ -100,10 +105,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 child: Column(
                                   children: [
                                     IconButton(
-                                      onPressed: () {},
-                                      icon: Icon(Icons.money,
-                                          size: 20.0, color: Colors.green)),
-
+                                        onPressed: () {},
+                                        icon: Icon(Icons.money,
+                                            size: 20.0, color: Colors.green)),
                                     Text(
                                       '${userData.typeAbonnement}',
                                       style: TextStyle(
@@ -166,18 +170,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                           ],
                         ),
-                        
-                        
                       ],
                     ),
-                    
                   ],
                 ),
               );
             }
           }
           return CircularProgressIndicator();
-          
         },
       ),
     );

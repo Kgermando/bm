@@ -30,16 +30,18 @@ class SideBarScreen extends StatelessWidget {
                         userData.telephone,
                       ),
                       currentAccountPicture: CircleAvatar(
-                        child: Image.asset(
-                          "assets/images/profile.jpg",
-                          height: 100.0,
-                          width: 100.0,
-                          fit: BoxFit.cover,
-                        ),
-                        radius: 100.0
-                      ),
+                          child: Image.asset(
+                            "assets/images/profile.jpg",
+                            height: 100.0,
+                            width: 100.0,
+                            fit: BoxFit.cover,
+                          ),
+                          radius: 100.0),
                       onDetailsPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileScreen()));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ProfileScreen()));
                       },
                     ),
                     ListTile(
@@ -124,7 +126,13 @@ class SideBarScreen extends StatelessWidget {
                 );
               }
             }
-            return Center(child: CircularProgressIndicator());
+            return Center(
+              child: Container(
+                width: 20.0,
+                height: 20.0,
+                child: CircularProgressIndicator()
+              )
+            );
           }),
     );
   }

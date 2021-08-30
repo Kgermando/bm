@@ -4,7 +4,6 @@ import 'package:e_management/src/produits/ventes/add_vente_form.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-
 class VenteDetailScreen extends StatelessWidget {
   const VenteDetailScreen({Key? key, required this.vente}) : super(key: key);
   final VenteModel vente;
@@ -13,26 +12,25 @@ class VenteDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Text('${vente.sousCategorie}'),
-            Container(
-              child: Row(
-                children: [
-                  ElevatedButton.icon(
-                    onPressed: () {},
-                    icon: Icon(Icons.print),
-                    label: Text(''),
-                  ),
-                  editButton(context),
-                  deleteButton(context)
-                ],
-              ),
-            )
-          ],
-        )
-      ),
+          title: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Text('${vente.sousCategorie}'),
+          Container(
+            child: Row(
+              children: [
+                ElevatedButton.icon(
+                  onPressed: () {},
+                  icon: Icon(Icons.print),
+                  label: Text(''),
+                ),
+                editButton(context),
+                deleteButton(context)
+              ],
+            ),
+          )
+        ],
+      )),
       body: Padding(
         padding: EdgeInsets.all(8.0),
         child: Column(
@@ -80,18 +78,16 @@ class VenteDetailScreen extends StatelessWidget {
             ),
           ),
           Text(vente.type,
-            style: TextStyle(fontWeight: FontWeight.w700, fontSize: 36),
-            overflow: TextOverflow.ellipsis
-          ),
+              style: TextStyle(fontWeight: FontWeight.w700, fontSize: 36),
+              overflow: TextOverflow.ellipsis),
           SizedBox(
             child: Container(
               child: Icon(Icons.arrow_right_outlined),
             ),
           ),
           Text(vente.identifiant,
-            style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20),
-            overflow: TextOverflow.ellipsis
-          ),
+              style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20),
+              overflow: TextOverflow.ellipsis),
         ],
       ),
     ));
@@ -162,35 +158,30 @@ class VenteDetailScreen extends StatelessWidget {
       content: Text("${vente.sousCategorie} vient d'être supprimé!"),
       backgroundColor: Colors.red[700],
     );
-
   }
 
-
-    Widget editButton(BuildContext context) {
-      return IconButton(
-      icon: Icon(Icons.edit_outlined),
-      onPressed: () async {
-
-        await Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => AddVenteForm(),
-        ));
-
-      });
-    }
-
-    Widget deleteButton(BuildContext context) {
-      return IconButton(
-        icon: Icon(Icons.delete),
+  Widget editButton(BuildContext context) {
+    return IconButton(
+        icon: Icon(Icons.edit_outlined),
         onPressed: () async {
-          await ProductDatabase.instance.deleteVente(vente.id!);
+          await Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => AddVenteForm(),
+          ));
+        });
+  }
+
+  Widget deleteButton(BuildContext context) {
+    return IconButton(
+      icon: Icon(Icons.delete),
+      onPressed: () async {
+        await ProductDatabase.instance.deleteVente(vente.id!);
 
         Navigator.of(context).pop();
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text("${vente.sousCategorie} vient d'être supprimé!"),
           backgroundColor: Colors.red[700],
         ));
-        },
-      );
-    }
-
+      },
+    );
+  }
 }

@@ -6,15 +6,15 @@ import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class AnStats extends StatefulWidget {
-  const AnStats({ Key? key }) : super(key: key);
+  const AnStats({Key? key}) : super(key: key);
 
   @override
   _AnStatsState createState() => _AnStatsState();
 }
 
 class _AnStatsState extends State<AnStats> {
-    List<VenteModel> venteList = [];
-    List<AchatModel> achatList = [];
+  List<VenteModel> venteList = [];
+  List<AchatModel> achatList = [];
 
   @override
   void initState() {
@@ -48,10 +48,10 @@ class _AnStatsState extends State<AnStats> {
       });
     }
   }
-  
+
   @override
   Widget build(BuildContext context) {
-      var dataPrice = venteList.map((e) => int.parse(e.price)).toList();
+    var dataPrice = venteList.map((e) => int.parse(e.price)).toList();
     int sum = 0;
     dataPrice.forEach((data) => sum += data);
 
@@ -61,9 +61,8 @@ class _AnStatsState extends State<AnStats> {
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Column(
-        children: [
-          Row(
+      child: Column(children: [
+        Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Column(
@@ -117,8 +116,9 @@ class _AnStatsState extends State<AnStats> {
                 LineSeries<VenteModel, String>(
                     dataSource: venteList,
                     xValueMapper: (VenteModel vente, _) =>
-                        (DateFormat("yyyy").format(vente.date).toString()), 
-                    yValueMapper: (VenteModel vente, _) => int.parse(vente.price),
+                        (DateFormat("yyyy").format(vente.date).toString()),
+                    yValueMapper: (VenteModel vente, _) =>
+                        int.parse(vente.price),
                     name: 'Ventes',
                     // Enable data label
                     dataLabelSettings: DataLabelSettings(isVisible: true))

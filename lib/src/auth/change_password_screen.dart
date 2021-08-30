@@ -2,7 +2,7 @@ import 'package:e_management/src/auth/login_screen.dart';
 import 'package:flutter/material.dart';
 
 class ChangePasswordScreen extends StatefulWidget {
-  const ChangePasswordScreen({ Key? key }) : super(key: key);
+  const ChangePasswordScreen({Key? key}) : super(key: key);
 
   @override
   _ChangePasswordScreenState createState() => _ChangePasswordScreenState();
@@ -106,8 +106,6 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
     );
   }
 
-
-
   Widget loginButtonBuild() {
     return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
       Container(
@@ -137,7 +135,6 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
               )))
     ]);
   }
-
 
   Widget loginTextBuild() {
     return Padding(
@@ -186,6 +183,4 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
       ],
     );
   }
-
-
 }

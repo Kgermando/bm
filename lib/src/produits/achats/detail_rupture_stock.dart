@@ -1,23 +1,25 @@
 import 'package:e_management/resources/products_database.dart';
-import 'package:e_management/src/models/achat_model.dart';
 import 'package:e_management/src/models/dette_model.dart';
+import 'package:e_management/src/models/rupture_stock.dart';
 import 'package:e_management/src/models/vente_model.dart';
 import 'package:e_management/src/produits/achats/add_achat_form.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class AchatDetailScreen extends StatefulWidget {
-  final AchatModel achat;
-  const AchatDetailScreen({Key? key, required this.achat}) : super(key: key);
+class DetailRuptureStock extends StatefulWidget {
+  const DetailRuptureStock({Key? key, required this.ruptureStock})
+      : super(key: key);
+  final RuptureStockModel ruptureStock;
 
   @override
-  _AchatDetailScreenState createState() => _AchatDetailScreenState(this.achat);
+  _DetailRuptureStockState createState() =>
+      _DetailRuptureStockState(this.ruptureStock);
 }
 
-class _AchatDetailScreenState extends State<AchatDetailScreen> {
-  final AchatModel achat;
+class _DetailRuptureStockState extends State<DetailRuptureStock> {
+  final RuptureStockModel ruptureStock;
 
-  _AchatDetailScreenState(this.achat);
+  _DetailRuptureStockState(this.ruptureStock);
 
   List<VenteModel> venteList = [];
   List<DetteModel> detteList = [];
@@ -53,7 +55,7 @@ class _AchatDetailScreenState extends State<AchatDetailScreen> {
           title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          Text('${achat.categorie}'),
+          Text('${ruptureStock.categorie}'),
           Container(
             child: Row(
               children: [
@@ -85,13 +87,9 @@ class _AchatDetailScreenState extends State<AchatDetailScreen> {
                 children: [
                   header(),
                   headerTitle(),
-                  achatTitle(),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  achats(),
+                  ruptureStockTitle(),
+                  ruptureStocks(),
                   ventetitle(),
-                  SizedBox(height: 20,),
                   ventes(),
                   benfices(),
                 ],
@@ -108,9 +106,9 @@ class _AchatDetailScreenState extends State<AchatDetailScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text('${achat.categorie.toUpperCase()}',
+          Text('${ruptureStock.categorie.toUpperCase()}',
               style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16)),
-          Text(DateFormat("dd.MM.yy HH:mm").format(achat.date),
+          Text(DateFormat("dd.MM.yy HH:mm").format(ruptureStock.date),
               style: TextStyle(fontWeight: FontWeight.w400, fontSize: 16)),
         ],
       ),
@@ -125,14 +123,14 @@ class _AchatDetailScreenState extends State<AchatDetailScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Text(achat.sousCategorie,
+          Text(ruptureStock.sousCategorie,
               style: TextStyle(fontWeight: FontWeight.w600, fontSize: 30)),
           SizedBox(
             child: Container(
               child: Icon(Icons.arrow_right_outlined),
             ),
           ),
-          Text(achat.type,
+          Text(ruptureStock.type,
               style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
               overflow: TextOverflow.ellipsis),
           SizedBox(
@@ -140,7 +138,7 @@ class _AchatDetailScreenState extends State<AchatDetailScreen> {
               child: Icon(Icons.arrow_right_outlined),
             ),
           ),
-          Text(achat.identifiant,
+          Text(ruptureStock.identifiant,
               style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20),
               overflow: TextOverflow.ellipsis),
         ],
@@ -148,21 +146,21 @@ class _AchatDetailScreenState extends State<AchatDetailScreen> {
     ));
   }
 
-  Widget achatTitle() {
+  Widget ruptureStockTitle() {
     return Card(
       child: Text(
-        'ACHATS',
+        'RUPTURE DU STOCK',
         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0),
       ),
     );
   }
 
-  Widget achats() {
-    double prix = double.parse(achat.price);
-    double quantite = double.parse(achat.quantity);
-
+  Widget ruptureStocks() {
+    double prix = double.parse(ruptureStock.price);
+    double quantite = double.parse(ruptureStock.quantity);
+    // var = prix / quantite;
     return Card(
-      child: Padding(
+        child: Padding(
       padding: EdgeInsets.only(top: 28.0, bottom: 10.0),
       child: Column(
         children: [
@@ -170,9 +168,9 @@ class _AchatDetailScreenState extends State<AchatDetailScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('${achat.quantity} ${achat.unity}',
+              Text('${ruptureStock.quantity} ${ruptureStock.unity}',
                   style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20)),
-              Text('${achat.price} FC',
+              Text('${ruptureStock.price} FC',
                   style: TextStyle(
                       fontWeight: FontWeight.w700,
                       fontSize: 30,
@@ -183,22 +181,10 @@ class _AchatDetailScreenState extends State<AchatDetailScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('1 ${achat.unity}',
+              Text('1 ${ruptureStock.unity}',
                   style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20)),
               Text('${prix / quantite} FC',
                   style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20)),
-            ],
-          ),
-          SizedBox(height: 30.0,),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text('Prix de vente',
-                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20, color: Colors.orange[900])),
-              Text('${achat.prixVente} FC',
-                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 25,
-                      color: Colors.orange[900])),
             ],
           ),
         ],
@@ -219,10 +205,10 @@ class _AchatDetailScreenState extends State<AchatDetailScreen> {
   Widget ventes() {
     // Filter
     var filter = venteList.where((element) =>
-        achat.categorie == element.categorie &&
-        achat.sousCategorie == element.sousCategorie &&
-        achat.type == element.type &&
-        achat.identifiant == element.identifiant);
+        ruptureStock.categorie == element.categorie &&
+        ruptureStock.sousCategorie == element.sousCategorie &&
+        ruptureStock.type == element.type &&
+        ruptureStock.identifiant == element.identifiant);
 
     // Quantités
     var filterQty = filter.map((e) => int.parse(e.quantity));
@@ -248,7 +234,7 @@ class _AchatDetailScreenState extends State<AchatDetailScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('${achat.unity} vendus',
+                Text('${ruptureStock.unity} vendus',
                     style:
                         TextStyle(fontWeight: FontWeight.w700, fontSize: 14)),
                 Text('Montant vendus',
@@ -260,7 +246,7 @@ class _AchatDetailScreenState extends State<AchatDetailScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('$sumQty ${achat.unity}',
+                Text('$sumQty ${ruptureStock.unity}',
                     style:
                         TextStyle(fontWeight: FontWeight.w700, fontSize: 20)),
                 Text('$sumPrice FC',
@@ -279,10 +265,10 @@ class _AchatDetailScreenState extends State<AchatDetailScreen> {
   Widget benfices() {
     // Filter
     var filterVente = venteList.where((element) =>
-        achat.categorie == element.categorie &&
-        achat.sousCategorie == element.sousCategorie &&
-        achat.type == element.type &&
-        achat.identifiant == element.identifiant);
+        ruptureStock.categorie == element.categorie &&
+        ruptureStock.sousCategorie == element.sousCategorie &&
+        ruptureStock.type == element.type &&
+        ruptureStock.identifiant == element.identifiant);
 
     // Quantités
     var filterQtyVente = filterVente.map((e) => int.parse(e.quantity));
@@ -294,14 +280,14 @@ class _AchatDetailScreenState extends State<AchatDetailScreen> {
     int sumPriceVente = 0;
     filterPriceVente.forEach((price) => sumPriceVente += price);
 
-    int qtyAchat = int.parse(achat.quantity);
-    int prixAchat = int.parse(achat.price);
+    int qtyAchat = int.parse(ruptureStock.quantity);
+    int prixAchat = int.parse(ruptureStock.price);
 
     var filterDette = detteList.where((element) =>
-        achat.categorie == element.categorie &&
-        achat.sousCategorie == element.sousCategorie &&
-        achat.type == element.type &&
-        achat.identifiant == element.identifiant);
+        ruptureStock.categorie == element.categorie &&
+        ruptureStock.sousCategorie == element.sousCategorie &&
+        ruptureStock.type == element.type &&
+        ruptureStock.identifiant == element.identifiant);
 
     var filterQtyDette = filterDette.map((e) => int.parse(e.quantity));
     int sumQtyDette = 0;
@@ -318,7 +304,7 @@ class _AchatDetailScreenState extends State<AchatDetailScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Restes des ${achat.unity}',
+                  Text('Restes des ${ruptureStock.unity}',
                       style:
                           TextStyle(fontWeight: FontWeight.w700, fontSize: 14)),
                   Text('Revenues',
@@ -330,7 +316,8 @@ class _AchatDetailScreenState extends State<AchatDetailScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('${qtyAchat - sumQtyVente - sumQtyDette} ${achat.unity}',
+                  Text(
+                      '${qtyAchat - sumQtyVente - sumQtyDette} ${ruptureStock.unity}',
                       style:
                           TextStyle(fontWeight: FontWeight.w700, fontSize: 20)),
                   Text('${sumPriceVente - prixAchat} FC',
@@ -345,25 +332,15 @@ class _AchatDetailScreenState extends State<AchatDetailScreen> {
         )));
   }
 
-  Widget editButton(BuildContext context) {
-    return IconButton(
-        icon: Icon(Icons.edit_outlined),
-        onPressed: () async {
-          await Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => AddAchatForm(),
-          ));
-        });
-  }
-
   Widget deleteButton(BuildContext context) {
     return IconButton(
       icon: Icon(Icons.delete),
       onPressed: () async {
-        await ProductDatabase.instance.deleteAchat(achat.id!);
+        await ProductDatabase.instance.deleteAchat(ruptureStock.id!);
 
         Navigator.of(context).pop();
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text("${achat.sousCategorie} vient d'être supprimé!"),
+          content: Text("${ruptureStock.type} vient d'être supprimé!"),
           backgroundColor: Colors.red[700],
         ));
       },

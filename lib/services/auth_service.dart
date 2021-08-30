@@ -72,10 +72,13 @@ class AuthService with ChangeNotifier {
 
   Future<User?> isLoggedIn() async {
     final String? jwt = await this._storage.read(key: 'jwt');
+
+    // final User jwt = await UserPreferences.read();
+
     var getuserUrl = Uri.parse("${Environment.serverUrl}/auth/user");
 
     final resp = await http.get(getuserUrl,
-        headers: {'Content-Type': 'application/json', 'x-access-token': jwt!});
+      headers: {'Content-Type': 'application/json', 'x-access-token': jwt!});
 
     if (resp.statusCode == 200) {
       // final userResponse = loginModelFromJson(resp.body);
@@ -93,7 +96,7 @@ class AuthService with ChangeNotifier {
   Future<void> _guardarToken(String jwt) async =>
       await _storage.write(key: _TOKEN_KEY, value: jwt);
 
-  Future<void> logout() async { 
+  Future<void> logout() async {
     // await sharedPreferences.clear();
     await _storage.delete(key: _TOKEN_KEY);
   }

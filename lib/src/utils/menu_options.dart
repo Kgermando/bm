@@ -1,4 +1,3 @@
-
 import 'package:e_management/services/auth_service.dart';
 import 'package:e_management/src/auth/login_screen.dart';
 import 'package:e_management/src/auth/profile_screen.dart';

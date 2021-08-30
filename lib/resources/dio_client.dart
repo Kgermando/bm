@@ -14,7 +14,8 @@ class DioClient {
   Future<User?> getUser() async {
     User? user;
     try {
-      Response userData = await _dio.get('http://192.168.43.230:3000/api/auth/user');
+      Response userData =
+          await _dio.get('http://192.168.43.230:3000/api/auth/user');
 
       print('User Info: ${userData.data}');
 

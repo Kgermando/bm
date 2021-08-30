@@ -12,7 +12,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:timezone/timezone.dart' as tz;
 
 final storage = FlutterSecureStorage();
- 
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations([

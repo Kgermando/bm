@@ -1,5 +1,6 @@
 import 'package:e_management/src/models/achat_model.dart';
 import 'package:e_management/src/models/dette_model.dart';
+import 'package:e_management/src/models/rupture_stock.dart';
 import 'package:e_management/src/models/vente_model.dart';
 import 'package:intl/intl.dart';
 import 'package:path/path.dart';
@@ -44,6 +45,7 @@ class ProductDatabase {
         ${AchatFields.quantity} $textType,
         ${AchatFields.unity} $textType,
         ${AchatFields.price} $textType,
+        ${AchatFields.prixVente} $textType,
         ${AchatFields.date} $textType
       )
       ''');
@@ -77,6 +79,21 @@ class ProductDatabase {
         ${DetteFields.datePayement} $textType
       )
       ''');
+
+    await db.execute('''
+      CREATE TABLE $tableRuptureSctock (
+        ${RuptureStockFields.id} $idType,
+        ${RuptureStockFields.categorie} $textType,
+        ${RuptureStockFields.sousCategorie} $textType,
+        ${RuptureStockFields.type} $textType,
+        ${RuptureStockFields.identifiant} $textType,
+        ${RuptureStockFields.quantity} $textType,
+        ${RuptureStockFields.unity} $textType,
+        ${RuptureStockFields.price} $textType,
+        ${RuptureStockFields.date} $textType,
+        ${RuptureStockFields.dateRupture} $textType
+      )
+      ''');
   }
 
   // Insert data in database
@@ -95,7 +112,7 @@ class ProductDatabase {
     return achat.copy(id: id);
   }
 
-  // Get One Achat in database
+  // Get One data in database
   Future<AchatModel> getOneAchat(int id) async {
     final db = await instance.database;
 
@@ -113,7 +130,7 @@ class ProductDatabase {
     }
   }
 
-  // Get All Achat database
+  // Get All data database
   Future<List<AchatModel>> getAllAchats() async {
     final db = await instance.database;
 
@@ -128,10 +145,8 @@ class ProductDatabase {
   Future<List<AchatModel>> getAllAchatDay() async {
     final db = await instance.database;
     final orderBy = '${AchatFields.date} ASC';
-    var now = new DateTime.now();
-    var nowW = now.subtract(Duration(days: 7));
-    final result = await db
-        .rawQuery('SELECT * FROM $tableAchats WHERE "$nowW" ORDER BY $orderBy');
+    final result = await db.rawQuery(
+        'SELECT * FROM $tableAchats WHERE date >= datetime("now", "-1 day") ORDER BY $orderBy');
     return result.map((json) => AchatModel.fromJson(json)).toList();
   }
 
@@ -165,7 +180,7 @@ class ProductDatabase {
     return result.map((json) => AchatModel.fromJson(json)).toList();
   }
 
-  // Get All Achat database
+  // Get All data database
   Future<List<AchatModel>> getAllAchatsVente() async {
     final db = await instance.database;
 
@@ -186,7 +201,7 @@ class ProductDatabase {
     );
   }
 
-  // Delete Achat int database
+  // Delete data int database
   Future<int> deleteAchat(int id) async {
     final db = await instance.database;
 
@@ -207,7 +222,7 @@ class ProductDatabase {
     return vente.copy(id: id);
   }
 
-  // Get One Achat in database
+  // Get One data in database
   Future<VenteModel> getOneVente(int id) async {
     final db = await instance.database;
 
@@ -225,7 +240,7 @@ class ProductDatabase {
     }
   }
 
-  // Get All Achat database
+  // Get All data database
   Future<List<VenteModel>> getAllVente() async {
     final db = await instance.database;
     final DateTime now = DateTime.now();
@@ -241,42 +256,14 @@ class ProductDatabase {
     return result.map((json) => VenteModel.fromJson(json)).toList();
   }
 
-  // Get All Achat database
+  // Get All data database
   Future<List<VenteModel>> getAllVenteByDay() async {
     final db = await instance.database;
-
-    // var now = new DateTime.now();
-    // var nowD = new DateTime(now.day);
-    // var nowDD = new DateTime(now.day + 1);
-
-    // var dd = nowD >= nowDD;
-    // var now_1w = now.subtract(Duration(days: 7));
-    // var now_1m = new DateTime(now.year, now.month - 1, now.day);
-    // var now_1y = new DateTime(now.year - 1, now.month, now.day);
-
-    // Duration duration = nowDD.difference(nowD);
-
-    // print('difference $duration');
-
-
-    // print('Day $nowD');
-
-    // print('Day $nowDD');
-
-    // print('Week $now_1w');
-    // print('Mouth $now_1m');
-    // print('Year $now_1y');
-
     // final date = '${VenteFields.date}';
     final orderBy = '${VenteFields.date} ASC';
 
-    
-
     final result = await db.rawQuery(
-      'SELECT * FROM $tableVente WHERE date >= datetime("now", "-1 day") ORDER BY $orderBy');
-
-    // final result = await db.rawQuery(
-    //     'SELECT * FROM $tableVente WHERE $date > "$nowD" ORDER BY $orderBy');
+        'SELECT * FROM $tableVente WHERE date >= datetime("now", "-1 day") ORDER BY $orderBy');
 
     return result.map((json) => VenteModel.fromJson(json)).toList();
   }
@@ -284,31 +271,36 @@ class ProductDatabase {
   Future<List<VenteModel>> getAllVenteByWeek() async {
     final db = await instance.database;
     final orderBy = '${VenteFields.date} ASC';
-    var now = new DateTime.now();
-    var nowW = now.subtract(Duration(days: 7));
-    final result = await db
-        .rawQuery('SELECT * FROM $tableVente WHERE "$nowW" ORDER BY $orderBy');
+    // final result = await db
+    //     .rawQuery('SELECT * FROM $tableVente WHERE "$nowW" ORDER BY $orderBy');
+    final result = await db.rawQuery(
+        'SELECT * FROM $tableVente WHERE date >= datetime("now", "-7 day") ORDER BY $orderBy');
+
     return result.map((json) => VenteModel.fromJson(json)).toList();
   }
 
   Future<List<VenteModel>> getAllVenteByMouth() async {
     final db = await instance.database;
     final orderBy = '${VenteFields.date} ASC';
-    var now = new DateTime.now();
-    var nowM = new DateTime(now.year, now.month - 1, now.day);
-    final result = await db
-        .rawQuery('SELECT * FROM $tableVente WHERE "$nowM" ORDER BY $orderBy');
+
+    // final result = await db
+    //     .rawQuery('SELECT * FROM $tableVente WHERE "$nowM" ORDER BY $orderBy');
+    final result = await db.rawQuery(
+        'SELECT * FROM $tableVente WHERE date >= datetime("now", "-30 day") ORDER BY $orderBy');
+
     return result.map((json) => VenteModel.fromJson(json)).toList();
   }
 
   Future<List<VenteModel>> getAllVenteByYear() async {
     final db = await instance.database;
-    var now = new DateTime.now();
-    var nowY = new DateTime(now.year - 1, now.month, now.day);
+    // var now = new DateTime.now();
+    // var nowY = new DateTime(now.year - 1, now.month, now.day);
     final orderBy = '${VenteFields.date} ASC';
 
-    final result = await db
-        .rawQuery('SELECT * FROM $tableVente WHERE "$nowY" ORDER BY $orderBy');
+    // final result = await db
+    //     .rawQuery('SELECT * FROM $tableVente WHERE "$nowY" ORDER BY $orderBy');
+    final result = await db.rawQuery(
+        'SELECT * FROM $tableVente WHERE date >= datetime("now", "-360 day") ORDER BY $orderBy');
     return result.map((json) => VenteModel.fromJson(json)).toList();
   }
 
@@ -324,7 +316,7 @@ class ProductDatabase {
     );
   }
 
-  // Delete Achat int database
+  // Delete data int database
   Future<int> deleteVente(int id) async {
     final db = await instance.database;
 
@@ -345,7 +337,7 @@ class ProductDatabase {
     return dette.copy(id: id);
   }
 
-  // Get One Achat in database
+  // Get One data in database
   Future<DetteModel> getOneDette(int id) async {
     final db = await instance.database;
 
@@ -363,7 +355,7 @@ class ProductDatabase {
     }
   }
 
-  // Get All Achat database
+  // Get All data database
   Future<List<DetteModel>> getAllDette() async {
     final db = await instance.database;
 
@@ -387,7 +379,7 @@ class ProductDatabase {
     );
   }
 
-  // Delete Achat int database
+  // Delete data int database
   Future<int> deleteDette(int id) async {
     final db = await instance.database;
 
@@ -403,5 +395,40 @@ class ProductDatabase {
     final db = await instance.database;
 
     db.close();
+  }
+
+  // RUPTURE STOCK
+  // Insert data in database
+  Future<RuptureStockModel> insertRuptureStock(
+      RuptureStockModel ruptureSctock) async {
+    final db = await instance.database;
+    final id = await db.insert(tableRuptureSctock, ruptureSctock.toJson());
+    return ruptureSctock.copy(id: id);
+  }
+
+  // Get All data database
+  Future<List<RuptureStockModel>> getAllRuptureStock() async {
+    final db = await instance.database;
+    final orderBy = '${RuptureStockFields.date} ASC';
+    final result = await db.query(tableRuptureSctock, orderBy: orderBy);
+    return result.map((json) => RuptureStockModel.fromJson(json)).toList();
+  }
+
+  // Get One data in database
+  Future<RuptureStockModel> getOneRuptureStock(int id) async {
+    final db = await instance.database;
+
+    final maps = await db.query(
+      tableRuptureSctock,
+      columns: RuptureStockFields.values,
+      where: '${RuptureStockFields.id} = ?',
+      whereArgs: [id],
+    );
+
+    if (maps.isNotEmpty) {
+      return RuptureStockModel.fromJson(maps.first);
+    } else {
+      throw Exception('ID $id not found');
+    }
   }
 }

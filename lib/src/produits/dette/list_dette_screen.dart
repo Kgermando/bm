@@ -1,4 +1,3 @@
-
 import 'package:e_management/resources/products_database.dart';
 import 'package:e_management/src/models/dette_model.dart';
 import 'package:e_management/src/models/menu_item.dart';
@@ -19,11 +18,10 @@ class ListDetteScreen extends StatefulWidget {
 }
 
 class _ListDetteScreenState extends State<ListDetteScreen> {
-
   @override
   void initState() {
-    super.initState();
     getData();
+    super.initState();
   }
 
   Future<void> getData() async {
@@ -123,7 +121,8 @@ class DetteItemWidget extends StatelessWidget {
                     children: [
                       Container(
                         padding: const EdgeInsets.only(bottom: 8),
-                        child: Text("${dette.sousCategorie} ${dette.type} ${dette.identifiant}",
+                        child: Text(
+                            "${dette.sousCategorie} ${dette.type} ${dette.identifiant}",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 14,

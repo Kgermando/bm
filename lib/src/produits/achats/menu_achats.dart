@@ -3,21 +3,21 @@ import 'package:e_management/src/pdf/pdf_api.dart';
 import 'package:e_management/src/pdf/pdf_product_api.dart';
 import 'package:e_management/src/produits/achats/add_achat_form.dart';
 import 'package:e_management/src/produits/achats/list_achat_screen.dart';
-import 'package:e_management/src/produits/achats/rupture_stock.dart';
+import 'package:e_management/src/produits/achats/list_rupture_stock.dart';
 import 'package:e_management/src/screens/sidebar_screen.dart';
 import 'package:e_management/src/utils/menu_items.dart';
 import 'package:e_management/src/utils/menu_options.dart';
 import 'package:flutter/material.dart';
 
 class MenuAchat extends StatefulWidget {
-  const MenuAchat({ Key? key }) : super(key: key);
+  const MenuAchat({Key? key}) : super(key: key);
 
   @override
   _MenuAchatState createState() => _MenuAchatState();
 }
 
-class _MenuAchatState extends State<MenuAchat> 
-  with SingleTickerProviderStateMixin {
+class _MenuAchatState extends State<MenuAchat>
+    with SingleTickerProviderStateMixin {
   late TabController controller;
 
   @override
@@ -41,7 +41,7 @@ class _MenuAchatState extends State<MenuAchat>
       length: 2,
       child: Scaffold(
           appBar: AppBar(
-            title: Text('Achats'),  // ${controller.index + 1}
+            title: Text('Achats'), // ${controller.index + 1}
             actions: [
               printPdf(),
               PopupMenuButton<MenuItem>(
@@ -60,7 +60,9 @@ class _MenuAchatState extends State<MenuAchat>
               // indicatorWeight: 10,
               tabs: [
                 Tab(text: 'Stocks', icon: Icon(Icons.shopping_bag_sharp)),
-                Tab(text: 'Rupture de stocks', icon: Icon(Icons.shopping_bag_outlined ))
+                Tab(
+                    text: 'Rupture de stocks',
+                    icon: Icon(Icons.shopping_bag_outlined))
               ],
             ),
           ),
@@ -75,23 +77,19 @@ class _MenuAchatState extends State<MenuAchat>
           drawer: SideBarScreen(),
           body: TabBarView(
             controller: controller,
-            children: [
-              ListAchatScreen(),
-              RuptureStock()
-            ],
+            children: [ListAchatScreen(), RuptureStock()],
           )),
     );
   }
 
   Widget printPdf() {
     return ElevatedButton.icon(
-      icon: Icon(Icons.print),
-      label: Text(''),
-      onPressed: () async {
-        final pdfFile = await PdfProductApi.generate();
+        icon: Icon(Icons.print),
+        label: Text(''),
+        onPressed: () async {
+          final pdfFile = await PdfProductApi.generate();
 
-        PdfApi.openFile(pdfFile);
-      }
-    );
+          PdfApi.openFile(pdfFile);
+        });
   }
 }

@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class MouthStats extends StatefulWidget {
-  const MouthStats({ Key? key }) : super(key: key);
+  const MouthStats({Key? key}) : super(key: key);
 
   @override
   _MouthStatsState createState() => _MouthStatsState();
@@ -23,7 +23,7 @@ class _MouthStatsState extends State<MouthStats> {
     loadAchat();
   }
 
-    @override
+  @override
   void dispose() {
     loadVente();
     loadAchat();
@@ -41,7 +41,8 @@ class _MouthStatsState extends State<MouthStats> {
   }
 
   void loadAchat() async {
-    List<AchatModel>? achats = await ProductDatabase.instance.getAllAchatMouth();
+    List<AchatModel>? achats =
+        await ProductDatabase.instance.getAllAchatMouth();
     if (this.mounted) {
       setState(() {
         achatList = achats;
@@ -58,7 +59,6 @@ class _MouthStatsState extends State<MouthStats> {
     var dataPriceAchat = achatList.map((e) => int.parse(e.price)).toList();
     int sumAchat = 0;
     dataPriceAchat.forEach((data) => sumAchat += data);
-
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -119,7 +119,8 @@ class _MouthStatsState extends State<MouthStats> {
                       dataSource: venteList,
                       xValueMapper: (VenteModel vente, _) =>
                           (DateFormat("MM/yyyy").format(vente.date).toString()),
-                      yValueMapper: (VenteModel vente, _) => int.parse(vente.price),
+                      yValueMapper: (VenteModel vente, _) =>
+                          int.parse(vente.price),
                       name: 'Ventes',
                       // Enable data label
                       dataLabelSettings: DataLabelSettings(isVisible: true))
@@ -135,8 +136,10 @@ class _MouthStatsState extends State<MouthStats> {
                     explodeIndex: 0,
                     dataSource: venteList,
                     xValueMapper: (VenteModel vente, _) => vente.sousCategorie,
-                    yValueMapper: (VenteModel vente, _) =>int.parse(vente.price),
-                    dataLabelMapper: (VenteModel vente, _) => vente.sousCategorie,
+                    yValueMapper: (VenteModel vente, _) =>
+                        int.parse(vente.price),
+                    dataLabelMapper: (VenteModel vente, _) =>
+                        vente.sousCategorie,
                     dataLabelSettings: DataLabelSettings(isVisible: true)),
               ]))
         ],

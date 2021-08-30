@@ -71,7 +71,7 @@ class _ContactPageState extends State<ContactPage> {
 
   Widget textField() {
     return Container(
-      margin: const EdgeInsets.all(30.0),
+      margin: const EdgeInsets.all(24.0),
       child: Text(
         "Contactez-Nous ici",
         style: Theme.of(context).textTheme.headline4,

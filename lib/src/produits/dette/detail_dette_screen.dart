@@ -74,18 +74,16 @@ class DetailDetteScreen extends StatelessWidget {
             ),
           ),
           Text(dette.type,
-            style: TextStyle(fontWeight: FontWeight.w700, fontSize: 36),
-            overflow: TextOverflow.ellipsis
-          ),
-           SizedBox(
+              style: TextStyle(fontWeight: FontWeight.w700, fontSize: 36),
+              overflow: TextOverflow.ellipsis),
+          SizedBox(
             child: Container(
               child: Icon(Icons.arrow_right_outlined),
             ),
           ),
           Text(dette.identifiant,
-            style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20),
-            overflow: TextOverflow.ellipsis
-          ),
+              style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20),
+              overflow: TextOverflow.ellipsis),
         ],
       ),
     ));
@@ -114,8 +112,7 @@ class DetailDetteScreen extends StatelessWidget {
                   style: TextStyle(
                       fontWeight: FontWeight.w700,
                       fontSize: 30,
-                      color: Colors.indigo)
-                    ),
+                      color: Colors.indigo)),
             ],
           ),
           // Row(
@@ -128,13 +125,15 @@ class DetailDetteScreen extends StatelessWidget {
           //         style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20)),
           //   ],
           // ),
-          SizedBox(height: 40.0,),
+          SizedBox(
+            height: 40.0,
+          ),
           Text('Dette de ${dette.personne.toUpperCase()}',
               style: TextStyle(
                   fontWeight: FontWeight.w800,
                   color: Colors.blueGrey[900],
                   fontSize: 28)),
-          
+
           SizedBox(
             height: 10.0,
           ),
@@ -142,14 +141,10 @@ class DetailDetteScreen extends StatelessWidget {
           Text(
               'Date de payement ${DateFormat("dd.MM.yy HH:mm").format(dette.datePayement)}',
               style: TextStyle(fontWeight: FontWeight.w400, fontSize: 20)),
-              
-      
         ],
       ),
     ));
-    
   }
-  
 
   Widget editButton(BuildContext context) {
     return IconButton(
@@ -176,7 +171,7 @@ class DetailDetteScreen extends StatelessWidget {
     );
   }
 
-  Widget addDette(BuildContext context)  {
+  Widget addDette(BuildContext context) {
     final dettes = VenteModel(
       categorie: dette.categorie,
       sousCategorie: dette.sousCategorie,
@@ -189,18 +184,16 @@ class DetailDetteScreen extends StatelessWidget {
       // personne: dette.personne,
     );
     return IconButton(
-      icon: Icon(Icons.send),
-      onPressed: () async {
-        await ProductDatabase.instance.insertVente(dettes);
-        await ProductDatabase.instance.deleteDette(dette.id!);
-        Navigator.of(context).pop();
+        icon: Icon(Icons.send),
+        onPressed: () async {
+          await ProductDatabase.instance.insertVente(dettes);
+          await ProductDatabase.instance.deleteDette(dette.id!);
+          Navigator.of(context).pop();
 
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text("${dette.sousCategorie} ajouté aux ventes!"),
-          backgroundColor: Colors.green[700],
-        ));
-      }
-    );
- 
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text("${dette.sousCategorie} ajouté aux ventes!"),
+            backgroundColor: Colors.green[700],
+          ));
+        });
   }
 }

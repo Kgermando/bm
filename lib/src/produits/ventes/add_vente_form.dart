@@ -96,6 +96,8 @@ class _AddVenteFormState extends State<AddVenteForm> {
   String? unity;
   String? price;
 
+  bool isLoading = false;
+
   @override
   void initState() {
     loadAchats();
@@ -103,12 +105,14 @@ class _AddVenteFormState extends State<AddVenteForm> {
     super.initState();
   }
 
+  List<AchatModel> achatList = [];
   List<AchatModel> categorieAchat = [];
 
   void loadAchats() async {
     List<AchatModel>? achats = await ProductDatabase.instance.getAllAchats();
     setState(() {
       categorieAchat = achats;
+      achatList = achats;
     });
 
     print('categorieAchat $categorieAchat');
@@ -121,34 +125,37 @@ class _AddVenteFormState extends State<AddVenteForm> {
           title: Text("Nouveau vente"),
         ),
         body: SingleChildScrollView(
-          key: _form,
           scrollDirection: Axis.vertical,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                textField(),
-                categorieField(),
-                sousCategorieField(),
-                typeField(),
-                identifiantField(),
-                Row(
-                  children: [
-                    Expanded(
-                      child: quantityField(),
-                    ),
-                    SizedBox(
-                      width: 5.0,
-                    ),
-                    Expanded(
-                      child: unityField(),
-                    )
-                  ],
-                ),
-                priceField(),
-                saveForm()
-              ],
+          child: Form(
+            key: _form,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  textField(),
+                  categorieField(),
+                  sousCategorieField(),
+                  typeField(),
+                  identifiantField(),
+                  quantityField(),
+                  // Row(
+                  //   children: [
+                  //     Expanded(
+                  //       child: quantityField(),
+                  //     ),
+                  //     SizedBox(
+                  //       width: 5.0,
+                  //     ),
+                  //     Expanded(
+                  //       child: unityField(),
+                  //     )
+                  //   ],
+                  // ),
+                  // priceField(),
+                  saveForm()
+                ],
+              ),
             ),
           ),
         ));
@@ -165,10 +172,9 @@ class _AddVenteFormState extends State<AddVenteForm> {
   }
 
   Widget categorieField() {
+    var catList = categorieAchat.map((e) => e.categorie).toSet();
 
-  var catList = categorieAchat.map((e) => e.categorie).toSet();
-
-    print('catList $catList');
+    // print('catList $catList');
 
     return Container(
       margin: const EdgeInsets.only(bottom: 20.0),
@@ -390,9 +396,12 @@ class _AddVenteFormState extends State<AddVenteForm> {
             borderRadius: BorderRadius.circular(5.0),
           ),
         ),
-        validator: (quantity) => quantity != null && quantity.isEmpty
-            ? 'La quantité ne peut pas être vide'
-            : null,
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'Please enter some text';
+          }
+          return null;
+        },
         onChanged: (value) => setState(() => quantity = value.trim()),
       ),
     );
@@ -433,20 +442,13 @@ class _AddVenteFormState extends State<AddVenteForm> {
   Widget saveForm() {
     return ElevatedButton(
       onPressed: () {
-        // final formvente = _form.currentState!.validate();
-
-        // print("categorie $categorie");
-        // print("sousCategorie $sousCategorie");
-        // print("type $type");
-        // print("identifiant $identifiant");
-        // print("quantity $quantity");
-        // print("unity $unity");
-        // print("price $price");
-
-        // print(formvente);
-        addVente();
-
-        Navigator.of(context).pop();
+        isLoading = true;
+        if (_form.currentState!.validate()) {
+          addVente();
+          Navigator.of(context).pop();
+        }
+        isLoading = false;
+       
       },
       child: Text(
         'Enregistrez',
@@ -456,19 +458,37 @@ class _AddVenteFormState extends State<AddVenteForm> {
     );
   }
 
-  Future addVente() async {
+  void addVente() async {
+    var filterAchat = achatList.where((element) =>
+        categorie.toString() == element.categorie &&
+        sousCategorie.toString() == element.sousCategorie &&
+        type.toString() == element.type &&
+        identifiant.toString() == element.identifiant);
+
+    var prixVenteAchat = filterAchat.map((e) => e.prixVente);
+
+    final String priceVente = prixVenteAchat.first;
+
+    final String qtyVente = quantity.toString();
+
+    print('priceAchat $priceVente');
+    print('qtyVente $qtyVente');
+
+    var priceTotal = int.parse(priceVente) * int.parse(qtyVente);
+
     final vente = VenteModel(
       categorie: categorie.toString(),
       sousCategorie: sousCategorie.toString(),
       type: type.toString(),
       identifiant: identifiant.toString(),
       quantity: quantity.toString(),
-      unity: unity.toString(),
-      price: price.toString(),
+      unity: identifiant.toString(),
+      price: priceTotal.toString(),
       date: DateTime.now(),
     );
 
     await ProductDatabase.instance.insertVente(vente);
+    
     if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text("${vente.sousCategorie} ajouté!"),
